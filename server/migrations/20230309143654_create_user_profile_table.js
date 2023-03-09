@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
     return knex.schema.createTable("user_profile", table => {
-        table.integer("user").primary()
+        table.integer("user").primary().notNullable()
         table.string("firstname").notNullable()
         table.integer("points").notNullable()
       })
