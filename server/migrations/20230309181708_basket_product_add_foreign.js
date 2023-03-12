@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.table("basket_product", table => {
         table.foreign("product").references("product.id")
-        table.foreign("basket").references("basket.id")
+        table.foreign("basket").references("basket.user")
       })
 };
 

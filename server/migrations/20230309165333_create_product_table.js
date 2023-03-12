@@ -7,6 +7,8 @@ exports.up = function(knex) {
         table.increments("id").primary()
         table.string("name").notNullable()
         table.integer("sub_category").notNullable()
+        table.integer("manufacturer").notNullable()
+        table.integer("supplier").notNullable()
         table.double("price").notNullable().checkPositive()
         table.double("rating").notNullable().checkPositive()
       })
