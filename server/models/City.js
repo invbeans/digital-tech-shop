@@ -6,7 +6,27 @@ class City extends Model {
     }
 
     static get relationMappings() {
+        const Region = require('./Region')
+        const DistrictCity = require('./DistrictCity')
 
+        return {
+            region: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Region,
+                join: {
+                    from: 'city.region',
+                    to: 'region.id'
+                }
+            },
+            district_city: {
+                relation: Model.HasManyRelation,
+                modelClass: DistrictCity,
+                join: {
+                    from: 'city.id',
+                    to: 'district_city.city'
+                }
+            }
+        }
     }
 }
 

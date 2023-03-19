@@ -6,7 +6,18 @@ class ProductRemains extends Model {
     }
 
     static get relationMappings() {
+        const Product = require('./Product')
 
+        return {
+            product: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Product,
+                join: {
+                    from: 'product_remains.product',
+                    to: 'product.id'
+                }
+            }
+        }
     }
 }
 

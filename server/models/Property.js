@@ -6,7 +6,27 @@ class Property extends Model {
     }
 
     static get relationMappings() {
+        const PropertySubCategory = require('./PropertySubCategory')
+        const PropertyValue = require('./PropertyValue')
 
+        return {
+            property_sub_category: {
+                relation: Model.HasManyRelation,
+                modelClass: PropertySubCategory,
+                join: {
+                    from: 'property.id',
+                    to: 'property_sub_category.property'
+                }
+            },
+            property_value: {
+                relation: Model.HasManyRelation,
+                modelClass: PropertyValue,
+                join: {
+                    from: 'property.id',
+                    to: 'property_value.property'
+                }
+            }
+        }
     }
 }
 

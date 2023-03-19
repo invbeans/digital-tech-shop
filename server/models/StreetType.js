@@ -6,7 +6,18 @@ class StreetType extends Model {
     }
 
     static get relationMappings() {
+        const Adress = require('./Adress')
 
+        return {
+            street_type: {
+                relation: Model.HasManyRelation,
+                modelClass: Adress,
+                join: {
+                    from: 'street_type.id',
+                    to: 'adress.street_type'
+                }
+            }
+        }
     }
 }
 

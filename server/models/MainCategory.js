@@ -6,7 +6,18 @@ class MainCategory extends Model {
     }
 
     static get relationMappings() {
+        const SubCategory = require('./SubCategory')
 
+        return {
+            sub_category: {
+                relation: Model.HasManyRelation,
+                modelClass: SubCategory,
+                join: {
+                    from: 'main_category.id',
+                    to: 'sub_category.main_category'
+                }
+            }
+        }
     }
 }
 

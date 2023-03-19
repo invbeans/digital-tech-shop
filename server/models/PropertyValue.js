@@ -6,7 +6,27 @@ class PropertyValue extends Model {
     }
 
     static get relationMappings() {
+        const Property = require('./Property')
+        const ProductPropertyValues = require('./ProductPropertyValues')
 
+        return {
+            property: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Property,
+                join: {
+                    from: 'property_value.property',
+                    to: 'property.id'
+                }
+            },
+            product_property_values: {
+                relation: Model.HasManyRelation,
+                modelClass: ProductPropertyValues,
+                join: {
+                    from: 'property_value.id',
+                    to: 'product_property_values.property_value'
+                }
+            }
+        }
     }
 }
 

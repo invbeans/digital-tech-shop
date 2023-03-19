@@ -18,7 +18,7 @@ class Role extends Model {
         const MetaUser = require('./MetaUser')
         return {
             meta_user: {
-                relation: Model.BelongsToOneRelation,
+                relation: Model.HasManyRelation,
                 modelClass: MetaUser,
                 join: {
                     from: 'role.id',

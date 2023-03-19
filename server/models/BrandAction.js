@@ -6,7 +6,27 @@ class BrandAction extends Model {
     }
 
     static get relationMappings() {
+        const Action = require('./Action')
+        const Manufacturer = require('./Manufacturer')
 
+        return {
+            action: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Action,
+                join: {
+                    from: 'brand_action.action',
+                    to: 'action.id'
+                }
+            },
+            manufacturer: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Manufacturer,
+                join: {
+                    from: 'brand_action.manufacturer',
+                    to: 'manufacturer.id'
+                }
+            }
+        }
     }
 }
 

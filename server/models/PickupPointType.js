@@ -6,7 +6,18 @@ class PickupPointType extends Model {
     }
 
     static get relationMappings() {
+        const OrderShipping = require('./OrderShipping')
 
+        return {
+            order_shipping: {
+                relation: Model.HasManyRelation,
+                modelClass: OrderShipping,
+                join: {
+                    from: 'pickup_point_type.id',
+                    to: 'order_shipping.pickup_point_type'
+                }
+            }
+        }
     }
 }
 

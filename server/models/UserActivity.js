@@ -6,7 +6,18 @@ class UserActivity extends Model {
     }
 
     static get relationMappings() {
+        const User = require('./User')
 
+        return {
+            user: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: User,
+                join: {
+                    from: 'user_activity.user',
+                    to: 'user.id'
+                }
+            }
+        }
     }
 }
 

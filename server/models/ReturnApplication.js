@@ -6,7 +6,27 @@ class ReturnApplication extends Model {
     }
 
     static get relationMappings() {
+        const ReturnProduct = require('./ReturnProduct')
+        const Order = require('./Order')
 
+        return {
+            return_product: {
+                relation: Model.HasManyRelation,
+                modelClass: ReturnProduct,
+                join: {
+                    from: 'return_application.id',
+                    to: 'return_product.return_application'
+                }
+            },
+            order: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Order,
+                join: {
+                    from: 'return_application.order',
+                    to: 'order.id'
+                }
+            }
+        }
     }
 }
 

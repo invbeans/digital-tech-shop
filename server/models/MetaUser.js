@@ -44,7 +44,7 @@ class MetaUser extends Model {
                 }
             },
             role: {
-                relation: Model.HasOneRelation,
+                relation: Model.BelongsToOneRelation,
                 modelClass: Role,
                 join: {
                     from: 'meta_user.role',

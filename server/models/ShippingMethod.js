@@ -6,7 +6,18 @@ class ShippingMethod extends Model {
     }
 
     static get relationMappings() {
+        const ShippingService = require('./ShippingService')
 
+        return {
+            shipping_service: {
+                relation: Model.HasManyRelation,
+                modelClass: Order,
+                join: {
+                    from: 'shipping_method.id',
+                    to: 'shipping_service.shipping_method'
+                }
+            }
+        }
     }
 }
 

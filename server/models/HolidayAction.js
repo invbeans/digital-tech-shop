@@ -6,7 +6,27 @@ class HolidayAction extends Model {
     }
 
     static get relationMappings() {
+        const Action = require('./Action')
+        const SubCategory = require('./SubCategory')
 
+        return {
+            action: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Action,
+                join: {
+                    from: 'holiday_action.action',
+                    to: 'action.id'
+                }
+            },
+            sub_category: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: SubCategory,
+                join: {
+                    from: 'sub_category.id',
+                    to: 'holiday_action.sub_category'
+                }
+            }
+        }
     }
 }
 
