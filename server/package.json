@@ -7,17 +7,22 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
     "migrate": "knex migrate:latest --knexfile knexfile.js",
-    "rollback": "knex migrate:rollback --knexfile knexfile.js"
+    "rollback": "knex migrate:rollback --knexfile knexfile.js",
+    "seed": "knex seed:make dev --knexfile knexfile.js",
+    "run-seed": "knex seed:run --knexfile knexfile.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "email-validator": "^2.0.4",
     "express": "^4.18.2",
     "knex": "^2.4.2",
     "objection": "^3.0.1",
-    "pg": "^8.10.0"
+    "pg": "^8.10.0",
+    "phone": "^3.1.36"
   },
   "devDependencies": {
     "nodemon": "^2.0.21"

@@ -8,9 +8,13 @@ module.exports = {
   development: {
     client: 'postgres',
     connection: {
+      host: 'localhost',
       database: 'postgres',
       user:     'postgres',
       password: 'admin'
+    },
+    seeds: {
+      directory: './seeds'
     }
   },
 
