@@ -6,6 +6,7 @@ const { Model, ValidationError, ForeignViolationError } = require('objection')
 //const {Role} = require('./models/Role') - ТАК НЕЛЬЗЯ все методы undefined
 //все вопросы к их документации)))))))))
 const Role = require('./models/Role') // А ТАК МОЖНО
+const userRouter = require('./routes/user.routes')
 
 const app = express()
 const PORT = 3000
@@ -18,9 +19,10 @@ let corsOptions = {
 };
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
+app.use(userRouter)
 
 //просто тестив
-app.get('/role/:id', async (req, res) => {
+/* app.get('/role/:id', async (req, res) => {
     const { id } = req.params
     const role = await Role.query()
         .findById(id)
@@ -35,7 +37,7 @@ app.post('/role', async (req, res) => {
         .then(role => res.json(role))
         .catch(err => console.log(err))
     // knex('role').insert(req.body).then(() => res.json(req.body)) - или так, then обязательно всем
-})
+}) */
 
 app.listen(PORT, () => {
     console.log(`Server listens on port = ${PORT}`)
