@@ -5,8 +5,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable("district_street", table => {
         table.increments("id").primary()
-        table.integer("district_city").notNullable()
-        table.integer("street").notNullable()
+        table.integer("district_city").notNullable().references("id").inTable("district_city")
+        table.integer("street").notNullable().references("id").inTable("street")
       })
 };
 

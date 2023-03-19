@@ -10,7 +10,7 @@ exports.up = function(knex) {
         table.date("date_end").notNullable()
         table.integer("percent").notNullable()
         table.string("image")
-        table.integer("action_type").notNullable()
+        table.integer("action_type").notNullable().references("id").inTable("action_type")
       })
 };
 

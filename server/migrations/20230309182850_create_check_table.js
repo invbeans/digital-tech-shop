@@ -4,8 +4,8 @@
  */
 exports.up = function(knex) {
     return knex.schema.createTable("check", table => {
-        table.integer("order").primary().notNullable()
-        table.integer("payment_method").notNullable()
+        table.integer("order").primary().notNullable().references("id").inTable("order")
+        table.integer("payment_method").notNullable().references("id").inTable("payment_method")
         table.double("full_price").notNullable().checkPositive()
       })
 };

@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable("holiday_action", table => {
         table.increments("id").primary()
-        table.integer("action").notNullable()
+        table.integer("action").notNullable().references("id").inTable("action")
         table.integer("sub_category").notNullable()
       })
 };

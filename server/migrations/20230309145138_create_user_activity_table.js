@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
     return knex.schema.createTable("user_activity", table => {
-        table.integer("user").primary().notNullable()
+        table.integer("user").primary().notNullable().references("id").inTable("user")
         table.dateTime("last_login")
         table.dateTime("last_shopped")
       })

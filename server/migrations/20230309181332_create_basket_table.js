@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
     return knex.schema.createTable("basket", table => {
-        table.integer("user").primary().notNullable()
+        table.integer("user").primary().notNullable().references("id").inTable("user")
         table.date("begin_date")
       })
 };

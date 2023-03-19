@@ -4,8 +4,8 @@
  */
 exports.up = function(knex) {
     return knex.schema.createTable("brand_action", table => {
-        table.integer("action").primary().notNullable()
-        table.integer("manufacturer").notNullable()
+        table.integer("action").primary().notNullable().references("id").inTable("action")
+        table.integer("manufacturer").notNullable().references("id").inTable("manufacturer")
       })
 };
 

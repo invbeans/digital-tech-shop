@@ -5,8 +5,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable("review", table => {
         table.increments("id").primary()
-        table.integer("user").notNullable()
-        table.integer("product").notNullable()
+        table.integer("user").notNullable().references("id").inTable("user")
+        table.integer("product").notNullable().references("id").inTable("product")
         table.integer("points").notNullable()
         table.dateTime("date").notNullable()
         table.string("text", 500).notNullable()

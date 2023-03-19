@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable("city", table => {
         table.increments("id").primary()
-        table.integer("region").notNullable()
+        table.integer("region").notNullable().references("id").inTable("region")
         table.string("name").notNullable()
       })
 };
