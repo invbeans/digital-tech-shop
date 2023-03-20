@@ -8,7 +8,6 @@ exports.up = function(knex) {
         table.integer("user").notNullable().references("id").inTable("user")
         table.dateTime("date").notNullable()
         table.integer("order").notNullable().references("id").inTable("order")
-        table.boolean("proper_quality").defaultTo(true).notNullable()
         table.string("text", 400).notNullable()
       })
 };
