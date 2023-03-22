@@ -8,7 +8,7 @@ class MetaUser extends Model {
     }
     $beforeInsert() {
         if(phone(this.phone_number, {country: 'RUS'}).isValid === false){
-            throw new objection.ValidationError({ //мб упадет, хз что за объект обжекшин)))
+            throw new objection.ValidationError({ 
                 message: 'Неправильно введён номер телефона'
             })
         }

@@ -9,6 +9,7 @@ exports.up = function(knex) {
         table.dateTime("date").notNullable()
         table.integer("order").notNullable().references("id").inTable("order")
         table.string("text", 400).notNullable()
+        table.boolean("approved").defaultTo(false)
       })
 };
 
