@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable("main_category", table => {
         table.increments("id").primary()
-        table.string("name").notNullable()
+        table.string("name").notNullable().unique()
       })
 };
 
