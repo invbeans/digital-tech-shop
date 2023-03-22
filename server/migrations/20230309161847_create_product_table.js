@@ -10,7 +10,7 @@ exports.up = function(knex) {
         table.integer("manufacturer").notNullable().references("id").inTable("manufacturer")
         table.integer("supplier").notNullable().references("id").inTable("supplier")
         table.double("price").notNullable().checkPositive()
-        table.double("rating").notNullable().checkPositive()
+        table.double("rating").checkPositive().defaultTo(5)
       })
 };
 

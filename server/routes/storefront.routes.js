@@ -14,4 +14,12 @@ router.put('/sub_category/:id', controller.updateSubCategory)
 router.delete('/sub_category/:id', controller.deleteSubCategory)
 router.get('/sub_category', controller.getSubCategories)
 
+// --------- product CRUD and more ----------
+router.get('/product/filter', controller.getFilteredProducts)
+router.post('/product', controller.createProduct)
+router.put('/product/:id', controller.updateProduct)
+router.delete('/product/:id', controller.deleteProduct)
+router.get('/product', controller.getProducts)
+router.get('/product/:id', controller.getProductById)
+
 module.exports = router
