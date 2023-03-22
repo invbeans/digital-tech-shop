@@ -24,12 +24,12 @@ let corsOptions = {
 };
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
-app.use("user", userRouter)
-app.use("storefront", storefrontRouter)
-app.use("order", orderRouter)
-app.use("shipping", shippingRouter)
-app.use("activity", activityRouter)
-app.use("discount", discountRouter)
+app.use("/user", userRouter)
+app.use("/storefront", storefrontRouter)
+app.use("/order", orderRouter)
+app.use("/shipping", shippingRouter)
+app.use("/activity", activityRouter)
+app.use("/discount", discountRouter)
 
 //просто тестив
 /* app.get('/role/:id', async (req, res) => {

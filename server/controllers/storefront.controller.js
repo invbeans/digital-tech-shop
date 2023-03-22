@@ -9,6 +9,7 @@ const ProductRemains = require("../models/ProductRemains")
 const ProductImage = require("../models/ProductImage")
 const Supplier = require("../models/Supplier")
 const Manufacturer = require("../models/Manufacturer")
+const { query } = require("../models/ProductRemains")
 
 class storefrontController {
     //проверки на роль админа / контент манагёра пока нет
@@ -53,6 +54,45 @@ class storefrontController {
     }
 
     // --------- sub category CRUD ----------
+    async createSubCategory(req, res) {
+        const {main_category, name} = req.body
+        //без проверки потому что интерфейс только
+        //через категорию добавляет
+        await SubCategory.query()
+        .insert({main_category, name})
+        .then(subCategory => res.json(subCategory))
+        .catch(err => res.json(err.message))
+    }
+
+    async updateSubCategory(req, res) {
+        const id = req.params.id
+        const {main_category, name} = req.body
+        await SubCategory.query()
+        .patchAndFetchById(id, {
+            main_category, name})
+        .then(subCategory => {
+            if(subCategory === null) res.json("Такой подкатегории нет")
+            else res.json(subCategory)
+        })
+        .catch(err => res.json(err.message))
+    }
+
+    async deleteSubCategory(req, res) {
+        const id = req.params.id
+        await SubCategory.query()
+        .deleteById(id)
+        .then(amount => {
+            if(amount == 0) res.json("Такой подкатегории нет")
+            else res.json(`Подкатегория с id = ${id} удалена`)
+        })
+        .catch(err => res.json(err.message))
+    }
+
+    async getSubCategories(req, res) {
+        await SubCategory.query()
+        .then(subCategories => res.json(subCategories))
+        .catch(err => res.json(err))
+    }
 
 }
 
