@@ -7,6 +7,11 @@ const { Model, ValidationError, ForeignViolationError } = require('objection')
 //все вопросы к их документации)))))))))
 const Role = require('./models/Role') // А ТАК МОЖНО
 const userRouter = require('./routes/user.routes')
+const storefrontRouter = require('./routes/storefront.routes')
+const orderRouter = require('./routes/order.routes')
+const shippingRouter = require('./routes/shipping.routes')
+const activityRouter = require('./routes/activity.routes')
+const discountRouter = require('./routes/discount.routes')
 
 const app = express()
 const PORT = 3000
@@ -20,6 +25,11 @@ let corsOptions = {
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.use(userRouter)
+app.use(storefrontRouter)
+app.use(orderRouter)
+app.use(shippingRouter)
+app.use(activityRouter)
+app.use(discountRouter)
 
 //просто тестив
 /* app.get('/role/:id', async (req, res) => {
