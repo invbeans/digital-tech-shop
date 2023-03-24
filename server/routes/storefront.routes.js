@@ -28,4 +28,11 @@ router.put('/property/:id', controller.updateProperty)
 router.delete('/property/:id', controller.deleteProperty)
 router.get('/property', controller.getProperties)
 
+// --------- property value CRUD ----------
+router.post('/property_value', controller.createPropertyValue)
+router.put('/property_value/:id', controller.updatePropertyValue)
+router.delete('/property_value/:id', controller.deletePropertyValue)
+router.get('/property_value', controller.getPropertyValues)
+router.get('/property_value/by_property', controller.getPropertyValueByProperty)
+
 module.exports = router

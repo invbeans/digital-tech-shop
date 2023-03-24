@@ -10,7 +10,7 @@ const ProductImage = require("../models/ProductImage")
 const Supplier = require("../models/Supplier")
 const Manufacturer = require("../models/Manufacturer")
 const { raw } = require('objection')
-const {knex} = require('knex')
+const { knex } = require('knex')
 
 class storefrontController {
     //проверки на роль админа / контент манагёра пока нет
@@ -268,15 +268,15 @@ class storefrontController {
         }
 
         knex.select('*')
-        .from('product')
-        .leftJoin('sub_category', function() {
-            this
-            .on('sub_category.id', '=', 'product.sub_category')
-        })
-        .leftJoin('property_subcategory', function () {
-            this
-            .on('property_subcategory.s')
-        })
+            .from('product')
+            .leftJoin('sub_category', function () {
+                this
+                    .on('sub_category.id', '=', 'product.sub_category')
+            })
+            .leftJoin('property_subcategory', function () {
+                this
+                    .on('property_subcategory.s')
+            })
     }
 
     // --------- property CRUD ----------
@@ -316,6 +316,55 @@ class storefrontController {
     async getProperties(req, res) {
         await Property.query()
             .then(properties => res.json(properties))
+            .catch(err => res.json(err))
+    }
+
+    // --------- property value CRUD ----------
+    async createPropertyValue(req, res) {
+        const { property, value } = req.body
+        await PropertyValue.query()
+            .insert({ property, value })
+            .then(propertyValue => res.json(propertyValue))
+            .catch(err => res.json(err.message))
+    }
+
+    async updatePropertyValue(req, res) {
+        const id = req.params.id
+        const { property, value } = req.body
+        await PropertyValue.query()
+            .patchAndFetchById(id, {
+                property, value
+            })
+            .then(propertyValue => {
+                if (propertyValue === null) res.json("Такой записи 'характеристика-значение' нет")
+                else res.json(propertyValue)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async deletePropertyValue(req, res) {
+        const id = req.params.id
+        await PropertyValue.query()
+            .deleteById(id)
+            .then(amount => {
+                if (amount == 0) res.json("Такой записи 'характеристика-значение' нет")
+                else res.json(`Характеристика-значение с id = ${id} удалена`)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async getPropertyValues(req, res) {
+        await PropertyValue.query()
+            .then(propertyValue => res.json(propertyValue))
+            .catch(err => res.json(err))
+    }
+
+    async getPropertyValueByProperty(req, res) {
+        const { property } = req.body
+        await PropertyValue.query()
+            .select('*')
+            .where('property', '=', property)
+            .then(propertyValue => res.json(propertyValue))
             .catch(err => res.json(err))
     }
 }
