@@ -148,6 +148,7 @@ class storefrontController {
             .catch(err => res.json(err.message))
     }
 
+    //хаха а что делать...
     async getFilteredProducts(req, res) {
         const { properties, price, brands } = req.body
 
@@ -276,6 +277,46 @@ class storefrontController {
             this
             .on('property_subcategory.s')
         })
+    }
+
+    // --------- property CRUD ----------
+    async createProperty(req, res) {
+        const { name } = req.body
+        await Property.query()
+            .insert({ name })
+            .then(property => res.json(property))
+            .catch(err => res.json(err.message))
+    }
+
+    async updateProperty(req, res) {
+        const id = req.params.id
+        const { name } = req.body
+        await Property.query()
+            .patchAndFetchById(id, {
+                name
+            })
+            .then(property => {
+                if (property === null) res.json("Такой характеристики нет")
+                else res.json(property)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async deleteProperty(req, res) {
+        const id = req.params.id
+        await Property.query()
+            .deleteById(id)
+            .then(amount => {
+                if (amount == 0) res.json("Такой характеристики нет")
+                else res.json(`Характеристика с id = ${id} удалена`)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async getProperties(req, res) {
+        await Property.query()
+            .then(properties => res.json(properties))
+            .catch(err => res.json(err))
     }
 }
 

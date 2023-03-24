@@ -22,4 +22,10 @@ router.delete('/product/:id', controller.deleteProduct)
 router.get('/product', controller.getProducts)
 router.get('/product/:id', controller.getProductById)
 
+// --------- property CRUD ----------
+router.post('/property', controller.createProperty)
+router.put('/property/:id', controller.updateProperty)
+router.delete('/property/:id', controller.deleteProperty)
+router.get('/property', controller.getProperties)
+
 module.exports = router
