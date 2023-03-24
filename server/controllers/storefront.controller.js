@@ -367,6 +367,64 @@ class storefrontController {
             .then(propertyValue => res.json(propertyValue))
             .catch(err => res.json(err))
     }
+
+    // --------- product property values CRUD ----------
+    async createProductPropertyValues(req, res) {
+        const { product, property_value } = req.body
+        await ProductPropertyValues.query()
+            .insert({ product, property_value })
+            .then(prodPropVal => res.json(prodPropVal))
+            .catch(err => res.json(err.message))
+    }
+
+    async updateProductPropertyValues(req, res) {
+        const id = req.params.id
+        const { product, property_value } = req.body
+        await ProductPropertyValues.query()
+            .patchAndFetchById(id, {
+                product, property_value
+            })
+            .then(prodPropVal => {
+                if (prodPropVal === null) res.json("Такой записи 'товар-значение' нет")
+                else res.json(prodPropVal)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async deleteProductPropertyValues(req, res) {
+        const id = req.params.id
+        await ProductPropertyValues.query()
+            .deleteById(id)
+            .then(amount => {
+                if (amount == 0) res.json("Такой записи 'товар-значение' нет")
+                else res.json(`Товар-значение с id = ${id} удален`)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async getProductPropertyValues(req, res) {
+        await ProductPropertyValues.query()
+            .then(prodPropVal => res.json(prodPropVal))
+            .catch(err => res.json(err))
+    }
+
+    async getProductPropertyValuesByProduct(req, res) {
+        const { product } = req.body
+        await ProductPropertyValues.query()
+            .select('*')
+            .where('product', '=', product)
+            .then(prodPropVal => res.json(prodPropVal))
+            .catch(err => res.json(err.message))
+    }
+
+    async getProductPropertyValuesByPropertyValue(req, res) {
+        const { property_value } = req.body
+        await ProductPropertyValues.query()
+            .select('*')
+            .where('property_value', '=', property_value)
+            .then(prodPropVal => res.json(prodPropVal))
+            .catch(err => res.json(err.message))
+    }
 }
 
 module.exports = new storefrontController()

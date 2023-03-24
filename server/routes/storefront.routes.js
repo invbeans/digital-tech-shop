@@ -35,4 +35,13 @@ router.delete('/property_value/:id', controller.deletePropertyValue)
 router.get('/property_value', controller.getPropertyValues)
 router.get('/property_value/by_property', controller.getPropertyValueByProperty)
 
+// --------- product property values CRUD ----------
+router.post('/product_property_values', controller.createProductPropertyValues)
+router.put('/product_property_values/:id', controller.updateProductPropertyValues)
+router.delete('/product_property_values/:id', controller.deleteProductPropertyValues)
+router.get('/product_property_values', controller.getProductPropertyValues)
+router.get('/product_property_values/by_product', controller.getProductPropertyValuesByProduct)
+router.get('/product_property_values/by_property_value', controller.getProductPropertyValuesByPropertyValue)
+
+
 module.exports = router
