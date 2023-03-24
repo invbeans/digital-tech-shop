@@ -10,6 +10,7 @@ const ProductImage = require("../models/ProductImage")
 const Supplier = require("../models/Supplier")
 const Manufacturer = require("../models/Manufacturer")
 const { raw } = require('objection')
+const {knex} = require('knex')
 
 class storefrontController {
     //проверки на роль админа / контент манагёра пока нет
@@ -163,7 +164,7 @@ class storefrontController {
          */
 
 
-        let propertyStr = ""
+        /*let propertyStr = ""
         if (properties !== undefined) {
             properties.map(elem => {
                 propertyStr += `'${elem.name}' in (`
@@ -187,8 +188,94 @@ class storefrontController {
         //omg how to ask properties tables for all of these...
         //res.json(propertyStr)
         res.json(brandStr)
-        //await Product.query()
-        //.where(raw())
+        await Product.query()
+        .findById(await ProductPropertyValues.query()
+        .where(raw("property_value in (??)", await PropertyValue.query()
+        .where(raw("property in (??)", await Property.query()
+        .where(raw("name in (??)", ...)))))))
+        .where() //цены и бренд*/
+
+        //let propStr = ""
+
+        /*let props = []
+        let propval = []
+        let prodpropvalues = []
+
+        for (let i = 0; i < properties.length; i++) {
+            await Property.query()
+                .where(raw(`name = '${properties[i].name}'`))
+                .then(async pr => { //а это же массив
+                    for (let i = 0; i < pr.length; i++) {
+                        await PropertyValue.query()
+                            .where(raw(`property = '${pr[i].id}'`))
+                            .then(async prval => {
+                                for (let i = 0; i < prval.length; i++) {
+                                    await ProductPropertyValues.query()
+                                        .where(raw(`property_value = '${prval[i].id}'`))
+                                        .then(async prodPropVal => {
+                                            await Product.query()
+                                            .where(raw())
+                                        })
+                                        .catch(err => res.json(err.message))
+                                }
+                            })
+                            .catch(err => res.json(err.message))
+                    }
+                })
+                .catch(err => res.json(err.message))
+        }
+        //res.json(props[1][0].name)
+        //res.json(props)
+        
+
+        async function getPropValue(props) {
+            for (let i = 0; i < props.length; i++) {
+                await PropertyValue.query()
+                    .where(raw(`property = '${props[i].id}'`))
+                    .then(async prval => {
+                        propval.push(prval)
+                        //await getProdPropValues(prval)
+                    })
+                    .catch(err => res.json(err.message))
+            }
+        }
+
+        async function getProdPropValues(propval) {
+            for (let i = 0; i < propval.length; i++) {
+                await ProductPropertyValues.query()
+                    .where(raw(`property_value = '${propval[i].id}'`))
+                    .then(prodPropVal => {
+                        console.log(prodPropVal)
+                        prodpropvalues.push(prodPropVal)
+                    })
+                    .catch(err => res.json(err.message))
+            }
+        }
+
+        res.json(prodpropvalues)*/
+
+        let propertyStr = ""
+        if (properties !== undefined) {
+            properties.map(elem => {
+                propertyStr += `'${elem.name}',`
+                /*elem.values.map(val => {
+                    propertyStr += `'${val}',`
+                })*/
+                propertyStr = propertyStr.slice(0, -1)
+                propertyStr += ')'
+            })
+        }
+
+        knex.select('*')
+        .from('product')
+        .leftJoin('sub_category', function() {
+            this
+            .on('sub_category.id', '=', 'product.sub_category')
+        })
+        .leftJoin('property_subcategory', function () {
+            this
+            .on('property_subcategory.s')
+        })
     }
 }
 
