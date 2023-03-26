@@ -1,4 +1,4 @@
-.navigation-container {
+/* .navigation-container {
     position: fixed;
     padding-top: 0;
     padding-left: 0;
@@ -6,4 +6,13 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}*/
+a {
+    margin-left: 5px;
 }
+
+.navigation-search {
+    height: 6vh;
+    border-radius:3px;
+    border-color: black;
+} 

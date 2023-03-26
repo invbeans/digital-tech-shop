@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+//@import '~pico.css/dist/pico.min.css';
+
+// Override default variables
+$primary-500: #4caf50;
+$primary-600: #43a047;
+$primary-700: #388e3c;
+
+@import 'node_modules/@picocss/pico/scss/pico.scss';
+
 html,
 body {
     height: 100%;
