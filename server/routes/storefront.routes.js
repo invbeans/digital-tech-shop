@@ -1,5 +1,4 @@
 const Router = require('express')
-const { updateProductRemains, updateProductImage } = require('../controllers/storefront.controller')
 const router = new Router()
 const controller = require('../controllers/storefront.controller')
 
