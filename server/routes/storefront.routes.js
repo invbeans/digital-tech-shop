@@ -53,13 +53,13 @@ router.post('/product_property_values/by_property_value', controller.getProductP
 
 // --------- product remains CRUD ----------
 router.post('/product_remains', controller.createProductRemains)
-router.put('/product_remains/:id', updateProductRemains)
+router.put('/product_remains/:id', controller.updateProductRemains)
 router.delete('/product_remains/:id', controller.deleteProductRemains)
 router.get('/product_remains/:id', controller.getProductRemainsById)
 
 // --------- product image CRUD ----------
 router.post('/product_image', controller.createProductImage)
-router.put('/product_image/:id', updateProductImage)
+router.put('/product_image/:id', controller.updateProductImage)
 router.delete('/product_image/:id', controller.deleteProductImage)
 router.get('/product_image/:id', controller.getProductImageById)
 
