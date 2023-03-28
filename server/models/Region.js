@@ -6,18 +6,9 @@ class Region extends Model {
     }
 
     static get relationMappings() {
-        const Adress = require('./Adress')
         const City = require('./City')
 
         return {
-            adress: {
-                relation: Model.HasManyRelation,
-                modelClass: Adress,
-                join: {
-                    from: 'region.id',
-                    to: 'adress.region'
-                }
-            },
             city: {
                 relation: Model.HasManyRelation,
                 modelClass: City,

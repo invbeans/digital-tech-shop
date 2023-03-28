@@ -6,19 +6,10 @@ class Adress extends Model {
     }
 
     static get relationMappings() {
-        const Region = require('./Region')
         const StreetType = require('./StreetType')
         const OrderShipping = require('./OrderShipping')
 
         return {
-            region: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: Region,
-                join: {
-                    from: 'adress.region',
-                    to: 'region.id'
-                }
-            },
             street_type: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: StreetType,
