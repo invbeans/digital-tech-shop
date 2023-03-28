@@ -32,23 +32,23 @@ router.get('/property', controller.getProperties)
 router.post('/property_value', controller.createPropertyValue)
 router.put('/property_value/:id', controller.updatePropertyValue)
 router.delete('/property_value/:id', controller.deletePropertyValue)
-router.get('/property_value', controller.getPropertyValues)
 router.get('/property_value/by_property/:id', controller.getPropertyValueByProperty)
+router.get('/property_value', controller.getPropertyValues)
 
 // --------- property sub category CRUD ----------
 router.post('/property_sub_category', controller.createPropertySubCategory)
 router.put('/property_sub_category/:id', controller.updatePropertySubCategory)
 router.delete('/property_sub_category/:id', controller.deletePropertySubCategory)
-router.get('/property_sub_category', controller.getPropertySubCategories)
 router.get('/property_sub_category/by_sub_category/:id', controller.getPropertySubCategoryBySubCategory)
+router.get('/property_sub_category', controller.getPropertySubCategories)
 
 // --------- product property values CRUD ----------
 router.post('/product_property_values', controller.createProductPropertyValues)
 router.put('/product_property_values/:id', controller.updateProductPropertyValues)
 router.delete('/product_property_values/:id', controller.deleteProductPropertyValues)
-router.get('/product_property_values', controller.getProductPropertyValues)
-router.get('/product_property_values/by_product/:id', controller.getProductPropertyValuesByProduct)
 router.get('/product_property_values/by_property_value/:id', controller.getProductPropertyValuesByPropertyValue)
+router.get('/product_property_values/by_product/:id', controller.getProductPropertyValuesByProduct)
+router.get('/product_property_values', controller.getProductPropertyValues)
 
 // --------- product remains CRUD ----------
 router.post('/product_remains', controller.createProductRemains)
