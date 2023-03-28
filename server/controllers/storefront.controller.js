@@ -361,7 +361,7 @@ class storefrontController {
     }
 
     async getPropertyValueByProperty(req, res) {
-        const { property } = req.body
+        const property = req.params.id
         await PropertyValue.query()
             .select('*')
             .where('property', '=', property)
@@ -410,7 +410,7 @@ class storefrontController {
     }
 
     async getPropertySubCategoryBySubCategory(req, res) {
-        const { sub_category } = req.body
+        const sub_category = req.params.id
         await PropertySubCategory.query()
             .select("*")
             .where("sub_category", "=", sub_category)
@@ -459,7 +459,7 @@ class storefrontController {
     }
 
     async getProductPropertyValuesByProduct(req, res) {
-        const { product } = req.body
+        const product = req.params.id
         await ProductPropertyValues.query()
             .select('*')
             .where('product', '=', product)
@@ -468,7 +468,7 @@ class storefrontController {
     }
 
     async getProductPropertyValuesByPropertyValue(req, res) {
-        const { property_value } = req.body
+        const property_value = req.params.id
         await ProductPropertyValues.query()
             .select('*')
             .where('property_value', '=', property_value)

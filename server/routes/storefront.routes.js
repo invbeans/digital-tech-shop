@@ -33,23 +33,22 @@ router.post('/property_value', controller.createPropertyValue)
 router.put('/property_value/:id', controller.updatePropertyValue)
 router.delete('/property_value/:id', controller.deletePropertyValue)
 router.get('/property_value', controller.getPropertyValues)
-router.post('/property_value/by_property', controller.getPropertyValueByProperty)
+router.get('/property_value/by_property/:id', controller.getPropertyValueByProperty)
 
 // --------- property sub category CRUD ----------
-//gets by field use POST method bc of body with field value
 router.post('/property_sub_category', controller.createPropertySubCategory)
 router.put('/property_sub_category/:id', controller.updatePropertySubCategory)
 router.delete('/property_sub_category/:id', controller.deletePropertySubCategory)
 router.get('/property_sub_category', controller.getPropertySubCategories)
-router.post('/property_sub_category/by_sub_category', controller.getPropertySubCategoryBySubCategory)
+router.get('/property_sub_category/by_sub_category/:id', controller.getPropertySubCategoryBySubCategory)
 
 // --------- product property values CRUD ----------
 router.post('/product_property_values', controller.createProductPropertyValues)
 router.put('/product_property_values/:id', controller.updateProductPropertyValues)
 router.delete('/product_property_values/:id', controller.deleteProductPropertyValues)
 router.get('/product_property_values', controller.getProductPropertyValues)
-router.post('/product_property_values/by_product', controller.getProductPropertyValuesByProduct)
-router.post('/product_property_values/by_property_value', controller.getProductPropertyValuesByPropertyValue)
+router.get('/product_property_values/by_product/:id', controller.getProductPropertyValuesByProduct)
+router.get('/product_property_values/by_property_value/:id', controller.getProductPropertyValuesByPropertyValue)
 
 // --------- product remains CRUD ----------
 router.post('/product_remains', controller.createProductRemains)
