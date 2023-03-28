@@ -52,7 +52,7 @@ class storefrontController {
     async getMainCategories(req, res) {
         await MainCategory.query()
             .then(mainCategories => res.json(mainCategories))
-            .catch(err => res.json(err))
+            .catch(err => res.json(err.message))
     }
 
     // --------- sub category CRUD ----------
@@ -94,7 +94,7 @@ class storefrontController {
     async getSubCategories(req, res) {
         await SubCategory.query()
             .then(subCategories => res.json(subCategories))
-            .catch(err => res.json(err))
+            .catch(err => res.json(err.message))
     }
 
     // --------- product CRUD and more ----------
@@ -134,7 +134,7 @@ class storefrontController {
     async getProducts(req, res) {
         await Product.query()
             .then(product => res.json(product))
-            .catch(err => res.json(err))
+            .catch(err => res.json(err.message))
     }
 
     async getProductById(req, res) {
@@ -149,6 +149,7 @@ class storefrontController {
     }
 
     //хаха а что делать...
+    //апдейт все еще не знаю ЛОЛ БЛИН
     async getFilteredProducts(req, res) {
         const { properties, price, brands } = req.body
 
@@ -316,7 +317,7 @@ class storefrontController {
     async getProperties(req, res) {
         await Property.query()
             .then(properties => res.json(properties))
-            .catch(err => res.json(err))
+            .catch(err => res.json(err.message))
     }
 
     // --------- property value CRUD ----------
@@ -356,7 +357,7 @@ class storefrontController {
     async getPropertyValues(req, res) {
         await PropertyValue.query()
             .then(propertyValue => res.json(propertyValue))
-            .catch(err => res.json(err))
+            .catch(err => res.json(err.message))
     }
 
     async getPropertyValueByProperty(req, res) {
@@ -365,7 +366,56 @@ class storefrontController {
             .select('*')
             .where('property', '=', property)
             .then(propertyValue => res.json(propertyValue))
-            .catch(err => res.json(err))
+            .catch(err => res.json(err.message))
+    }
+
+    // --------- property sub category CRUD ----------
+    async createPropertySubCategory(req, res) {
+        const { property, sub_category } = req.body
+        await PropertySubCategory.query()
+            .insert({ property, sub_category })
+            .then(propSubCat => res.json(propSubCat))
+            .catch(err => res.json(err.message))
+    }
+
+    async updatePropertySubCategory(req, res) {
+        const id = req.params.id
+        const { property, sub_category } = req.body
+        await PropertySubCategory.query()
+            .patchAndFetchById(id, {
+                property, sub_category
+            })
+            .then(propSubCat => {
+                if (propSubCat === null) res.json("Такой записи 'подкатегория-характеристика' нет")
+                else res.json(propSubCat)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async deletePropertySubCategory(req, res) {
+        const id = req.params.id
+        await PropertySubCategory.query()
+            .deleteById(id)
+            .then(amount => {
+                if (amount == 0) res.json("Такой записи 'подкатегория-характеристика' нет")
+                else res.json(`Подкатегория-характеристика с id = ${id} удалена`)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async getPropertySubCategories(req, res) {
+        await PropertySubCategory.query()
+            .then(propSubCat => res.json(propSubCat))
+            .catch(err => res.json(err.message))
+    }
+
+    async getPropertySubCategoryBySubCategory(req, res) {
+        const { sub_category } = req.body
+        await PropertySubCategory.query()
+            .select("*")
+            .where("sub_category", "=", sub_category)
+            .then(prodPropVal => res.json(prodPropVal))
+            .catch(err => res.json(err.message))
     }
 
     // --------- product property values CRUD ----------
@@ -405,7 +455,7 @@ class storefrontController {
     async getProductPropertyValues(req, res) {
         await ProductPropertyValues.query()
             .then(prodPropVal => res.json(prodPropVal))
-            .catch(err => res.json(err))
+            .catch(err => res.json(err.message))
     }
 
     async getProductPropertyValuesByProduct(req, res) {
@@ -423,6 +473,192 @@ class storefrontController {
             .select('*')
             .where('property_value', '=', property_value)
             .then(prodPropVal => res.json(prodPropVal))
+            .catch(err => res.json(err.message))
+    }
+
+    // --------- product remains CRUD ----------
+    async createProductRemains(req, res) {
+        const { product, amount } = req.body
+        await ProductRemains.query()
+            .insert({ product, amount })
+            .then(productRemains => res.json(productRemains))
+            .catch(err => res.json(err.message))
+    }
+
+    async updateProductRemains(req, res) {
+        const id = req.params.id
+        const { product, amount } = req.body
+        await ProductRemains.query()
+            .patchAndFetchById(id, {
+                product, amount
+            })
+            .then(productRemains => {
+                if (productRemains === null) res.json("Такой записи о количестве товара нет")
+                else res.json(productRemains)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async deleteProductRemains(req, res) {
+        const id = req.params.id
+        await ProductRemains.query()
+            .deleteById(id)
+            .then(amount => {
+                if (amount == 0) res.json("Такой записи о количестве товара нет")
+                else res.json(`Запись о количестве товара с id = ${id} удалена`)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async getProductRemainsById(req, res) {
+        const { product } = req.params.id
+        await ProductRemains.query()
+            .findById(product)
+            .then(productRemains => res.json(productRemains))
+            .catch(err => res.json(err.message))
+    }
+
+    // --------- product image CRUD ----------
+    async createProductImage(req, res) {
+        const { product, image_link } = req.body
+        await ProductImage.query()
+            .insert({ product, image_link })
+            .then(productRemains => res.json(productRemains))
+            .catch(err => res.json(err.message))
+    }
+
+    async updateProductImage(req, res) {
+        const id = req.params.id
+        const { product, image_link } = req.body
+        await ProductImage.query()
+            .patchAndFetchById(id, {
+                product, image_link
+            })
+            .then(productImage => {
+                if (productImage === null) res.json("Такого изображения товара нет")
+                else res.json(productImage)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async deleteProductImage(req, res) {
+        const id = req.params.id
+        await ProductImage.query()
+            .deleteById(id)
+            .then(amount => {
+                if (amount == 0) res.json("Такого изображения товара нет")
+                else res.json(`Запись об изображении товара с id = ${id} удалена`)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async getProductImageById(req, res) {
+        const { product } = req.params.id
+        await ProductImage.query()
+            .findById(product)
+            .then(productImage => res.json(productImage))
+            .catch(err => res.json(err.message))
+    }
+
+    // --------- supplier CRUD ----------
+    async createSupplier(req, res) {
+        const { name, email, phone } = req.body
+        await Supplier.query()
+            .insert({ name, email, phone })
+            .then(supplier => res.json(supplier))
+            .catch(err => res.json(err.message))
+    }
+
+    async updateSupplier(req, res) {
+        const id = req.params.id
+        const { name, email, phone } = req.body
+        await Supplier.query()
+            .patchAndFetchById(id, {
+                name, email, phone
+            })
+            .then(supplier => {
+                if (supplier === null) res.json("Такого поставщика нет")
+                else res.json(supplier)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async deleteSupplier(req, res) {
+        const id = req.params.id
+        await Supplier.query()
+            .deleteById(id)
+            .then(amount => {
+                if (amount == 0) res.json("Такого поставщика нет")
+                else res.json(`Поставщик с id = ${id} удалён`)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async getSuppliers(req, res) {
+        await Supplier.query()
+            .then(supplier => res.json(supplier))
+            .catch(err => res.json(err.message))
+    }
+
+    async getSupplierById(req, res) {
+        const id = req.params.id
+        await Supplier.query()
+            .findById(id)
+            .then(supplier => {
+                if (supplier === null) res.json("Такого поставщика нет")
+                else res.json(supplier)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    // --------- manufacturer CRUD ----------
+    async createManufacturer(req, res) {
+        const { name, email } = req.body
+        await Manufacturer.query()
+            .insert({ name, email })
+            .then(manufacturer => res.json(manufacturer))
+            .catch(err => res.json(err.message))
+    }
+
+    async updateManufacturer(req, res) {
+        const id = req.params.id
+        const { name, email } = req.body
+        await Manufacturer.query()
+            .patchAndFetchById(id, {
+                name, email
+            })
+            .then(manufacturer => {
+                if (manufacturer === null) res.json("Такого производителя нет")
+                else res.json(manufacturer)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async deleteManufacturer(req, res) {
+        const id = req.params.id
+        await Manufacturer.query()
+            .deleteById(id)
+            .then(amount => {
+                if (amount == 0) res.json("Такого производителя нет")
+                else res.json(`Производитель с id = ${id} удалён`)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async getManufacturers(req, res) {
+        await Manufacturer.query()
+            .then(manufacturer => res.json(manufacturer))
+            .catch(err => res.json(err.message))
+    }
+
+    async getManufacturerById(req, res) {
+        const id = req.params.id
+        await Manufacturer.query()
+            .findById(id)
+            .then(manufacturer => {
+                if (manufacturer === null) res.json("Такого производителя нет")
+                else res.json(manufacturer)
+            })
             .catch(err => res.json(err.message))
     }
 }
