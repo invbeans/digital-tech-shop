@@ -2,10 +2,16 @@
     <app-navigation></app-navigation>
     <app-footer></app-footer>
     <app-sidebar></app-sidebar>
-    <app-edit-text-item-card title={{card_title}} content={{card_content}}></app-edit-text-item-card>
-    <app-edit-text-item-card title={{card_title}} content={{card_content}}></app-edit-text-item-card>
-    <app-edit-text-item-card title={{card_title}} content={{card_content}}></app-edit-text-item-card>
-    <app-edit-text-item-card title={{card_title}} content={{card_content}}></app-edit-text-item-card>
+    
+    <app-edit-text-item-card 
+    title={{card_title}} 
+    content={{card_content}} 
+    (editSaveClick)="onEditSaveClick($event)"
+    (deleteClick)="onDeleteClick()"
+    ><div *ngIf="isInput"><input type="text" placeholder="Редактировать"></div>
+        <div *ngIf="!isInput">Текст</div>
+    </app-edit-text-item-card>
+    
     <p>Заглушк</p>
     <router-outlet></router-outlet>
 </div>

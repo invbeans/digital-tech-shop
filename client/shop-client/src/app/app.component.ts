@@ -10,4 +10,14 @@ export class AppComponent {
 
   card_title = "Времянка :D";
   card_content = "Заходит улитка в бар";
+
+  isInput = false
+
+  onEditSaveClick(isEdit: boolean){
+    this.isInput = !isEdit;
+  }
+
+  onDeleteClick(){
+    this.card_title = "А карточку удалили!";
+  }
 }

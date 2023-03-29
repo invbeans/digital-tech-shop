@@ -2,10 +2,11 @@
     <header>
         <div class="grid">{{title}}
             <span class="grid buttons-div">
-            <button class="green">Редактировать</button>
-            <button class="red">Удалить</button>
+            <button class="green" 
+            (click)="onEditSaveClick()">{{editSaveButtonName}}</button>
+            <button class="red" (click)="onDeleteClick()">Удалить</button>
             </span>
         </div>
     </header>
-    {{content}}
+    <ng-content></ng-content>
 </article>
