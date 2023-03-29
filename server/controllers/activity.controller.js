@@ -168,10 +168,10 @@ class activityController {
             .catch(err => res.json(err.message))
     }
 
-    async getReturnApplications(req, res){
+    async getReturnApplications(req, res) {
         await ReturnApplication.query()
-        .then(returnApplication => res.json(returnApplication))
-        .catch(err => res.json(err.message))
+            .then(returnApplication => res.json(returnApplication))
+            .catch(err => res.json(err.message))
     }
 
     // --------- return product CRUD ----------
