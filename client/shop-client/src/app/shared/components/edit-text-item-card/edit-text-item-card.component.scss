@@ -1,0 +1,27 @@
+.grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 5vh;
+}
+
+button {
+    width: fit-content;
+    font-size: medium;
+}
+
+
+.buttons-div {
+    padding-bottom: 10px;
+}
+
+.green {
+    background-color: #4caf50;
+    border: none;
+}
+
+.red {
+    background-color: #af4c4c;
+    border: none;
+}

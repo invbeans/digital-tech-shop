@@ -4,6 +4,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { FooterComponent } from './components/footer/footer.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarService } from './services/show-sidebar/sidebar.service';
+import { EditTextItemCardComponent } from './components/edit-text-item-card/edit-text-item-card.component';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { SidebarService } from './services/show-sidebar/sidebar.service';
     declarations: [
       NavigationComponent,
       FooterComponent,
-      SidebarComponent
+      SidebarComponent,
+      EditTextItemCardComponent
     ],
     providers: [
       SidebarService
@@ -20,7 +22,8 @@ import { SidebarService } from './services/show-sidebar/sidebar.service';
     exports: [
       NavigationComponent,
       FooterComponent,
-      SidebarComponent
+      SidebarComponent,
+      EditTextItemCardComponent
     ]
   })
   export class SharedModule { }
