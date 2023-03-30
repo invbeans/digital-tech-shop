@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'shop-client';
 
-  card_title = "Времянка :D";
-  card_content = "Заходит улитка в бар";
+  card_title = "Заголовок";
+  card_content = "Какой-то текст";
 
   isInput = false
 

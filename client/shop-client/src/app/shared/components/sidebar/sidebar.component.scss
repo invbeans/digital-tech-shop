@@ -4,10 +4,23 @@
     width: 20vw;
     display: flex;
     flex-direction: column;
-    background-color: #263526;
+    background-color: #153915;
     height: 94vh;
 }
 
 aside {
-    padding-left: 5px;
+    padding-left: 1vw;
+}
+
+li {
+    padding-top: 1vh;
+    padding-bottom: 3vh;
+}
+
+a {
+    color: #d3d3d3;
+}
+
+a:hover {
+    color: #8d8c8c;
 }

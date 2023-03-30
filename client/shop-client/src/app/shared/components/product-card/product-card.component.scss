@@ -1,0 +1,36 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #183719;
+    height: fit-content;
+    min-height: 36vh;
+    align-items: center;
+}
+
+.wrapper p {
+    font-size: medium;
+}
+
+img {
+    margin-top: 1vh;
+    height: 25vh;
+}
+
+.small-font-info{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2vw;
+    width: 100%;
+}
+
+.price {
+    justify-self: start;
+    padding-left: 0.5vw;
+}
+
+.rate {
+    justify-self: end;
+    padding-right: 0.5vw;
+}
+
+
