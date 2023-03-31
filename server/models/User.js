@@ -1,8 +1,32 @@
-const { Model } = require('objection');
+const { Model, ValidationError } = require('objection');
 
 class User extends Model {
   static get tableName() {
     return 'user'
+  }
+
+  $beforeInsert() {
+    let onlyRussian = new RegExp('^[А-Яа-яёЁ]+$')
+    if (onlyRussian.test(this.surname) === false) {
+      throw new ValidationError({
+        message: 'Используйте символы кириллицы для вашей фамилии'
+      })
+    }
+    if (onlyRussian.test(this.lastname) === false) {
+      throw new ValidationError({
+        message: 'Используйте символы кириллицы для вашего отчества'
+      })
+    }
+  }
+
+  static get jsonSchema() {
+    return {
+      type: 'object',
+      properties: {
+        lastname: { type: 'string' },
+        surname: { type: 'string' }
+      }
+    }
   }
 
   static get relationMappings() {

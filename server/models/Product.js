@@ -1,8 +1,31 @@
-const { Model } = require('objection');
+const { Model, ValidationError } = require('objection');
 
 class Product extends Model {
     static get tableName() {
         return 'product'
+    }
+
+    $beforeInsert() {
+        if(this.price <= 0){
+            throw new ValidationError({
+                message: 'Неккоректная цена товара'
+            })
+        }
+        if(this.rating < 0){
+            throw new ValidationError({
+                message: 'Неккоректный рейтинг товара'
+            })
+        }
+    }
+
+    static get jsonSchema() {
+        return{
+            type: 'object',
+            properties: {
+                price: {type: 'double'},
+                rating: {type: 'double'}
+            }
+        }
     }
 
     static get relationMappings() {

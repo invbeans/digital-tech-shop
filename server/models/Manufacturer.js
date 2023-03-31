@@ -1,8 +1,17 @@
-const { Model } = require('objection');
+const { Model, ValidationError } = require('objection')
+const { validate } = require('email-validator')
 
 class Manufacturer extends Model {
     static get tableName() {
         return 'manufacturer'
+    }
+
+    $beforeInsert() {
+        if(!validate(this.email)){
+            throw new ValidationError({
+                message: 'Неправильно введена электронная почта'
+            })
+        }
     }
 
     static get relationMappings() {

@@ -1,8 +1,25 @@
-const { Model } = require('objection');
+const { Model, ValidationError } = require('objection');
 
 class ProductRemains extends Model {
     static get tableName() {
         return 'product_remains'
+    }
+
+    $beforeInsert() {
+        if (this.amount < 0) {
+            throw new ValidationError({
+                message: 'Неккоректное количество товара'
+            })
+        }
+    }
+
+    static get jsonSchema() {
+        return {
+            type: 'object',
+            properties: {
+                amount: { type: 'integer' }
+            }
+        }
     }
 
     static get relationMappings() {

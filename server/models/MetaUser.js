@@ -1,6 +1,6 @@
-const { Model, objection } = require('objection')
+const { Model, ValidationError } = require('objection')
 const { phone } = require('phone')
-const { validator } = require('email-validator')
+const { validate } = require('email-validator')
 
 class MetaUser extends Model {
     static get tableName() {
@@ -8,13 +8,13 @@ class MetaUser extends Model {
     }
     $beforeInsert() {
         if(phone(this.phone_number, {country: 'RUS'}).isValid === false){
-            throw new objection.ValidationError({ 
+            throw new ValidationError({ 
                 message: 'Неправильно введён номер телефона'
             })
         }
         else this.phone_number = phone(this.phone_number, {country: 'RUS'}).phoneNumber
-        if(!validator.validate(this.email)){
-            throw new objection.ValidationError({
+        if(!validate(this.email)){
+            throw new ValidationError({
                 message: 'Неправильно введена электронная почта'
             })
         }
@@ -24,8 +24,8 @@ class MetaUser extends Model {
         return{
             type: 'object',
             properties: {
-                phone_number: {type: 'string', minLength: 20, maxLength: 30},
-                birthday_date: {type: 'string'},
+                phone_number: {type: 'string'},
+                birthday_date: {type: 'date'},
                 email: {type: 'string'}
             }
         }
