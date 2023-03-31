@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable("order", table => {
         table.increments("id").primary()
-        table.integer("user").notNullable().references("id").inTable("user")
+        table.integer("user").notNullable().references("id").inTable("user").onUpdate("CASCADE").onDelete("CASCADE")
         table.dateTime("date").notNullable()
       })
 };

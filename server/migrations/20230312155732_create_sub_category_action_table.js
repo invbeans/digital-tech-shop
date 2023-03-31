@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
     return knex.schema.createTable("sub_category_action", table => {
-        table.integer("action").primary().notNullable().references("id").inTable("action")
+        table.integer("action").primary().notNullable().references("id").inTable("action").onUpdate("CASCADE").onDelete("CASCADE")
         table.integer("sub_category").notNullable()
       })
 };

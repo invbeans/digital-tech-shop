@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
     return knex.schema.createTable("product_remains", table => {
-        table.integer("product").primary().notNullable().references("id").inTable("product")
+        table.integer("product").primary().notNullable().references("id").inTable("product").onUpdate("CASCADE").onDelete("CASCADE")
         table.integer("amount").notNullable()
       })
 };

@@ -6,7 +6,7 @@ exports.up = function(knex) {
     return knex.schema.createTable("shipping_service", table => {
         table.increments("id").primary()
         table.string("name").notNullable()
-        table.integer("shipping_method").notNullable().references("id").inTable("shipping_method")
+        table.integer("shipping_method").notNullable().references("id").inTable("shipping_method").onUpdate("CASCADE").onDelete("CASCADE")
         table.double("price").notNullable().checkPositive()
       })
 };

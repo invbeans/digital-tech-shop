@@ -5,8 +5,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable("basket_product", table => {
         table.increments("id").primary()
-        table.integer("basket").notNullable().references("user").inTable("basket")
-        table.integer("product").notNullable().references("id").inTable("product")
+        table.integer("basket").notNullable().references("user").inTable("basket").onUpdate("CASCADE").onDelete("CASCADE")
+        table.integer("product").notNullable().references("id").inTable("product").onUpdate("CASCADE").onDelete("CASCADE")
       })
 };
 

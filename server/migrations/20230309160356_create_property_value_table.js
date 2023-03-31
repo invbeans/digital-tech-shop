@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable("property_value", table => {
         table.increments("id").primary()
-        table.integer("property").notNullable().references("id").inTable("property")
+        table.integer("property").notNullable().references("id").inTable("property").onUpdate("CASCADE").onDelete("CASCADE")
         table.string("value").notNullable()
       })
 };
