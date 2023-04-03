@@ -1,0 +1,33 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #183719; 
+}
+
+.description {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2vw;
+    width: 100%;
+}
+
+p {
+    font-size: medium;
+}
+
+p .flex-start {
+    justify-self: start;
+}
+
+p .flex-end {
+    justify-self: end;
+}
+
+.name {
+    justify-content: center;
+}
+
+img {
+    height: 30vh;
+}
