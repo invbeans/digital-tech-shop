@@ -17,6 +17,7 @@ import { ReturnModule } from './return/return.module';
 import { SharedModule } from './shared/shared.module';
 import { SubCatModule } from './sub-cat/sub-cat.module';
 import { TrackOrderModule } from './track-order/track-order.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { TrackOrderModule } from './track-order/track-order.module';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     SharedModule,

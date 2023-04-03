@@ -64,6 +64,14 @@ class discountController {
             .catch(err => res.json(err.message))
     }
 
+    async getLastAction(req, res) {
+        await Action.query()
+            .orderBy('id', 'desc')
+            .first("*")
+            .then(action => res.json(action))
+            .catch(err => res.json(err.message))
+    }
+
     // --------- action type CRUD ----------
     async createActionType(req, res) {
         const { name } = req.body

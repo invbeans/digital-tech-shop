@@ -7,6 +7,7 @@ router.post('/action', controller.createAction)
 router.put('/action/:id', controller.updateAction)
 router.delete('/action/:id', controller.deleteAction)
 router.get('/action/by_type/:id', controller.getActionsByActionType)
+router.get('/action/last', controller.getLastAction)
 router.get('/action/:id', controller.getActionById)
 router.get('/action', controller.getActions)
 

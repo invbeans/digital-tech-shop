@@ -18,10 +18,12 @@ p {
 
 p .flex-start {
     justify-self: start;
+    padding-left: 0.5vw;
 }
 
 p .flex-end {
     justify-self: end;
+    padding-right: 0.5vw;
 }
 
 .name {
