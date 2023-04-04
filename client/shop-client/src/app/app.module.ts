@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { BrandModule } from './brand/brand.module';
 import { ContentPageModule } from './content-page/content-page.module';
 import { DiscountsModule } from './discounts/discounts.module';
-import { MainCatModule } from './main-cat/main-cat.module';
-import { MainModule } from './main/main.module';
+//import { MainCatModule } from './main-cat/main-cat.module';
+//import { MainModule } from './main/main.module';
 import { MakeOrderModule } from './make-order/make-order.module';
 import { ManagerPageModule } from './manager-page/manager-page.module';
 import { ProductModule } from './product/product.module';
@@ -29,8 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     SharedModule,
-    MainModule,
-    MainCatModule,
+    //MainModule,
+    //MainCatModule,
     SubCatModule,
     ProductModule,
     DiscountsModule,
