@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from 'src/app/services/main-service/main.service';
 import { Action } from 'src/app/shared/models/action';
+import { MainCategory } from 'src/app/shared/models/main-category';
+import { Product } from 'src/app/shared/models/product';
 
 @Component({
   selector: 'app-main-page',
@@ -10,9 +12,13 @@ import { Action } from 'src/app/shared/models/action';
 })
 export class MainPageComponent implements OnInit {
   lastAction: Action | null = null;
+  bestProducts: Product[] = [];
+  mainCategories: MainCategory[] = [];
+
   constructor(private mainService: MainService) { }
   ngOnInit(): void {
     this.getLastAction();
+    this.getMainCategories();
   }
 
   getLastAction() {
@@ -28,5 +34,12 @@ export class MainPageComponent implements OnInit {
           this.lastAction.dateEnd = tempEnd
         }
       })
+  }
+
+  getMainCategories() {
+    this.mainService.getAllCategories()
+    .subscribe((data: any) => {
+      this.mainCategories = data
+    })
   }
 }

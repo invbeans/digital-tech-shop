@@ -9,6 +9,8 @@ import { ProductContainerComponent } from './components/product-container/produc
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { DiscountsFeedComponent } from './components/discounts-feed/discounts-feed.component';
 import { DiscountsFeedItemComponent } from './components/discounts-feed-item/discounts-feed-item.component';
+import { CategoryItemComponent } from './components/category-item/category-item.component';
+import { CategoriesFeedComponent } from './components/categories-feed/categories-feed.component';
 
 @NgModule({
     imports: [
@@ -22,7 +24,9 @@ import { DiscountsFeedItemComponent } from './components/discounts-feed-item/dis
       ProductContainerComponent,
       ProductCardComponent,
       DiscountsFeedComponent,
-      DiscountsFeedItemComponent
+      DiscountsFeedItemComponent,
+      CategoriesFeedComponent,
+      CategoryItemComponent
     ],
     providers: [
       SidebarService
@@ -35,7 +39,9 @@ import { DiscountsFeedItemComponent } from './components/discounts-feed-item/dis
       ProductCardComponent,
       ProductContainerComponent,
       DiscountsFeedComponent,
-      DiscountsFeedItemComponent
+      DiscountsFeedItemComponent,
+      CategoriesFeedComponent,
+      CategoryItemComponent
     ]
   })
   export class SharedModule { }
