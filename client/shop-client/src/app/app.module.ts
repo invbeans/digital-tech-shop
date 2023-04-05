@@ -15,7 +15,7 @@ import { ManagerPageModule } from './manager-page/manager-page.module';
 import { ProductModule } from './product/product.module';
 import { ReturnModule } from './return/return.module';
 import { SharedModule } from './shared/shared.module';
-import { SubCatModule } from './sub-cat/sub-cat.module';
+//import { SubCatModule } from './sub-cat/sub-cat.module';
 import { TrackOrderModule } from './track-order/track-order.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -31,7 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     //MainModule,
     //MainCatModule,
-    SubCatModule,
+    //SubCatModule,
     ProductModule,
     DiscountsModule,
     BrandModule,

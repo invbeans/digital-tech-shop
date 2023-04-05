@@ -12,6 +12,7 @@ router.get('/main_category', controller.getMainCategories)
 router.post('/sub_category', controller.createSubCategory)
 router.put('/sub_category/:id', controller.updateSubCategory)
 router.delete('/sub_category/:id', controller.deleteSubCategory)
+router.get('/sub_category/by_main_category/:id', controller.getSubCategoriesByMainCategory)
 router.get('/sub_category', controller.getSubCategories)
 
 // --------- product CRUD and more ----------

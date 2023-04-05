@@ -11,10 +11,15 @@ import { DiscountsFeedComponent } from './components/discounts-feed/discounts-fe
 import { DiscountsFeedItemComponent } from './components/discounts-feed-item/discounts-feed-item.component';
 import { CategoryItemComponent } from './components/category-item/category-item.component';
 import { CategoriesFeedComponent } from './components/categories-feed/categories-feed.component';
+import { AppRoutingModule } from '../app-routing.module';
+import { RouterModule } from '@angular/router';
+import { SubCategoryFeedComponent } from './components/sub-category-feed/sub-category-feed.component';
+import { SubCategoryItemComponent } from './components/sub-category-item/sub-category-item.component';
 
 @NgModule({
     imports: [
       CommonModule,
+      RouterModule
     ],
     declarations: [
       NavigationComponent,
@@ -26,7 +31,9 @@ import { CategoriesFeedComponent } from './components/categories-feed/categories
       DiscountsFeedComponent,
       DiscountsFeedItemComponent,
       CategoriesFeedComponent,
-      CategoryItemComponent
+      CategoryItemComponent,
+      SubCategoryFeedComponent,
+      SubCategoryItemComponent
     ],
     providers: [
       SidebarService
@@ -41,7 +48,9 @@ import { CategoriesFeedComponent } from './components/categories-feed/categories
       DiscountsFeedComponent,
       DiscountsFeedItemComponent,
       CategoriesFeedComponent,
-      CategoryItemComponent
+      CategoryItemComponent,
+      SubCategoryFeedComponent,
+      SubCategoryItemComponent
     ]
   })
   export class SharedModule { }

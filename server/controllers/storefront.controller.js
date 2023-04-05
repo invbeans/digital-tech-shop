@@ -97,6 +97,15 @@ class storefrontController {
             .catch(err => res.json(err.message))
     }
 
+    async getSubCategoriesByMainCategory(req, res) {
+        const main_category = req.params.id
+        await SubCategory.query()
+            .select("*")
+            .where("main_category", "=", main_category)
+            .then(subCategories => res.json(subCategories))
+            .catch(err => res.json(err.message))
+    }
+
     // --------- product CRUD and more ----------
     async createProduct(req, res) {
         const { name, sub_category, price, manufacturer, supplier } = req.body

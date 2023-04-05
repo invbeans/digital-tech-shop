@@ -57,6 +57,20 @@ exports.seed = async function(knex) {
     {name: "Brand"},
     {name: "Double"}
   ])
+
+  await knex('main_category').del()
+  await knex('main_category').insert([
+    {name: "Ноутбуки"},
+    {name: "Смартфоны"},
+    {name: "Компьютеры"}
+  ])
+
+  await knex('sub_category').del()
+  await knex('sub_category').insert([
+    {main_category: 1, name: "Ноутбуки"},
+    {main_category: 1, name: "Игровые ноутбуки"},
+    {main_category: 1, name: "Аксессуары для ноутбуков"}
+  ])
   /*await knex('meta_user').del()
   await knex('meta_user').insert([
     {user: 1, role: 1, phone_number: '234', hashed_password: 'asdaf', birthday_date: '2012-03-12', email: 'aboba'}

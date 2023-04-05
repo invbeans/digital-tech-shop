@@ -26,7 +26,7 @@ export class MainPageComponent implements OnInit {
       .subscribe((data: any) => {
         this.lastAction = data
         if (this.lastAction === null) {
-          this.lastAction = new Action(null, "Пока нет предложений", null, null, 0, "img", 0);
+          this.lastAction = new Action(null, "Пока нет предложений", null, null, 0, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDVuaQbojYLTlYezNW7HPVIYO6QiLZsd8RFP86jMuySoBlJ369aVAK0Mtzo7La2hyVcxU&usqp=CAU", 0);
         } else {
           let tempBegin = new Date(data.date_begin)
           let tempEnd = new Date(data.date_end)
