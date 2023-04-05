@@ -22,8 +22,8 @@ class Product extends Model {
         return{
             type: 'object',
             properties: {
-                price: {type: 'double'},
-                rating: {type: 'double'}
+                price: {type: 'number'}, //везде где дабл расставить намбер
+                rating: {type: 'number'}
             }
         }
     }
@@ -123,7 +123,7 @@ class Product extends Model {
                     to: 'order_product.product'
                 }
             },
-            sub_category: {
+            sub_category_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: SubCategory,
                 join: {
@@ -131,7 +131,7 @@ class Product extends Model {
                     to: 'sub_category.id'
                 }
             },
-            manufacturer: {
+            manufacturer_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Manufacturer,
                 join: {
@@ -139,7 +139,7 @@ class Product extends Model {
                     to: 'manufacturer.id'
                 }
             },
-            supplier: {
+            supplier_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Supplier,
                 join: {

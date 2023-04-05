@@ -20,6 +20,7 @@ router.get('/product/filter', controller.getFilteredProducts)
 router.post('/product', controller.createProduct)
 router.put('/product/:id', controller.updateProduct)
 router.delete('/product/:id', controller.deleteProduct)
+router.get('/product/by_sub_category/:id', controller.getProductsBySubCategory)
 router.get('/product/:id', controller.getProductById)
 router.get('/product', controller.getProducts)
 

@@ -108,19 +108,19 @@ class storefrontController {
 
     // --------- product CRUD and more ----------
     async createProduct(req, res) {
-        const { name, sub_category, price, manufacturer, supplier } = req.body
+        const { name, sub_category, price, rating, manufacturer, supplier } = req.body
         await Product.query()
-            .insert({ name, sub_category, price, manufacturer, supplier })
+            .insert({ name, sub_category, price, rating, manufacturer, supplier })
             .then(product => res.json(product))
             .catch(err => res.json(err.message))
     }
 
     async updateProduct(req, res) {
         const id = req.params.id
-        const { name, sub_category, price, manufacturer, supplier } = req.body
+        const { name, sub_category, price, rating, manufacturer, supplier } = req.body
         await Product.query()
             .patchAndFetchById(id, {
-                name, sub_category, price, manufacturer, supplier
+                name, sub_category, price, rating, manufacturer, supplier
             })
             .then(product => {
                 if (product === null) res.json("Такого товара нет")
@@ -154,6 +154,15 @@ class storefrontController {
                 if (product === null) res.json("Такого товара нет")
                 else res.json(product)
             })
+            .catch(err => res.json(err.message))
+    }
+
+    async getProductsBySubCategory(req, res) {
+        const sub_category = req.params.id
+        await Product.query()
+            .select("*")
+            .where("sub_category", "=", sub_category)
+            .then(product => res.json(product))
             .catch(err => res.json(err.message))
     }
 

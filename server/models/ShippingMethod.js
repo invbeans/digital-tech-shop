@@ -11,7 +11,7 @@ class ShippingMethod extends Model {
         return {
             shipping_service: {
                 relation: Model.HasManyRelation,
-                modelClass: Order,
+                modelClass: ShippingService,
                 join: {
                     from: 'shipping_method.id',
                     to: 'shipping_service.shipping_method'
