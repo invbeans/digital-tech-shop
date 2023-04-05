@@ -13,6 +13,8 @@ export class AppComponent {
 
   isInput = false
 
+  constructor(){}
+
   onEditSaveClick(isEdit: boolean){
     this.isInput = !isEdit;
   }

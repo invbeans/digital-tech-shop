@@ -1,0 +1,3 @@
+<app-product-container>
+    <app-product-card *ngFor="let prod of products; let index = index" product_name={{products[index].name}} product_price={{products[index].price}} product_rate={{products[index].rating}}></app-product-card>
+</app-product-container>

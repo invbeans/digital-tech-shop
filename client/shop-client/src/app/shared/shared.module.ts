@@ -15,11 +15,13 @@ import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { SubCategoryFeedComponent } from './components/sub-category-feed/sub-category-feed.component';
 import { SubCategoryItemComponent } from './components/sub-category-item/sub-category-item.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
       CommonModule,
-      RouterModule
+      RouterModule,
+      FormsModule
     ],
     declarations: [
       NavigationComponent,

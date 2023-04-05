@@ -8,7 +8,8 @@ const routes: Routes = [
   //{path: '', component: MainPageComponent}
   {path: '', loadChildren: () => import('./main/main.module').then(m => m.MainModule)},
   {path: 'main_categories', loadChildren: () => import('./main-cat/main-cat.module').then(m => m.MainCatModule)},
-  {path: 'main_category/:id', loadChildren: () => import('./sub-cat/sub-cat.module').then(m => m.SubCatModule)}
+  {path: 'main_category/:id', loadChildren: () => import('./sub-cat/sub-cat.module').then(m => m.SubCatModule)},
+  {path: 'search_products', loadChildren: () => import('./search-products/search-products.module').then(m => m.SearchProductsModule)}
 
 ];
 

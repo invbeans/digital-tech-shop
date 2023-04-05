@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AdminPageModule } from './admin-page/admin-page.module';
 
@@ -27,7 +26,6 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule,
     SharedModule,
     //MainModule,
     //MainCatModule,

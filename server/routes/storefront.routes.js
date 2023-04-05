@@ -17,6 +17,7 @@ router.get('/sub_category', controller.getSubCategories)
 
 // --------- product CRUD and more ----------
 router.get('/product/filter', controller.getFilteredProducts)
+router.post('/product/search', controller.getProductsBySearch)
 router.post('/product', controller.createProduct)
 router.put('/product/:id', controller.updateProduct)
 router.delete('/product/:id', controller.deleteProduct)

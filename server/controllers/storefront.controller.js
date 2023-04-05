@@ -166,6 +166,21 @@ class storefrontController {
             .catch(err => res.json(err.message))
     }
 
+    async getProductsBySearch(req, res) {
+        let { input } = req.body
+        input = String(input)
+
+        await Product.query()
+            .select("*")
+            .where((query) => {
+                input.split(' ').forEach(word => {
+                    query.andWhere('name', 'ilike', `%${word}%`)
+                })
+            })
+            .then(product => res.json(product))
+            .catch(err => res.json(err.message))
+    }
+
     //хаха а что делать...
     //апдейт все еще не знаю ЛОЛ БЛИН
     async getFilteredProducts(req, res) {

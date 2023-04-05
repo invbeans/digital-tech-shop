@@ -4,7 +4,8 @@
         <a><li>Корзина</li></a>
     </ul>
     <ul>
-        <li><input class="input" placeholder="Поиск"></li>
+        <li><input class="input" placeholder="Поиск" [(ngModel)]="inputString"></li>
+        <li><button (click)="clickSearch(inputString)">Найти</button></li>
     </ul>
     <ul>
         <a><li>Вход/регистрация</li></a>
