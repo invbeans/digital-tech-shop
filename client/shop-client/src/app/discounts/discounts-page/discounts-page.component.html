@@ -1,0 +1,36 @@
+<app-discounts-feed *ngIf="showSubCategory" actionType="Акции раздела:">
+    <app-discounts-feed-item 
+        *ngFor="let action of subCategoryActions; let index = index"
+        actionName={{subCategoryActions[index].name}}
+        dateStart={{subCategoryActions[index].dateBegin}}
+        dateEnd={{subCategoryActions[index].dateEnd}}
+        image={{subCategoryActions[index].image}}
+    ></app-discounts-feed-item>
+</app-discounts-feed>
+<app-discounts-feed *ngIf="showHoliday" actionType="Праздничные акции:">
+    <app-discounts-feed-item 
+        *ngFor="let action of holidayActions; let index = index"
+        actionName={{holidayActions[index].name}}
+        dateStart={{holidayActions[index].dateBegin}}
+        dateEnd={{holidayActions[index].dateEnd}}
+        image={{holidayActions[index].image}}
+    ></app-discounts-feed-item>
+</app-discounts-feed>
+<app-discounts-feed *ngIf="showBrand" actionType="Акции бренда:">
+    <app-discounts-feed-item 
+        *ngFor="let action of brandActions; let index = index"
+        actionName={{brandActions[index].name}}
+        dateStart={{brandActions[index].dateBegin}}
+        dateEnd={{brandActions[index].dateEnd}}
+        image={{brandActions[index].image}}
+    ></app-discounts-feed-item>
+</app-discounts-feed>
+<app-discounts-feed *ngIf="showDouble" actionType="Акции 1+1:">
+    <app-discounts-feed-item 
+        *ngFor="let action of doubleActions; let index = index"
+        actionName={{doubleActions[index].name}}
+        dateStart={{doubleActions[index].dateBegin}}
+        dateEnd={{doubleActions[index].dateEnd}}
+        image={{doubleActions[index].image}}
+    ></app-discounts-feed-item>
+</app-discounts-feed>
