@@ -5,6 +5,10 @@ class UserProfile extends Model {
         return 'user_profile'
     }
 
+    static get idColumn() {
+        return 'user';
+    }
+
     $beforeInsert() {
         let onlyRussian = new RegExp('^[А-Яа-яёЁ]+$')
         if (onlyRussian.test(this.firstname) === false) {
@@ -27,7 +31,7 @@ class UserProfile extends Model {
         const User = require('./User')
 
         return {
-            user: {
+            user_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {

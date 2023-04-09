@@ -4,16 +4,21 @@ const { validate } = require('email-validator')
 
 class MetaUser extends Model {
     static get tableName() {
-      return 'meta_user'
+        return 'meta_user'
     }
+
+    static get idColumn() {
+        return 'user';
+    }
+
     $beforeInsert() {
-        if(phone(this.phone_number, {country: 'RUS'}).isValid === false){
-            throw new ValidationError({ 
+        if (phone(this.phone_number, { country: 'RUS' }).isValid === false) {
+            throw new ValidationError({
                 message: 'Неправильно введён номер телефона'
             })
         }
-        else this.phone_number = phone(this.phone_number, {country: 'RUS'}).phoneNumber
-        if(!validate(this.email)){
+        else this.phone_number = phone(this.phone_number, { country: 'RUS' }).phoneNumber
+        if (!validate(this.email)) {
             throw new ValidationError({
                 message: 'Неправильно введена электронная почта'
             })
@@ -21,12 +26,12 @@ class MetaUser extends Model {
     }
 
     static get jsonSchema() {
-        return{
+        return {
             type: 'object',
             properties: {
-                phone_number: {type: 'string'},
-                birthday_date: {type: 'date'},
-                email: {type: 'string'}
+                phone_number: { type: 'string' },
+                birthday_date: { type: 'string' },
+                email: { type: 'string' }
             }
         }
     }
@@ -35,7 +40,7 @@ class MetaUser extends Model {
         const Role = require('./Role')
         const User = require('./User')
         return {
-            user: {
+            user_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {
@@ -43,7 +48,7 @@ class MetaUser extends Model {
                     to: 'user.id'
                 }
             },
-            role: {
+            role_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Role,
                 join: {
@@ -53,6 +58,6 @@ class MetaUser extends Model {
             }
         }
     }
-  }
-  
-  module.exports = MetaUser
+}
+
+module.exports = MetaUser

@@ -12,6 +12,7 @@ const orderRouter = require('./routes/order.routes')
 const shippingRouter = require('./routes/shipping.routes')
 const activityRouter = require('./routes/activity.routes')
 const discountRouter = require('./routes/discount.routes')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 const PORT = 3000
@@ -24,6 +25,7 @@ let corsOptions = {
 };
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
+app.use(cookieParser())
 app.use("/user", userRouter)
 app.use("/storefront", storefrontRouter)
 app.use("/order", orderRouter)

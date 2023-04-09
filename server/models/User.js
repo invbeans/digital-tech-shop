@@ -38,6 +38,7 @@ class User extends Model {
     const UserActivity = require('./UserActivity')
     const Answer = require('./Answer')
     const Review = require('./Review')
+    const Token = require('./Token')
 
     return {
       meta_user: {
@@ -54,6 +55,14 @@ class User extends Model {
         join: {
           from: 'user.id',
           to: 'user_profile.user'
+        }
+      },
+      token: {
+        relation: Model.HasOneRelation,
+        modelClass: Token,
+        join: {
+          from: 'user.id',
+          to: 'token.user'
         }
       },
       question: {
