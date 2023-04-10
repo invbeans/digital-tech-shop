@@ -4,7 +4,6 @@ const UserProfile = require('../models/UserProfile')
 const bcrypt = require('bcrypt')
 const tokenService = require('../service/token.service')
 const UserDto = require('../models/UserDto')
-const {validationResult} = require('express-validator')
 
 class userController {
     async saveUser(req, res) {
@@ -57,19 +56,14 @@ class userController {
             .catch(err => res.json(err.message))
     }
 
-    async registration(req, res, next) { 
-        const errors = validationResult(req)
-        if(!errors.isEmpty()) {
-            res.json('Длина пароля от 5 до 35 символов')
-            return
-        } 
+    async registration(req, res) {
         const { firstname, points, username, surname, lastname, email, phone_number, birthday_date, password } = req.body
         await MetaUser.query()
             .select("*")
             .where("email", "=", email)
             .then(async candidate => {
                 if (candidate.length > 0) {
-                    res.json(`Пользователь с почтой: ${email} уже существует`)
+                    throw new Error(`Пользователь с почтой: ${email} уже существует`)
                 }
                 let hashed_password = await bcrypt.hash(password, 3)
                 let id = 0
@@ -86,16 +80,35 @@ class userController {
                     .insert({ user, firstname, points })
                     .then(user => { })
                 const userDto = new UserDto(id, email) //payload
-                const tokens = tokenService.generateToken({...userDto})
+                const tokens = tokenService.generateToken({ ...userDto })
                 await tokenService.saveToken(id, tokens.refreshToken)
-                res.cookie('refreshToken', tokens.refreshToken, {maxAge: 40*24*60*60*1000, httpOnly: true})
-                res.json({...tokens, userDto})
+                res.cookie('refreshToken', tokens.refreshToken, { maxAge: 40 * 24 * 60 * 60 * 1000, httpOnly: true })
+                res.json({ ...tokens, userDto })
+
             })
             .catch(err => res.json(err.message))
     }
 
     async login(req, res) {
+        const { email, password } = req.body
+        await MetaUser.query()
+            .select("*")
+            .where("email", "=", email)
+            .then(async candidate => {
+                if (candidate.length == 0) {
+                    throw new Error(`Пользователя с почтой: ${email} не существует`)
+                }
+                const passwordEquals = await bcrypt.compare(password, candidate[0].hashed_password)
+                if (passwordEquals == false) {
+                    throw new Error('Пароль указан неверно')
+                }
+                const userDto = new UserDto(candidate[0].user, email) //payload
+                const tokens = tokenService.generateToken({ ...userDto })
+                await tokenService.saveToken(candidate[0].user, tokens.refreshToken)
+                res.cookie('refreshToken', tokens.refreshToken, { maxAge: 40 * 24 * 60 * 60 * 1000, httpOnly: true })
+                res.json({ ...tokens, userDto })
 
+            }).catch(err => res.json(err.message))
     }
 
     async logout(req, res) {

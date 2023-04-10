@@ -29,9 +29,11 @@ class MetaUser extends Model {
         return {
             type: 'object',
             properties: {
+                user: {type: 'number'},
                 phone_number: { type: 'string' },
                 birthday_date: { type: 'string' },
-                email: { type: 'string' }
+                email: { type: 'string' },
+                hashed_password: { type: 'string' }
             }
         }
     }

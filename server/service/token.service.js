@@ -15,7 +15,7 @@ class TokenService {
         .then(async token => {
             if(token.length > 0){
                 await Token.query()
-                .patchAndFetchById(userId, {refreshToken})
+                .patchAndFetchById(userId, {refresh_token: refreshToken})
                 .then(updatedToken => {
                     return updatedToken
                 })

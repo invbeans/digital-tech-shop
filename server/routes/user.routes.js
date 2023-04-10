@@ -1,12 +1,9 @@
 const Router = require('express')
 const router = new Router()
 const controller = require('../controllers/user.controller')
-const {body} = require('express-validator')
 
-router.post('/registration', 
-    body('password').isLength({min: 5, max: 35}),
-    controller.registration)
-router.post('/login')
+router.post('/registration', controller.registration)
+router.post('/login', controller.login)
 router.post('/logout')
 router.get('/refresh')
 
