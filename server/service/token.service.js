@@ -21,7 +21,7 @@ class TokenService {
                 })
             } else {
                 Token.query()
-                .insert({user: userId, refreshToken})
+                .insert({user: userId, refresh_token: refreshToken})
                 .then(token => {
                     return token
                 })

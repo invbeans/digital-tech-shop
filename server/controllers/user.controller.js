@@ -2,6 +2,9 @@ const User = require('../models/User')
 const MetaUser = require('../models/MetaUser')
 const UserProfile = require('../models/UserProfile')
 const bcrypt = require('bcrypt')
+const tokenService = require('../service/token.service')
+const UserDto = require('../models/UserDto')
+const {validationResult} = require('express-validator')
 
 class userController {
     async saveUser(req, res) {
@@ -54,7 +57,12 @@ class userController {
             .catch(err => res.json(err.message))
     }
 
-    async registration(req, res) {
+    async registration(req, res, next) { 
+        const errors = validationResult(req)
+        if(!errors.isEmpty()) {
+            res.json('Длина пароля от 5 до 35 символов')
+            return
+        } 
         const { firstname, points, username, surname, lastname, email, phone_number, birthday_date, password } = req.body
         await MetaUser.query()
             .select("*")
@@ -77,7 +85,11 @@ class userController {
                 await UserProfile.query()
                     .insert({ user, firstname, points })
                     .then(user => { })
-                res.json("Успешная регистрация!")
+                const userDto = new UserDto(id, email) //payload
+                const tokens = tokenService.generateToken({...userDto})
+                await tokenService.saveToken(id, tokens.refreshToken)
+                res.cookie('refreshToken', tokens.refreshToken, {maxAge: 40*24*60*60*1000, httpOnly: true})
+                res.json({...tokens, userDto})
             })
             .catch(err => res.json(err.message))
     }
@@ -87,10 +99,6 @@ class userController {
     }
 
     async logout(req, res) {
-
-    }
-
-    async activate(req, res) {
 
     }
 
