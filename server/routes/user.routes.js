@@ -4,8 +4,8 @@ const controller = require('../controllers/user.controller')
 
 router.post('/registration', controller.registration)
 router.post('/login', controller.login)
-router.post('/logout')
-router.get('/refresh')
+router.post('/logout', controller.logout)
+router.get('/refresh', controller.refresh)
 
 router.post('/user', controller.saveUser)
 router.delete('/user/:id', controller.deleteUser)

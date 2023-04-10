@@ -112,11 +112,42 @@ class userController {
     }
 
     async logout(req, res) {
+        try {
+            const { refreshToken } = req.cookies
+            await tokenService.removeToken(refreshToken).then(token => {
+                res.clearCookie('refreshToken')
+                res.json(token[0])
+            })
+        } catch (err) {
+            res.json(err.message)
+        }
 
     }
 
     async refresh(req, res) {
-
+        try {
+            const { refreshToken } = req.cookies
+            if (!refreshToken) {
+                throw new Error('Вы не авторизованы')
+            }
+            const userData = await tokenService.validateRefreshToken(refreshToken)
+            const foundToken = await tokenService.findToken(refreshToken)
+            if (!userData || !foundToken) {
+                throw new Error('Вы не авторизованы')
+            }
+            await MetaUser.query()
+                .select("*")
+                .where("user", "=", userData.id)
+                .then(async candidate => {
+                    const userDto = new UserDto(candidate[0].user, candidate[0].email) //payload
+                    const tokens = tokenService.generateToken({ ...userDto })
+                    await tokenService.saveToken(candidate[0].user, tokens.refreshToken)
+                    res.cookie('refreshToken', tokens.refreshToken, { maxAge: 40 * 24 * 60 * 60 * 1000, httpOnly: true })
+                    res.json({ ...tokens, userDto })
+                })
+        } catch (err) {
+            res.json(err.message)
+        }
     }
 }
 
