@@ -9,7 +9,7 @@ class MainCategory extends Model {
         const SubCategory = require('./SubCategory')
 
         return {
-            sub_category: {
+            sub_category_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: SubCategory,
                 join: {

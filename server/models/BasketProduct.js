@@ -10,7 +10,7 @@ class BasketProduct extends Model {
         const Product = require('./Product')
 
         return {
-            basket: {
+            basket_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Basket,
                 join: {
@@ -18,7 +18,7 @@ class BasketProduct extends Model {
                     to: 'basket.user'
                 }
             },
-            product: {
+            product_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Product,
                 join: {

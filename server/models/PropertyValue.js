@@ -10,7 +10,7 @@ class PropertyValue extends Model {
         const ProductPropertyValues = require('./ProductPropertyValues')
 
         return {
-            property: {
+            property_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Property,
                 join: {
@@ -18,7 +18,7 @@ class PropertyValue extends Model {
                     to: 'property.id'
                 }
             },
-            product_property_values: {
+            product_property_values_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: ProductPropertyValues,
                 join: {

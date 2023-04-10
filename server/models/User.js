@@ -41,7 +41,7 @@ class User extends Model {
     const Token = require('./Token')
 
     return {
-      meta_user: {
+      meta_user_rel: {
         relation: Model.HasOneRelation,
         modelClass: MetaUser,
         join: {
@@ -49,7 +49,7 @@ class User extends Model {
           to: 'meta_user.user'
         }
       },
-      user_profile: {
+      user_profile_rel: {
         relation: Model.HasOneRelation,
         modelClass: UserProfile,
         join: {
@@ -57,7 +57,7 @@ class User extends Model {
           to: 'user_profile.user'
         }
       },
-      token: {
+      token_rel: {
         relation: Model.HasOneRelation,
         modelClass: Token,
         join: {
@@ -65,7 +65,7 @@ class User extends Model {
           to: 'token.user'
         }
       },
-      question: {
+      question_rel: {
         relation: Model.HasManyRelation,
         modelClass: Question,
         join: {
@@ -73,7 +73,7 @@ class User extends Model {
           to: 'question.user'
         }
       },
-      basket: {
+      basket_rel: {
         relation: Model.HasOneRelation,
         modelClass: Basket,
         join: {
@@ -81,7 +81,7 @@ class User extends Model {
           to: 'basket.user'
         }
       },
-      order: {
+      order_rel: {
         relation: Model.HasManyRelation,
         modelClass: Order,
         join: {
@@ -89,7 +89,7 @@ class User extends Model {
           to: 'order.user'
         }
       },
-      user_activity: {
+      user_activity_rel: {
         relation: Model.HasOneRelation,
         modelClass: UserActivity,
         join: {
@@ -97,7 +97,7 @@ class User extends Model {
           to: 'user_activity.user'
         }
       },
-      answer: {
+      answer_rel: {
         relation: Model.HasManyRelation,
         modelClass: Answer,
         join: {
@@ -105,7 +105,7 @@ class User extends Model {
           to: 'answer.user'
         }
       },
-      review: {
+      review_rel: {
         relation: Model.HasManyRelation,
         modelClass: Review,
         join: {

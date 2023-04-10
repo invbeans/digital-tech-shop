@@ -5,12 +5,16 @@ class DoubleAction extends Model {
         return 'double_action'
     }
 
+    static get idColumn() {
+        return 'action'
+    }
+
     static get relationMappings() {
         const Action = require('./Action')
         const Product = require('./Product')
 
         return {
-            action: {
+            action_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Action,
                 join: {
@@ -18,7 +22,7 @@ class DoubleAction extends Model {
                     to: 'action.id'
                 }
             },
-            full_price_product: {
+            full_price_product_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Product,
                 join: {
@@ -26,7 +30,7 @@ class DoubleAction extends Model {
                     to: 'product.id'
                 }
             },
-            discount_product: {
+            discount_product_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Product,
                 join: {

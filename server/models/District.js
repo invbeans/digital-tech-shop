@@ -9,7 +9,7 @@ class District extends Model {
         const DistrictCity = require('./DistrictCity')
 
         return {
-            district_city: {
+            district_city_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: DistrictCity,
                 join: {

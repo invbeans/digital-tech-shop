@@ -9,7 +9,7 @@ class Region extends Model {
         const City = require('./City')
 
         return {
-            city: {
+            city_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: City,
                 join: {

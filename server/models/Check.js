@@ -5,12 +5,16 @@ class Check extends Model {
         return 'check'
     }
 
+    static get idColumn() {
+        return 'order'
+    }
+
     static get relationMappings() {
         const Order = require('./Order')
         const PaymentMethod = require('./PaymentMethod')
 
         return {
-            order: {
+            order_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Order,
                 join: {
@@ -18,7 +22,7 @@ class Check extends Model {
                     to: 'order.id'
                 }
             },
-            payment_method: {
+            payment_method_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: PaymentMethod,
                 join: {

@@ -12,7 +12,7 @@ class SubCategory extends Model {
         const HolidayAction = require('./HolidayAction')
 
         return {
-            property_sub_category: {
+            property_sub_category_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: PropertySubCategory,
                 join: {
@@ -20,7 +20,7 @@ class SubCategory extends Model {
                     to: 'property_sub_category.sub_category'
                 }
             },
-            sub_category_action: {
+            sub_category_action_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: SubCategoryAction,
                 join: {
@@ -28,7 +28,7 @@ class SubCategory extends Model {
                     to: 'sub_category_action.sub_category'
                 }
             },
-            product: {
+            product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: Product,
                 join: {
@@ -36,7 +36,7 @@ class SubCategory extends Model {
                     to: 'product.sub_category'
                 }
             },
-            holiday_action: {
+            holiday_action_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: HolidayAction,
                 join: {

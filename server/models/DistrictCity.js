@@ -10,7 +10,7 @@ class DistrictCity extends Model {
         const City = require('./City')
 
         return {
-            city: {
+            city_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: City,
                 join: {
@@ -18,7 +18,7 @@ class DistrictCity extends Model {
                     to: 'city.id'
                 }
             },
-            district: {
+            district_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: District,
                 join: {

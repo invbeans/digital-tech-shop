@@ -19,7 +19,7 @@ class Manufacturer extends Model {
         const Product = require('./Product')
 
         return {
-            brand_action: {
+            brand_action_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: BrandAction,
                 join: {
@@ -27,7 +27,7 @@ class Manufacturer extends Model {
                     to: 'brand_action.manufacturer'
                 }
             },
-            product: {
+            product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: Product,
                 join: {

@@ -10,7 +10,7 @@ class Review extends Model {
         const Product = require('./Product')
 
         return {
-            user: {
+            user_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {
@@ -18,7 +18,7 @@ class Review extends Model {
                     to: 'user.id'
                 }
             },
-            product: {
+            product_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Product,
                 join: {

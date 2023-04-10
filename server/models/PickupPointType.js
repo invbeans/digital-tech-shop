@@ -9,7 +9,7 @@ class PickupPointType extends Model {
         const OrderShipping = require('./OrderShipping')
 
         return {
-            order_shipping: {
+            order_shipping_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: OrderShipping,
                 join: {

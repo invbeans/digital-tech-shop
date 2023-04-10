@@ -5,12 +5,16 @@ class Basket extends Model {
         return 'basket'
     }
 
+    static get idColumn() {
+        return 'user'
+    }
+
     static get relationMappings() {
         const User = require('./User')
         const BasketProduct = require('./BasketProduct')
 
         return {
-            user: {
+            user_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User, 
                 join: {
@@ -18,7 +22,7 @@ class Basket extends Model {
                     to: 'user.id'
                 }
             },
-            basket_product: {
+            basket_product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: BasketProduct,
                 join: {

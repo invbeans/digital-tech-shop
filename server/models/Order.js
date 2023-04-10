@@ -14,7 +14,7 @@ class Order extends Model {
         const Check = require('./Check')
 
         return {
-            user: {
+            user_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {
@@ -22,7 +22,7 @@ class Order extends Model {
                     to: 'user.id'
                 }
             },
-            shipping_history: {
+            shipping_history_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: ShippingHistory,
                 join: {
@@ -30,7 +30,7 @@ class Order extends Model {
                     to: 'shipping_history.order'
                 }
             },
-            order_shipping: {
+            order_shipping_rel: {
                 relation: Model.HasOneRelation,
                 modelClass: OrderShipping,
                 join: {
@@ -38,7 +38,7 @@ class Order extends Model {
                     to: 'order_shipping.order'
                 }
             },
-            order_product: {
+            order_product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: OrderProduct,
                 join: {
@@ -46,7 +46,7 @@ class Order extends Model {
                     to: 'order_product.order'
                 }
             },
-            return_application: {
+            return_application_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: ReturnApplication,
                 join: {
@@ -54,7 +54,7 @@ class Order extends Model {
                     to: 'return_application.order'
                 }
             },
-            check: {
+            check_rel: {
                 relation: Model.HasOneRelation,
                 modelClass: Check,
                 join: {

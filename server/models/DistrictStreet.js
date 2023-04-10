@@ -10,7 +10,7 @@ class DistrictStreet extends Model {
         const Street = require('./Street')
 
         return {
-            district_city: {
+            district_city_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: DistrictCity,
                 join: {
@@ -18,7 +18,7 @@ class DistrictStreet extends Model {
                     to: 'district_city.id'
                 }
             },
-            street: {
+            street_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Street,
                 join: {

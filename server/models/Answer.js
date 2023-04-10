@@ -10,7 +10,7 @@ class Answer extends Model {
         const Question = require('./Question')
         
         return {
-            user: {
+            user_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {
@@ -18,7 +18,7 @@ class Answer extends Model {
                     to: 'user.id'
                 }
             },
-            question: {
+            question_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Question,
                 join: {

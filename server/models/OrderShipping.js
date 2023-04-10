@@ -5,6 +5,10 @@ class OrderShipping extends Model {
         return 'order_shipping'
     }
 
+    static get idColumn() {
+        return 'order'
+    }
+
     static get relationMappings() {
         const Order = require('./Order')
         const ShippingService = require('./ShippingService')
@@ -12,7 +16,7 @@ class OrderShipping extends Model {
         const PickupPointType = require('./PickupPointType')
 
         return {
-            order: {
+            order_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Order,
                 join: {
@@ -20,7 +24,7 @@ class OrderShipping extends Model {
                     to: 'order.id'
                 }
             },
-            shipping_service: {
+            shipping_service_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: ShippingService,
                 join: {
@@ -28,7 +32,7 @@ class OrderShipping extends Model {
                     to: 'shipping_service.id'
                 }
             },
-            adress: {
+            adress_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Adress,
                 join: {
@@ -36,7 +40,7 @@ class OrderShipping extends Model {
                     to: 'adress.id'
                 }
             },
-            pickup_point_type: {
+            pickup_point_type_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: PickupPointType,
                 join: {

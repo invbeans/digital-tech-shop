@@ -5,12 +5,16 @@ class ProductPropertyValue extends Model {
         return 'product_property_values'
     }
 
+    static get idColumn() {
+        return 'product'
+    }
+
     static get relationMappings() {
         const Product = require('./Product')
         const PropertyValue = require('./PropertyValue')
 
         return {
-            product: {
+            product_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Product,
                 join: {
@@ -18,7 +22,7 @@ class ProductPropertyValue extends Model {
                     to: 'product.id'
                 }
             },
-            property_value: {
+            property_value_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: PropertyValue,
                 join: {

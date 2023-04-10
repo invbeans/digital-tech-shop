@@ -10,7 +10,7 @@ class PropertySubCategory extends Model {
         const SubCategory = require('./SubCategory')
 
         return {
-            property: {
+            property_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Property,
                 join: {
@@ -18,7 +18,7 @@ class PropertySubCategory extends Model {
                     to: 'property.id'
                 }
             },
-            sub_category: {
+            sub_category_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: SubCategory,
                 join: {

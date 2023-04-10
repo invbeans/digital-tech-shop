@@ -10,7 +10,7 @@ class ShippingHistory extends Model {
         const ShippingStatus = require('./ShippingStatus')
 
         return {
-            order: {
+            order_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Order,
                 join: {
@@ -18,7 +18,7 @@ class ShippingHistory extends Model {
                     to: 'order.id'
                 }
             },
-            shipping_status: {
+            shipping_status_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: ShippingStatus,
                 join: {

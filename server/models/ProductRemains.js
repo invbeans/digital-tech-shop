@@ -5,6 +5,10 @@ class ProductRemains extends Model {
         return 'product_remains'
     }
 
+    static get idColumn() {
+        return 'product'
+    }
+
     $beforeInsert() {
         if (this.amount < 0) {
             throw new ValidationError({
@@ -26,7 +30,7 @@ class ProductRemains extends Model {
         const Product = require('./Product')
 
         return {
-            product: {
+            product_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Product,
                 join: {

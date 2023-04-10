@@ -47,7 +47,7 @@ class Action extends Model {
                     to: 'action_type.id'
                 }
             },
-            sub_category_action: {
+            sub_category_action_rel: {
                 relation: Model.HasOneRelation,
                 modelClass: SubCategoryAction,
                 join: {
@@ -55,7 +55,7 @@ class Action extends Model {
                     to: 'sub_category_action.action'
                 }
             },
-            holiday_action: {
+            holiday_action_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: HolidayAction,
                 join: {
@@ -63,7 +63,7 @@ class Action extends Model {
                     to: 'holiday_action.action'
                 }
             },
-            double_action: {
+            double_action_rel: {
                 relation: Model.HasOneRelation,
                 modelClass: DoubleAction,
                 join: {
@@ -71,7 +71,7 @@ class Action extends Model {
                     to: 'double_action.action'
                 }
             },
-            brand_action: {
+            brand_action_rel: {
                 relation: Model.HasOneRelation,
                 modelClass: BrandAction,
                 join: {

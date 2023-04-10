@@ -10,7 +10,7 @@ class ReturnApplication extends Model {
         const Order = require('./Order')
 
         return {
-            return_product: {
+            return_product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: ReturnProduct,
                 join: {
@@ -18,7 +18,7 @@ class ReturnApplication extends Model {
                     to: 'return_product.return_application'
                 }
             },
-            order: {
+            order_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Order,
                 join: {

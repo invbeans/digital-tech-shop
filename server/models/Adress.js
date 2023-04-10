@@ -10,7 +10,7 @@ class Adress extends Model {
         const OrderShipping = require('./OrderShipping')
 
         return {
-            street_type: {
+            street_type_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: StreetType,
                 join: {
@@ -18,7 +18,7 @@ class Adress extends Model {
                     to: 'street_type.id'
                 }
             },
-            order_shipping: {
+            order_shipping_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: OrderShipping,
                 join: {

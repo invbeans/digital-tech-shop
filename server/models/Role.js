@@ -17,7 +17,7 @@ class Role extends Model {
     static get relationMappings() {
         const MetaUser = require('./MetaUser')
         return {
-            meta_user: {
+            meta_user_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: MetaUser,
                 join: {

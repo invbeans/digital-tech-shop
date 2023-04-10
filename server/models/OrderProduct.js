@@ -10,7 +10,7 @@ class OrderProduct extends Model {
         const Product = require('./Product')
 
         return {
-            order: {
+            order_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Order,
                 join: {
@@ -18,7 +18,7 @@ class OrderProduct extends Model {
                     to: 'order.id'
                 }
             },
-            product: {
+            product_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Product,
                 join: {

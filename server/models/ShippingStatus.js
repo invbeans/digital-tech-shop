@@ -9,7 +9,7 @@ class ShippingStatus extends Model {
         const ShippingHistory = require('./ShippingHistory')
 
         return {
-            shipping_history: {
+            shipping_history_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: ShippingHistory,
                 join: {

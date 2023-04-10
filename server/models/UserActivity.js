@@ -5,11 +5,15 @@ class UserActivity extends Model {
         return 'user_activity'
     }
 
+    static get idColumn() {
+        return 'user'
+    }
+
     static get relationMappings() {
         const User = require('./User')
 
         return {
-            user: {
+            user_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {

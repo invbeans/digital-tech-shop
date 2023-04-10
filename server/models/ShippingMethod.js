@@ -9,7 +9,7 @@ class ShippingMethod extends Model {
         const ShippingService = require('./ShippingService')
 
         return {
-            shipping_service: {
+            shipping_service_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: ShippingService,
                 join: {

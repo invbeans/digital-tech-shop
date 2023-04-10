@@ -9,7 +9,7 @@ class StreetType extends Model {
         const Adress = require('./Adress')
 
         return {
-            street_type: {
+            adress_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: Adress,
                 join: {

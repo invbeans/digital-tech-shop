@@ -10,7 +10,7 @@ class Property extends Model {
         const PropertyValue = require('./PropertyValue')
 
         return {
-            property_sub_category: {
+            property_sub_category_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: PropertySubCategory,
                 join: {
@@ -18,7 +18,7 @@ class Property extends Model {
                     to: 'property_sub_category.property'
                 }
             },
-            property_value: {
+            property_value_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: PropertyValue,
                 join: {

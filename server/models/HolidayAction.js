@@ -10,7 +10,7 @@ class HolidayAction extends Model {
         const SubCategory = require('./SubCategory')
 
         return {
-            action: {
+            action_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Action,
                 join: {
@@ -18,7 +18,7 @@ class HolidayAction extends Model {
                     to: 'action.id'
                 }
             },
-            sub_category: {
+            sub_category_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: SubCategory,
                 join: {

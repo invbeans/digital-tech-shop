@@ -35,7 +35,7 @@ class Supplier extends Model {
         const Product = require('./Product')
 
         return {
-            product: {
+            product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: Product,
                 join: {

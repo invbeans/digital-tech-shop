@@ -43,7 +43,7 @@ class Product extends Model {
         const Supplier = require('./Supplier')
 
         return {
-            product_property_values: {
+            product_property_values_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: ProductPropertyValues,
                 join: {
@@ -51,7 +51,7 @@ class Product extends Model {
                     to: 'product_property_values.product'
                 }
             },
-            product_remains: {
+            product_remains_rel: {
                 relation: Model.HasOneRelation,
                 modelClass: ProductRemains,
                 join: {
@@ -59,7 +59,7 @@ class Product extends Model {
                     to: 'product_remains.product'
                 }
             },
-            review: {
+            review_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: Review,
                 join: {
@@ -67,7 +67,7 @@ class Product extends Model {
                     to: 'review.product'
                 }
             },
-            return_product: {
+            return_product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: ReturnProduct,
                 join: {
@@ -75,7 +75,7 @@ class Product extends Model {
                     to: 'return_product.product'
                 }
             },
-            product_image: {
+            product_image_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: ProductImage,
                 join: {
@@ -83,7 +83,7 @@ class Product extends Model {
                     to: 'product_image.product'
                 }
             },
-            question: {
+            question_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: Question,
                 join: {
@@ -91,7 +91,7 @@ class Product extends Model {
                     to: 'question.product'
                 }
             },
-            full_price_product: {
+            full_price_product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: DoubleAction,
                 join: {
@@ -99,7 +99,7 @@ class Product extends Model {
                     to: 'double_action.full_price_product'
                 }
             },
-            discount_product: {
+            discount_product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: DoubleAction,
                 join: {
@@ -107,7 +107,7 @@ class Product extends Model {
                     to: 'double_action.discount_product'
                 }
             },
-            basket_product: {
+            basket_product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: BasketProduct,
                 join: {
@@ -115,7 +115,7 @@ class Product extends Model {
                     to: 'basket_product.product'
                 }
             },
-            order_product: {
+            order_product_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: OrderProduct,
                 join: {

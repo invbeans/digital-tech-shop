@@ -5,11 +5,15 @@ class ProductImage extends Model {
         return 'product_image'
     }
 
+    static get idColumn() {
+        return 'product'
+    }
+
     static get relationMappings() {
         const Product = require('./Product')
 
         return {
-            product: {
+            product_rel: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Product,
                 join: {

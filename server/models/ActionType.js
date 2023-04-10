@@ -8,7 +8,7 @@ class ActionType extends Model {
     static get relationMappings() {
         const Action = require('./Action')
         return {
-            action: {
+            action_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: Action,
                 join: {

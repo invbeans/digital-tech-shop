@@ -9,7 +9,7 @@ class Street extends Model {
         const DistrictStreet = require('./DistrictStreet')
 
         return {
-            district_street: {
+            district_street_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: DistrictStreet,
                 join: {

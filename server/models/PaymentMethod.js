@@ -9,7 +9,7 @@ class PaymentMethod extends Model {
         const Check = require('./Check')
 
         return {
-            check: {
+            check_rel: {
                 relation: Model.HasManyRelation,
                 modelClass: Check,
                 join: {
