@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MainService } from 'src/app/services/main-service/main.service';
 import { Action } from 'src/app/shared/models/action';
 import { MainCategory } from 'src/app/shared/models/main-category';
 import { Product } from 'src/app/shared/models/product';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-main-page',
@@ -15,10 +16,14 @@ export class MainPageComponent implements OnInit {
   bestProducts: Product[] = [];
   mainCategories: MainCategory[] = [];
 
-  constructor(private mainService: MainService) { }
+  constructor(private mainService: MainService, private cookieService: CookieService) {
+  }
+
   ngOnInit(): void {
     this.getLastAction();
     this.getMainCategories();
+    this.getAllUsers();
+    console.log(this.cookieService.get('refreshToken'))
   }
 
   getLastAction() {
@@ -38,8 +43,13 @@ export class MainPageComponent implements OnInit {
 
   getMainCategories() {
     this.mainService.getAllCategories()
-    .subscribe((data: any) => {
-      this.mainCategories = data
-    })
+      .subscribe((data: any) => {
+        this.mainCategories = data
+      })
+  }
+
+  getAllUsers(){
+    this.mainService.getAllUsers()
+    .subscribe((data: any) => console.log(data))
   }
 }

@@ -16,12 +16,15 @@ import { RouterModule } from '@angular/router';
 import { SubCategoryFeedComponent } from './components/sub-category-feed/sub-category-feed.component';
 import { SubCategoryItemComponent } from './components/sub-category-item/sub-category-item.component';
 import { FormsModule } from '@angular/forms';
+import { CookieModule } from 'ngx-cookie';
+import { AuthService } from './services/auth/auth.service';
 
 @NgModule({
     imports: [
       CommonModule,
       RouterModule,
-      FormsModule
+      FormsModule,
+      CookieModule.withOptions()
     ],
     declarations: [
       NavigationComponent,
@@ -38,7 +41,8 @@ import { FormsModule } from '@angular/forms';
       SubCategoryItemComponent
     ],
     providers: [
-      SidebarService
+      SidebarService,
+      AuthService
     ],
     exports: [
       NavigationComponent,

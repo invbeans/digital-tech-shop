@@ -16,8 +16,12 @@ class userController {
 
     async getUsers(req, res) {
         await User.query()
-            .then(users => res.json(users))
+            .then(users => {
+                console.log(req.user)
+                res.json(users)
+            })
             .catch(err => res.json(err.message))
+
     }
 
     async getUserById(req, res) {
@@ -79,7 +83,7 @@ class userController {
                 await UserProfile.query()
                     .insert({ user, firstname, points })
                     .then(user => { })
-                const userDto = new UserDto(id, email) //payload
+                const userDto = new UserDto(id, email, role) //payload
                 const tokens = tokenService.generateToken({ ...userDto })
                 await tokenService.saveToken(id, tokens.refreshToken)
                 res.cookie('refreshToken', tokens.refreshToken, { maxAge: 40 * 24 * 60 * 60 * 1000, httpOnly: true })
@@ -102,7 +106,7 @@ class userController {
                 if (passwordEquals == false) {
                     throw new Error('Пароль указан неверно')
                 }
-                const userDto = new UserDto(candidate[0].user, email) //payload
+                const userDto = new UserDto(candidate[0].user, email, candidate[0].role) //payload
                 const tokens = tokenService.generateToken({ ...userDto })
                 await tokenService.saveToken(candidate[0].user, tokens.refreshToken)
                 res.cookie('refreshToken', tokens.refreshToken, { maxAge: 40 * 24 * 60 * 60 * 1000, httpOnly: true })
@@ -139,7 +143,7 @@ class userController {
                 .select("*")
                 .where("user", "=", userData.id)
                 .then(async candidate => {
-                    const userDto = new UserDto(candidate[0].user, candidate[0].email) //payload
+                    const userDto = new UserDto(candidate[0].user, candidate[0].email, candidate[0].role) //payload
                     const tokens = tokenService.generateToken({ ...userDto })
                     await tokenService.saveToken(candidate[0].user, tokens.refreshToken)
                     res.cookie('refreshToken', tokens.refreshToken, { maxAge: 40 * 24 * 60 * 60 * 1000, httpOnly: true })
