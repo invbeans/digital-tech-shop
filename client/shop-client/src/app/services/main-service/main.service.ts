@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Injectable()
 export class MainService {
-  
+
   mapping: string = 'http://localhost:3000/';
   constructor(private http: HttpClient, private cookieService: CookieService, private authService: AuthService) {
     //console.log(cookieService.check('refreshToken'))
@@ -22,12 +22,13 @@ export class MainService {
     return this.http.get<MainCategory | null>(this.mapping + 'storefront/main_category');
   }
 
-  getAllUsers(){
+  getAllUsers() {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Beaver hereistoken`
-      })
+        'Content-Type': 'application/json',
+        'Authorization': `Beaver ${localStorage.getItem('token')}`
+      }),
+      withCredentials: true
     }
     return this.http.get<User | null>(this.mapping + 'user/user', httpOptions)
   }

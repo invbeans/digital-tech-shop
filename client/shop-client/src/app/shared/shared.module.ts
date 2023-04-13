@@ -15,48 +15,51 @@ import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { SubCategoryFeedComponent } from './components/sub-category-feed/sub-category-feed.component';
 import { SubCategoryItemComponent } from './components/sub-category-item/sub-category-item.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CookieModule } from 'ngx-cookie';
 import { AuthService } from './services/auth/auth.service';
 
 @NgModule({
-    imports: [
-      CommonModule,
-      RouterModule,
-      FormsModule,
-      CookieModule.withOptions()
-    ],
-    declarations: [
-      NavigationComponent,
-      FooterComponent,
-      SidebarComponent,
-      EditTextItemCardComponent,
-      ProductContainerComponent,
-      ProductCardComponent,
-      DiscountsFeedComponent,
-      DiscountsFeedItemComponent,
-      CategoriesFeedComponent,
-      CategoryItemComponent,
-      SubCategoryFeedComponent,
-      SubCategoryItemComponent
-    ],
-    providers: [
-      SidebarService,
-      AuthService
-    ],
-    exports: [
-      NavigationComponent,
-      FooterComponent,
-      SidebarComponent,
-      EditTextItemCardComponent,
-      ProductCardComponent,
-      ProductContainerComponent,
-      DiscountsFeedComponent,
-      DiscountsFeedItemComponent,
-      CategoriesFeedComponent,
-      CategoryItemComponent,
-      SubCategoryFeedComponent,
-      SubCategoryItemComponent
-    ]
-  })
-  export class SharedModule { }
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CookieModule.withOptions()
+  ],
+  declarations: [
+    NavigationComponent,
+    FooterComponent,
+    SidebarComponent,
+    EditTextItemCardComponent,
+    ProductContainerComponent,
+    ProductCardComponent,
+    DiscountsFeedComponent,
+    DiscountsFeedItemComponent,
+    CategoriesFeedComponent,
+    CategoryItemComponent,
+    SubCategoryFeedComponent,
+    SubCategoryItemComponent
+  ],
+  providers: [
+    SidebarService,
+    AuthService
+  ],
+  exports: [
+    NavigationComponent,
+    FooterComponent,
+    SidebarComponent,
+    EditTextItemCardComponent,
+    ProductCardComponent,
+    ProductContainerComponent,
+    DiscountsFeedComponent,
+    DiscountsFeedItemComponent,
+    CategoriesFeedComponent,
+    CategoryItemComponent,
+    SubCategoryFeedComponent,
+    SubCategoryItemComponent,
+    FormsModule,
+    ReactiveFormsModule
+  ]
+})
+export class SharedModule { }
