@@ -4,6 +4,7 @@ import { Action } from 'src/app/shared/models/action';
 import { MainCategory } from 'src/app/shared/models/main-category';
 import { Product } from 'src/app/shared/models/product';
 import { CookieService } from 'ngx-cookie';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-main-page',
@@ -16,14 +17,18 @@ export class MainPageComponent implements OnInit {
   bestProducts: Product[] = [];
   mainCategories: MainCategory[] = [];
 
-  constructor(private mainService: MainService, private cookieService: CookieService) {
+  constructor(private mainService: MainService, private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.checkAuth()
     this.getLastAction();
     this.getMainCategories();
-    this.getAllUsers();
-    console.log(this.cookieService.get('refreshToken'))
+    this.getAllUsers()
+  }
+
+  checkAuth(){
+    this.authService.checkAuth().subscribe((data: any) => console.log(data))
   }
 
   getLastAction() {
@@ -48,8 +53,11 @@ export class MainPageComponent implements OnInit {
       })
   }
 
-  getAllUsers(){
+  getAllUsers() {
     this.mainService.getAllUsers()
-    .subscribe((data: any) => console.log(data))
+    .subscribe((data: any) => {
+      console.log(data)
+    })
   }
+
 }

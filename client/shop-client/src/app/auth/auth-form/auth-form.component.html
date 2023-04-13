@@ -1,0 +1,57 @@
+<div class="wrapper">
+    <button class="form-type-btn" (click)="toggleButton()">{{choiceBtnText}}</button>
+    <div *ngIf="errorMessage!=''" class="error-message">{{errorMessage}}</div>
+    <form *ngIf="!isLogin" class="form-parent" [formGroup]="registrationForm">
+        <div class="grid">
+            <label class="form-group">Фамилия
+                <input type="text" placeholder="Фамилия" formControlName="surname">
+            </label>
+            <label class="form-group">Имя
+                <input type="text" placeholder="Имя" formControlName="firstname">
+            </label>
+            <label class="form-group">Отчество
+                <input type="text" placeholder="Отчество" formControlName="lastname">
+            </label>
+        </div>
+        <div class="grid">
+            <label class="form-group">Электронная почта
+                <input type="text" placeholder="Электронная почта" formControlName="email">
+            </label>
+        </div>
+        <div class="grid">
+            <label class="form-group">Дата рождения
+                <input type="date" formControlName="birthday_date">
+            </label>
+            <label class="form-group">Номер телефона
+                <input type="text" placeholder="Номер телефона" formControlName="phone_number">
+            </label>
+        </div>
+        <div class="grid">
+            <label class="form-group">Ник на сайте (необязательно)
+                <input type="text" placeholder="Ник на сайте (необязательно)" formControlName="username">
+            </label>
+            <label class="form-group">Пароль
+                <input type="text" placeholder="Пароль" formControlName="password">
+            </label>
+        </div>
+        <div>
+            <button class="submit" (click)="registration()" [disabled]="registrationForm.invalid || registrationForm.untouched">Отправить</button>
+        </div>
+    </form>
+
+    <form *ngIf="isLogin" class="form-parent" [formGroup]="loginForm">
+        <div>
+            <label class="form-group">Электронная почта
+                <input type="text" placeholder="Электронная почта" formControlName="email">
+            </label>
+        </div>
+        <div>
+            <label class="form-group">Пароль
+                <input type="text" placeholder="Пароль" formControlName="password">
+            </label>
+        </div>
+        <div>
+            <button class="submit" (click)="login()" [disabled]="loginForm.invalid || loginForm.untouched">Отправить</button>
+        </div>
+    </form>
+</div>
