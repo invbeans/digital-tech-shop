@@ -17,8 +17,9 @@ class userController {
 
     async getUsers(req, res) {
         if(req.message){
-            res.json(req.message)
-            //res.status(401).json(req.message) 
+            //res.json(req.message)
+            //this.refresh(req, res)
+            res.status(401).json(req.message) 
             //не оч мне понравилось кидать ошибку сразу из миддлвейра,
             //поэтому код такой странный кек
         }

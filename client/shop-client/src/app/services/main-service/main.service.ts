@@ -5,6 +5,8 @@ import { MainCategory } from 'src/app/shared/models/main-category';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { map } from 'rxjs';
+import { AuthResponse } from 'src/app/shared/models/auth-response';
 
 @Injectable()
 export class MainService {
@@ -28,8 +30,21 @@ export class MainService {
         'Content-Type': 'application/json',
         'Authorization': `Beaver ${localStorage.getItem('token')}`
       }),
-      withCredentials: true
+      withCredentials: true,
+      "observe?": "response"
     }
     return this.http.get<User | null>(this.mapping + 'user/user', httpOptions)
+    .pipe(
+      map((data: any) => {
+        if(data.status === 401){
+          this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+            if(refreshData){
+              localStorage.setItem('token', refreshData.accessToken) //это должен быть рефреш по истечению времени вроде
+            }
+          })
+        }
+        this.http.get<User | null>(this.mapping + 'user/user', httpOptions)
+      })
+    )
   }
 }
