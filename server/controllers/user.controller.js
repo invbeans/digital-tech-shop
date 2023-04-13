@@ -4,6 +4,7 @@ const UserProfile = require('../models/UserProfile')
 const bcrypt = require('bcrypt')
 const tokenService = require('../service/token.service')
 const UserDto = require('../models/UserDto')
+const { transaction } = require('objection')
 
 class userController {
     async saveUser(req, res) {
@@ -15,13 +16,20 @@ class userController {
     }
 
     async getUsers(req, res) {
-        await User.query()
+        if(req.message){
+            res.json(req.message)
+            //res.status(401).json(req.message) 
+            //не оч мне понравилось кидать ошибку сразу из миддлвейра,
+            //поэтому код такой странный кек
+        }
+        else{
+            await User.query()
             .then(users => {
                 console.log(req.user)
                 res.json(users)
             })
             .catch(err => res.json(err.message))
-
+        }
     }
 
     async getUserById(req, res) {
@@ -70,25 +78,25 @@ class userController {
                     throw new Error(`Пользователь с почтой: ${email} уже существует`)
                 }
                 let hashed_password = await bcrypt.hash(password, 3)
-                let id = 0
-                await User.query()
-                    .insert({ username, surname, lastname })
-                    .then(user => id = user.id)
-                    .catch(err => res.json(err.message))
-                let user = id
+                let userId = 0
                 let role = 4
-                await MetaUser.query()
-                    .insert({ user, role, phone_number, hashed_password, birthday_date, email })
-                    .then(user => { })
-                await UserProfile.query()
-                    .insert({ user, firstname, points })
-                    .then(user => { })
-                const userDto = new UserDto(id, email, role) //payload
-                const tokens = tokenService.generateToken({ ...userDto })
-                await tokenService.saveToken(id, tokens.refreshToken)
-                res.cookie('refreshToken', tokens.refreshToken, { maxAge: 40 * 24 * 60 * 60 * 1000, httpOnly: true })
-                res.json({ ...tokens, userDto })
-
+                const transac = await transaction(User, MetaUser, UserProfile, async (User, MetaUser, UserProfile) => {
+                    await User.query()
+                        .insert({ username, surname, lastname })
+                        .then(user => userId = user.id)
+                    await MetaUser.query()
+                        .insert({ user: userId, role, phone_number, hashed_password, birthday_date, email })
+                        .then(user => { })
+                    await UserProfile.query()
+                        .insert({ user: userId, firstname, points })
+                        .then(user => { })
+                }).then(async () => {
+                    const userDto = new UserDto(userId, email, role) //payload
+                    const tokens = tokenService.generateToken({ ...userDto })
+                    await tokenService.saveToken(userId, tokens.refreshToken)
+                    res.cookie('refreshToken', tokens.refreshToken, { maxAge: 40 * 24 * 60 * 60 * 1000, httpOnly: true })
+                    res.json({ ...tokens, userDto })
+                })
             })
             .catch(err => res.json(err.message))
     }

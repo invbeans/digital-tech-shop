@@ -22,7 +22,8 @@ Model.knex(knex)
 
 app.use(express.json())
 let corsOptions = {
-    origin: "http://localhost:4200"
+    origin: "http://localhost:4200",
+    credentials: true
 };
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
