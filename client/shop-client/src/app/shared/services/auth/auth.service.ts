@@ -30,6 +30,10 @@ export class AuthService {
     this.isAuth = isAuth
   }
 
+  getAuth() {
+    return this.isAuth
+  }
+
   getErrorMessage() {
     return this.errorMessage
   }
@@ -86,12 +90,15 @@ export class AuthService {
       }),
       withCredentials: true
     }
-    return this.http.get<AuthResponse | null>(this.mapping + 'logout', httpOptions)
-      .subscribe(() => {
-        localStorage.removeItem('token')
-        this.isAuth = false
-        this.userDto = {} as UserDto
-      })
+    return this.http.get(this.mapping + 'logout', httpOptions)
+      .pipe(
+        map((data: any) => {
+          localStorage.removeItem('token')
+          this.isAuth = false
+          this.userDto = {} as UserDto
+          return data
+        })
+      )
   }
 
   checkAuth() {
@@ -109,8 +116,9 @@ export class AuthService {
             this.isAuth = true
             this.userDto = data.userDto
           }
-          else{
+          else {
             this.isAuth = false
+            this.userDto = {} as UserDto
           }
           return data
         })

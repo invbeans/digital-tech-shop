@@ -129,7 +129,7 @@ class userController {
             const { refreshToken } = req.cookies
             await tokenService.removeToken(refreshToken).then(token => {
                 res.clearCookie('refreshToken')
-                res.json(token[0])
+                res.json({token: token[0]})
             })
         } catch (err) {
             res.json(err.message)

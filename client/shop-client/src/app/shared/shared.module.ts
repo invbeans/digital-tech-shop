@@ -11,13 +11,14 @@ import { DiscountsFeedComponent } from './components/discounts-feed/discounts-fe
 import { DiscountsFeedItemComponent } from './components/discounts-feed-item/discounts-feed-item.component';
 import { CategoryItemComponent } from './components/category-item/category-item.component';
 import { CategoriesFeedComponent } from './components/categories-feed/categories-feed.component';
-import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { SubCategoryFeedComponent } from './components/sub-category-feed/sub-category-feed.component';
 import { SubCategoryItemComponent } from './components/sub-category-item/sub-category-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CookieModule } from 'ngx-cookie';
 import { AuthService } from './services/auth/auth.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/interceptors/auth-interceptor.interceptor';
 
 @NgModule({
   imports: [
@@ -43,7 +44,12 @@ import { AuthService } from './services/auth/auth.service';
   ],
   providers: [
     SidebarService,
-    AuthService
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   exports: [
     NavigationComponent,

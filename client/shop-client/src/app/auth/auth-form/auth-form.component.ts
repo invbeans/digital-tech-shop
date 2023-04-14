@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthResponse } from 'src/app/shared/models/auth-response';
 import { LoginUser, RegistrationUser } from 'src/app/shared/models/user-auth-forms';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -21,7 +22,7 @@ export class AuthFormComponent {
   registrationUser = new RegistrationUser("", "", "", "", new Date(), "", "", "", 0)
   loginUser = new LoginUser("", "")
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.registrationForm = new FormGroup({
       "surname": new FormControl("", Validators.required),
       "lastname": new FormControl("", Validators.required),
@@ -51,6 +52,7 @@ export class AuthFormComponent {
     this.loginUser = new LoginUser(this.loginForm.value.email, this.loginForm.value.password)
     this.authService.login(this.loginUser).subscribe((data: any) => {
       if(typeof data === "string") this.errorMessage = data
+      else this.router.navigate(['/'], {queryParams: {'refresh': true}})
     })
   }
 
@@ -69,6 +71,7 @@ export class AuthFormComponent {
       0)
     this.authService.registration(this.registrationUser).subscribe((data: any) => {
       if(typeof data === "string") this.errorMessage = data
+      else this.router.navigate(['/'], {queryParams: {'refresh': true}}) //нужно для релоуда страницы
     })
   }
 }

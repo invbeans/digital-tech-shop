@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
   providers: [MainService]
 })
 export class MainPageComponent implements OnInit {
-  lastAction: Action | null = null;
+  lastAction: Action | null = {} as Action;
   bestProducts: Product[] = [];
   mainCategories: MainCategory[] = [];
 

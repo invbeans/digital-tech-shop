@@ -28,7 +28,6 @@ export class MainService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Beaver ${localStorage.getItem('token')}`
       }),
       withCredentials: true,
       "observe?": "response"
