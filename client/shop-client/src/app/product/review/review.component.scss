@@ -1,0 +1,12 @@
+.wrapper {
+    width: 80vw;
+    border: 1px solid #183719;
+    padding: 5vw;
+}
+
+.horiz-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    column-gap: 5vw;
+}

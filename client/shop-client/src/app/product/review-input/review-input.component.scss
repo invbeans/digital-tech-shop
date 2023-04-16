@@ -1,0 +1,19 @@
+.horiz-div {
+    display: flex;
+    flex-direction: row;
+}
+
+button{
+    width: 10vw;
+    min-width: fit-content;
+    height: fit-content;
+}
+
+textarea{
+    resize: vertical;
+    min-height: 30vh;
+}
+
+.point-input{
+    width: 10vw;
+}

@@ -11,7 +11,7 @@ import { ContentPageModule } from './content-page/content-page.module';
 //import { MainModule } from './main/main.module';
 import { MakeOrderModule } from './make-order/make-order.module';
 import { ManagerPageModule } from './manager-page/manager-page.module';
-import { ProductModule } from './product/product.module';
+//import { ProductModule } from './product/product.module';
 import { ReturnModule } from './return/return.module';
 import { SharedModule } from './shared/shared.module';
 //import { SubCatModule } from './sub-cat/sub-cat.module';
@@ -31,7 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     //MainModule,
     //MainCatModule,
     //SubCatModule,
-    ProductModule,
+    //ProductModule,
     //DiscountsModule,
     BrandModule,
     MakeOrderModule,

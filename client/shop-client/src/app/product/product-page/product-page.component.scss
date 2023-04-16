@@ -1,0 +1,14 @@
+.main-wrapper{
+    padding-bottom: 30vh;
+}
+
+.horiz-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.open-info-btn {
+    min-width: fit-content;
+    width: 15vw;
+}

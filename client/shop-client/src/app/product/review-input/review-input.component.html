@@ -1,0 +1,10 @@
+<div class="wrapper">
+    <div class="horiz-div">
+        <input type="number" class="point-input" min="0" max="5" placeholder="5" [(ngModel)]="points">
+        <p>⭐</p>
+    </div>
+    <div class="horiz-div">
+        <textarea placeholder="Текст отзыва" maxlength="500" [(ngModel)]="text" (ngModelChange)="checkInput()"></textarea>
+        <button [disabled]="inputBtnDisabled" (click)="sendReview()">Отправить</button>
+    </div>
+</div>

@@ -5,8 +5,6 @@ import { Product } from '../../models/product';
 import { SearchProductsService } from '../../services/search-products-state/search-products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
-import { AuthResponse } from '../../models/auth-response';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-navigation',

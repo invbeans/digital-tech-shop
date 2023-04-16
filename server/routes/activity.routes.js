@@ -1,9 +1,10 @@
 const Router = require('express')
 const router = new Router()
 const controller = require('../controllers/activity.controller')
+const userMiddleware = require('../middlewares/user-auth.middleware')
 
 // --------- review CRUD ----------
-router.post('/review', controller.createReview)
+router.post('/review', userMiddleware, controller.createReview)
 router.put('/review/:id', controller.updateReview)
 router.delete('/review/:id', controller.deleteReview)
 router.get('/review/by_product/:id', controller.getReviewByProduct)

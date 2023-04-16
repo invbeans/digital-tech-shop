@@ -11,7 +11,8 @@ const routes: Routes = [
   {path: 'main_category/:id', loadChildren: () => import('./sub-cat/sub-cat.module').then(m => m.SubCatModule)},
   {path: 'search_products', loadChildren: () => import('./search-products/search-products.module').then(m => m.SearchProductsModule)},
   {path: 'discounts', loadChildren: () => import('./discounts/discounts.module').then(m => m.DiscountsModule)},
-  {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)}
+  {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
+  {path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)}
 
 ];
 

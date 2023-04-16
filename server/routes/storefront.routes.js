@@ -22,7 +22,7 @@ router.post('/product', controller.createProduct)
 router.put('/product/:id', controller.updateProduct)
 router.delete('/product/:id', controller.deleteProduct)
 router.get('/product/by_sub_category/:id', controller.getProductsBySubCategory)
-router.get('/product/:id', controller.getProductById)
+router.get('/product/:id', controller.getProductByIdForProdPage)
 router.get('/product', controller.getProducts)
 
 // --------- property CRUD ----------
@@ -51,6 +51,7 @@ router.put('/product_property_values/:id', controller.updateProductPropertyValue
 router.delete('/product_property_values/:id', controller.deleteProductPropertyValues)
 router.get('/product_property_values/by_property_value/:id', controller.getProductPropertyValuesByPropertyValue)
 router.get('/product_property_values/by_product/:id', controller.getProductPropertyValuesByProduct)
+router.get('/product_prop_val_info/by_product/:id', controller.getProductPropValInfo)
 router.get('/product_property_values', controller.getProductPropertyValues)
 
 // --------- product remains CRUD ----------

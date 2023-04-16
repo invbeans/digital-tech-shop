@@ -9,6 +9,15 @@ class ProductPropertyValue extends Model {
         return 'product'
     }
 
+    static get jsonSchema() {
+        return {
+            type: 'object',
+            properties: {
+                product: { type: 'number' }
+            }
+        }
+    }
+
     static get relationMappings() {
         const Product = require('./Product')
         const PropertyValue = require('./PropertyValue')

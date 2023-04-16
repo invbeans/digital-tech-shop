@@ -146,13 +146,20 @@ class storefrontController {
             .catch(err => res.json(err.message))
     }
 
-    async getProductById(req, res) {
+    async getProductByIdForProdPage(req, res) {
         const id = req.params.id
         await Product.query()
             .findById(id)
-            .then(product => {
+            .then(async product => {
                 if (product === null) res.json("Такого товара нет")
-                else res.json(product)
+                else {
+                    let resProduct = {}
+                    resProduct = { ...product }
+                    await ProductImage.query().where('product', '=', product.id).then(productImg => { resProduct.image_link = productImg[0].image_link })
+                    await ProductRemains.query().where('product', '=', product.id).then(productAmt => { resProduct.amount = productAmt[0].amount })
+                    await Manufacturer.query().findById(product.manufacturer).then(manufacturer => { resProduct.manufacturer = manufacturer.name })
+                    res.json(resProduct)
+                }
             })
             .catch(err => res.json(err.message))
     }
@@ -164,7 +171,7 @@ class storefrontController {
             .select("*")
             .where("sub_category", "=", sub_category)
             .then(async product => {
-                for(const prod of product) {
+                for (const prod of product) {
                     let prodElem = {}
                     prodElem = { ...prod }
                     await ProductImage.query().where('product', '=', prod.id).then(productImg => { prodElem.image_link = productImg[0].image_link })
@@ -189,7 +196,7 @@ class storefrontController {
                 })
             })
             .then(async product => {
-                for(const prod of product) {
+                for (const prod of product) {
                     let prodElem = {}
                     prodElem = { ...prod }
                     await ProductImage.query().where('product', '=', prod.id).then(productImg => { prodElem.image_link = productImg[0].image_link })
@@ -527,6 +534,28 @@ class storefrontController {
             .where('property_value', '=', property_value)
             .then(prodPropVal => res.json(prodPropVal))
             .catch(err => res.json(err.message))
+    }
+
+    async getProductPropValInfo(req, res) {
+        let productPropVals = []
+        const product = req.params.id
+        await PropertyValue.query()
+        .select("*")
+        .joinRelated('product_property_values_rel', {alias: 'ppv'})
+        .where('ppv.product', product)
+        .then(async propertyValues => {
+            for(const propVal of propertyValues){
+                let prodPropValElem = {}
+                await Property.query()
+                .findById(propVal.property)
+                .then(property => {
+                    prodPropValElem.property = property.name
+                    prodPropValElem.property_value = propVal.value
+                    productPropVals.push(prodPropValElem)
+                })
+            }
+            res.json(productPropVals)
+        }).catch(err => res.json(err.message))
     }
 
     // --------- product remains CRUD ----------

@@ -1,0 +1,13 @@
+<div class="main-wrapper">
+    <app-product-short *ngIf="product" [product]="product"></app-product-short>
+    <div class="horiz-btns">
+        <button class="open-info-btn" (click)="productInfoClick()">Характеристики</button>
+        <button class="open-info-btn" (click)="productReviewClick()">Отзывы</button>
+        <button class="open-info-btn" (click)="productQaAClick()">Вопросы-ответы</button>
+    </div>
+    <app-product-info *ngIf="showContent==1" [productInfo]="productPropValInfo"></app-product-info>
+    <app-reviews-container *ngIf="showContent==2">
+        <app-review-input *ngIf="showInputs" [productId]="id"></app-review-input>
+        <app-review *ngFor="let review of reviews" [review]="review"></app-review>
+    </app-reviews-container>
+</div>

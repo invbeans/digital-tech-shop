@@ -3,15 +3,26 @@ const Question = require('../models/Question')
 const Answer = require('../models/Answer')
 const ReturnApplication = require('../models/ReturnApplication')
 const ReturnProduct = require('../models/ReturnProduct')
+const User = require('../models/User')
 
 class activityController {
     // --------- review CRUD ----------
     async createReview(req, res) {
-        const { user, product, points, date, text } = req.body
-        await Review.query()
-            .insert({ user, product, points, date, text })
-            .then(review => res.json(review))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let { user, product, points, date, text } = req.body
+            if(!user){
+                user = req.userData.id
+            }
+            await Review.query()
+                .insert({ user, product, points, date, text })
+                .then(review => {
+                    res.json(review)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async updateReview(req, res) {
@@ -41,10 +52,23 @@ class activityController {
 
     async getReviewByProduct(req, res) {
         const product = req.params.id
+        let reviewsForProducts = []
         await Review.query()
             .select("*")
             .where("product", "=", product)
-            .then(review => res.json(review))
+            .then(async review => {
+                for (const rev of review) {
+                    let revForProdElem = {}
+                    revForProdElem = { ...rev }
+                    await User.query()
+                        .findById(rev.user)
+                        .then(user => {
+                            revForProdElem.user = user.username
+                        })
+                    reviewsForProducts.push(revForProdElem)
+                }
+                res.json(reviewsForProducts)
+            })
             .catch(err => res.json(err.message))
     }
 
