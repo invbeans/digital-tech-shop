@@ -4,7 +4,7 @@ class Product extends Model {
     static get tableName() {
         return 'product'
     }
-
+    
     $beforeInsert() {
         if(this.price <= 0){
             throw new ValidationError({

@@ -21,7 +21,7 @@ class ProductRemains extends Model {
         return {
             type: 'object',
             properties: {
-                amount: { type: 'integer' }
+                amount: { type: 'number' }
             }
         }
     }

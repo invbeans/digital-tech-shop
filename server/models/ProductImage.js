@@ -9,6 +9,15 @@ class ProductImage extends Model {
         return 'product'
     }
 
+    static get jsonSchema() {
+        return{
+            type: 'object',
+            properties: {
+                image_link: {type: 'string'}
+            }
+        }
+    }
+
     static get relationMappings() {
         const Product = require('./Product')
 

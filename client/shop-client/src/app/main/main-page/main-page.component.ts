@@ -24,7 +24,7 @@ export class MainPageComponent implements OnInit {
     this.checkAuth()
     this.getLastAction();
     this.getMainCategories();
-    this.getAllUsers()
+    //this.getAllUsers()
   }
 
   checkAuth(){

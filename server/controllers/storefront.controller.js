@@ -159,10 +159,20 @@ class storefrontController {
 
     async getProductsBySubCategory(req, res) {
         const sub_category = req.params.id
+        let prods = []
         await Product.query()
             .select("*")
             .where("sub_category", "=", sub_category)
-            .then(product => res.json(product))
+            .then(async product => {
+                for(const prod of product) {
+                    let prodElem = {}
+                    prodElem = { ...prod }
+                    await ProductImage.query().where('product', '=', prod.id).then(productImg => { prodElem.image_link = productImg[0].image_link })
+                    await ProductRemains.query().where('product', '=', prod.id).then(productAmt => { prodElem.amount = productAmt[0].amount })
+                    prods.push(prodElem)
+                }
+                res.json(prods)
+            })
             .catch(err => res.json(err.message))
     }
 

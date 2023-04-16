@@ -35,7 +35,9 @@ export class SubCatPageComponent implements OnInit {
     this.products = [];
     if (id !== null) {
       this.storefrontService.getProductsBySubCategory(id)
-        .subscribe((data: any) => this.products = data)
+        .subscribe((data: any) => {
+          this.products = data
+        })
     }
   }
 }
