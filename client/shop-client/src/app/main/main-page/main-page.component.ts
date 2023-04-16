@@ -1,9 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { MainService } from 'src/app/services/main-service/main.service';
 import { Action } from 'src/app/shared/models/action';
 import { MainCategory } from 'src/app/shared/models/main-category';
 import { Product } from 'src/app/shared/models/product';
-import { CookieService } from 'ngx-cookie';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
@@ -13,11 +13,13 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
   providers: [MainService]
 })
 export class MainPageComponent implements OnInit {
-  lastAction: Action | null = {} as Action;
+  lastAction: Action = {} as Action;
   bestProducts: Product[] = [];
   mainCategories: MainCategory[] = [];
+  actionFeedTitle = "Самое последнее предложение";
+  showAction = true;
 
-  constructor(private mainService: MainService, private authService: AuthService) {
+  constructor(private mainService: MainService, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -35,8 +37,9 @@ export class MainPageComponent implements OnInit {
     this.mainService.getLastAction()
       .subscribe((data: any) => {
         this.lastAction = data
-        if (this.lastAction === null) {
-          this.lastAction = new Action(null, "Пока нет предложений", null, null, 0, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDVuaQbojYLTlYezNW7HPVIYO6QiLZsd8RFP86jMuySoBlJ369aVAK0Mtzo7La2hyVcxU&usqp=CAU", 0);
+        if (this.lastAction === undefined) {
+          this.actionFeedTitle = "Пока нет предложений"
+          this.showAction = false
         } else {
           let tempBegin = new Date(data.date_begin)
           let tempEnd = new Date(data.date_end)
@@ -58,6 +61,12 @@ export class MainPageComponent implements OnInit {
     .subscribe((data: any) => {
       console.log(data)
     })
+  }
+
+  toMainCatPage(id: number | null){
+    if(id !== null){
+      this.router.navigate([`/main_category/${id}`])
+    }
   }
 
 }

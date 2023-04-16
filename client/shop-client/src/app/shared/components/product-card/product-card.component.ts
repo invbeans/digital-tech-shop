@@ -1,4 +1,6 @@
+import { state } from '@angular/animations';
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
@@ -10,5 +12,11 @@ export class ProductCardComponent {
   @Input() product_price = "100000000р";
   @Input() product_rate = "5.5";
   @Input() image_link = "https://designshack.net/wp-content/uploads/placeholder-image.png"
+  @Input() id = "";
 
+  constructor(private router: Router){}
+
+  onClick(){
+    this.router.navigate(['/product'], {state: {productId: this.id}})
+  }
 }

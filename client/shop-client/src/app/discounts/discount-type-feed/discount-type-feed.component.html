@@ -1,0 +1,9 @@
+<app-discounts-feed actionType={{actionType}}>
+    <app-discounts-feed-item 
+        *ngFor="let action of actions"
+        actionName={{action.name}}
+        [dateStart]="action.dateBegin"
+        [dateEnd]="action.dateEnd"
+        image={{action.image}}
+    ></app-discounts-feed-item>
+</app-discounts-feed>

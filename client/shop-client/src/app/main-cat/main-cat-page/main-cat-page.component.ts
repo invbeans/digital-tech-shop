@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MainService } from 'src/app/services/main-service/main.service';
 import { MainCategory } from 'src/app/shared/models/main-category';
 
@@ -11,7 +12,7 @@ import { MainCategory } from 'src/app/shared/models/main-category';
 export class MainCatPageComponent implements OnInit {
   mainCategories: MainCategory[] = []
 
-  constructor(private mainService: MainService) { }
+  constructor(private mainService: MainService, private router: Router) { }
 
   ngOnInit(): void {
     this.getMainCategories()

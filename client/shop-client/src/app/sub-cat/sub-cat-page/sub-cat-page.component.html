@@ -1,7 +1,7 @@
 <app-sub-category-feed>
-    <app-sub-category-item *ngFor="let subCategory of subCategories; let index = index" name={{subCategory.name}} (click)="getProducts(subCategories[index].id)"></app-sub-category-item>
+    <app-sub-category-item *ngFor="let subCategory of subCategories; let index = index" name={{subCategory.name}} (click)="getProducts(subCategory.id)"></app-sub-category-item>
 </app-sub-category-feed>
 
 <app-product-container>
-    <app-product-card *ngFor="let prod of products; let index = index" product_name={{products[index].name}} product_price={{products[index].price}} product_rate={{products[index].rating}} image_link={{products[index].image_link}}></app-product-card>
+    <app-product-card *ngFor="let prod of products; let index = index" product_name={{prod.name}} product_price={{prod.price}} product_rate={{prod.rating}} image_link={{prod.image_link}} id={{prod.id}}></app-product-card>
 </app-product-container>

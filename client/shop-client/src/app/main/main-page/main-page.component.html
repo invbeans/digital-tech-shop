@@ -1,6 +1,6 @@
-<app-discounts-feed actionType="Самое последнее предложение">
-    <app-discounts-feed-item actionName={{lastAction!.name}} dateStart={{lastAction!.dateBegin}}
-        dateEnd={{lastAction!.dateEnd}} image={{lastAction!.image}}></app-discounts-feed-item>
+<app-discounts-feed actionType={{actionFeedTitle}}>
+    <app-discounts-feed-item *ngIf="showAction" actionName={{lastAction!.name}} [dateStart]="lastAction.dateBegin"
+        [dateEnd]="lastAction.dateEnd" image={{lastAction!.image}}></app-discounts-feed-item>
 </app-discounts-feed>
 
 <app-product-container>
@@ -8,5 +8,5 @@
 </app-product-container>
 
 <app-categories-feed>
-    <app-category-item *ngFor="let category of mainCategories" name={{category.name}} id={{category.id}}></app-category-item>
+    <app-category-item *ngFor="let category of mainCategories; let index = index" name={{category.name}} id={{category.id}} (click)="toMainCatPage(category.id)"></app-category-item>
 </app-categories-feed>
