@@ -1,7 +1,12 @@
 const tokenService = require('../service/token.service')
 
+const ADMIN_ROLE = 1;
+const MANAGER_ROLE = 2;
+const CONTENT_ROLE = 3;
+const USER_ROLE = 4;
+
 module.exports = async function (req, res, next) {
-    const message = "Доступ разрешён только администраторам"
+    const message = "Доступ разрешён только контент-менеджерам"
     try {
         const authorizationHeader = req.headers.authorization
         if (!authorizationHeader) {
@@ -15,7 +20,7 @@ module.exports = async function (req, res, next) {
         if (!userData) {
             req.message = message
         }
-        if(userData.role !== 1){
+        if(userData.role !== ADMIN_ROLE || userData.role !== CONTENT_ROLE){
             req.message = message
         }
         req.user = userData //кладет поле в req, если не авторизован, то поле не появится
