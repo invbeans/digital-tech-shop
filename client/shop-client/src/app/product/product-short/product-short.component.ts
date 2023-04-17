@@ -8,5 +8,6 @@ import { ProductProdPage } from 'src/app/shared/models/product-prod-page';
 })
 export class ProductShortComponent {
   @Input() product: ProductProdPage = {} as ProductProdPage 
+  @Input() canBasket = false;
 
 }

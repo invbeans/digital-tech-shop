@@ -11,6 +11,8 @@ import { QuestionsAnswersContainerComponent } from './questions-answers-containe
 import { QuestionComponent } from './question/question.component';
 import { AnswerComponent } from './answer/answer.component';
 import { ReviewInputComponent } from './review-input/review-input.component';
+import { QuestionInputComponent } from './question-input/question-input.component';
+import { AnswerInputComponent } from './answer-input/answer-input.component';
 
 const routes: Routes = [
   {path: '', component: ProductPageComponent}
@@ -26,7 +28,9 @@ const routes: Routes = [
     QuestionsAnswersContainerComponent,
     QuestionComponent,
     AnswerComponent,
-    ReviewInputComponent
+    ReviewInputComponent,
+    QuestionInputComponent,
+    AnswerInputComponent
   ],
   imports: [
     CommonModule,
