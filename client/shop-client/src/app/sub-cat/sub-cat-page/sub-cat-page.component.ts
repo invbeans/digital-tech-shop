@@ -31,6 +31,8 @@ export class SubCatPageComponent implements OnInit {
 
   getSubCategories() {
     if (this.id !== undefined) {
+      this.products = []
+      this.subCategories = []
       this.storefrontService.getSubcategoriesByMainCategory(this.id)
         .subscribe((data: any) => this.subCategories = data)
     }
