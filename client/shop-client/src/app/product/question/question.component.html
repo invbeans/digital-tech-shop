@@ -1,1 +1,12 @@
-<p>question works!</p>
+<div class="wrapper">
+    <div class="question">
+        <div class="horiz-info">
+            <p>{{question.username}}</p>
+            <p>{{question.date| date: 'dd.MM.yyyy - HH:mm:ss'}}</p>
+        </div>
+        <p>{{question.text}}</p>
+    </div>
+    <div class="answers">
+        <ng-content></ng-content>
+    </div>
+</div>

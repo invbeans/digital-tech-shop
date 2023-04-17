@@ -20,7 +20,7 @@ module.exports = async function (req, res, next) {
         if (!userData) {
             req.message = message
         }
-        if(userData.role !== ADMIN_ROLE || userData.role !== CONTENT_ROLE){
+        if(userData.role !== ADMIN_ROLE && userData.role !== CONTENT_ROLE){
             req.message = message
         }
         req.userData = userData //кладет поле в req, если не авторизован, то поле не появится

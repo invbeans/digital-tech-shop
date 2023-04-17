@@ -13,7 +13,7 @@ class activityController {
         }
         else {
             let { user, product, points, date, text } = req.body
-            if(!user){
+            if (!user) {
                 user = req.userData.id
             }
             await Review.query()
@@ -50,7 +50,7 @@ class activityController {
             .catch(err => res.json(err.message))
     }
 
-    async getReviewByProduct(req, res) {
+    async getReviewByProductForProdPage(req, res) {
         const product = req.params.id
         let reviewsForProducts = []
         await Review.query()
@@ -74,11 +74,19 @@ class activityController {
 
     // --------- question CRUD ----------
     async createQuestion(req, res) {
-        const { user, product, date, text } = req.body
-        await Question.query()
-            .insert({ user, product, date, text })
-            .then(question => res.json(question))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let { user, product, date, text } = req.body
+            if (!user) {
+                user = req.userData.id
+            }
+            await Question.query()
+                .insert({ user, product, date, text })
+                .then(question => res.json(question))
+                .catch(err => res.json(err.message))
+        }
     }
 
     async updateQuestion(req, res) {
@@ -106,22 +114,43 @@ class activityController {
             .catch(err => res.json(err.message))
     }
 
-    async getQuestionByProduct(req, res) {
+    async getQuestionByProductForProdPage(req, res) {
         const product = req.params.id
+        let questionsForProducts = []
         await Question.query()
             .select("*")
             .where("product", "=", product)
-            .then(question => res.json(question))
+            .then(async question => {
+                for (const que of question) {
+                    let queElem = {}
+                    queElem = { ...que }
+                    await User.query()
+                        .findById(que.user)
+                        .then(user => {
+                            queElem.user = user.username
+                        })
+                    questionsForProducts.push(queElem)
+                }
+                res.json(questionsForProducts)
+            })
             .catch(err => res.json(err.message))
     }
 
     // --------- answer CRUD ----------
     async createAnswer(req, res) {
-        const { question, user, date, text } = req.body
-        await Answer.query()
-            .insert({ question, user, date, text })
-            .then(answer => res.json(answer))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let { question, user, date, text } = req.body
+            if (!user) {
+                user = req.userData.id
+            }
+            await Answer.query()
+                .insert({ question, user, date, text })
+                .then(answer => res.json(answer))
+                .catch(err => res.json(err.message))
+        }
     }
 
     async updateAnswer(req, res) {
@@ -149,12 +178,25 @@ class activityController {
             .catch(err => res.json(err.message))
     }
 
-    async getAnswerByQuestion(req, res) {
+    async getAnswerByQuestionForProdPage(req, res) {
         const question = req.params.id
+        let answersForProducts = []
         await Answer.query()
             .select("*")
             .where("question", "=", question)
-            .then(answer => res.json(answer))
+            .then(async answer => {
+                for (const ans of answer) {
+                    let ansElem = {}
+                    ansElem = { ...ans }
+                    await User.query()
+                        .findById(ans.user)
+                        .then(user => {
+                            ansElem.user = user.username
+                        })
+                    answersForProducts.push(ansElem)
+                }
+                res.json(answersForProducts)
+            })
             .catch(err => res.json(err.message))
     }
 

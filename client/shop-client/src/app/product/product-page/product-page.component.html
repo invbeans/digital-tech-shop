@@ -1,5 +1,5 @@
 <div class="main-wrapper">
-    <app-product-short *ngIf="product" [product]="product"></app-product-short>
+    <app-product-short *ngIf="product" [product]="product" [canBasket]="showInputs"></app-product-short>
     <div class="horiz-btns">
         <button class="open-info-btn" (click)="productInfoClick()">Характеристики</button>
         <button class="open-info-btn" (click)="productReviewClick()">Отзывы</button>
@@ -10,4 +10,11 @@
         <app-review-input *ngIf="showInputs" [productId]="id"></app-review-input>
         <app-review *ngFor="let review of reviews" [review]="review"></app-review>
     </app-reviews-container>
+    <app-questions-answers-container *ngIf="showContent==3">
+        <app-question-input *ngIf="showInputs" [productId]="id"></app-question-input>
+        <app-question *ngFor="let questionAnswer of questionsAnswers" [question]="questionAnswer.question">
+            <app-answer-input *ngIf="showManagerInputs" [questionId]="questionAnswer.question.id"></app-answer-input>
+            <app-answer *ngFor="let answer of questionAnswer.answers" [answer]="answer"></app-answer>
+        </app-question>
+    </app-questions-answers-container>
 </div>

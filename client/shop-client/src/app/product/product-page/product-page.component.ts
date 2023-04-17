@@ -4,6 +4,7 @@ import { ActivityService } from 'src/app/services/activity-service/activity.serv
 import { StorefrontService } from 'src/app/services/storefront-service/storefront.service';
 import { ProductProdPage } from 'src/app/shared/models/product-prod-page';
 import { PropertyValueInfo } from 'src/app/shared/models/property-value-info';
+import { QuestionAnswer } from 'src/app/shared/models/question-answer';
 import { ReviewProdPage } from 'src/app/shared/models/review-prod-page';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
@@ -17,9 +18,10 @@ export class ProductPageComponent implements OnInit {
   product: ProductProdPage | null = {} as ProductProdPage;
   productPropValInfo: PropertyValueInfo[] = []
   reviews: ReviewProdPage[] = []
-  manufacturer = "";
+  questionsAnswers: QuestionAnswer[] = []
   showContent = 1;
   showInputs = false;
+  showManagerInputs = false;
 
   constructor(private storefrontService: StorefrontService, private router: Router, private activityService: ActivityService, private authService: AuthService) {
     if (this.router.getCurrentNavigation()?.extras?.state) {
@@ -31,8 +33,6 @@ export class ProductPageComponent implements OnInit {
     this.checkAuth()
     this.getProduct()
     this.getProductPropValInfo()
-    
-    //console.log(new Date().toISOString())
   }
 
   getProduct() {
@@ -60,22 +60,35 @@ export class ProductPageComponent implements OnInit {
       })
   }
 
+  getProductQuestionsAnswers() {
+    this.activityService.getQuestionsByProduct(this.id)
+    .subscribe((data: any) => {
+      this.questionsAnswers = data
+    })
+  }
+
   productInfoClick() {
     this.showContent = 1;
   }
 
-  productReviewClick (){
-    if(this.reviews.length == 0){
+  productReviewClick() {
+    if (this.reviews.length == 0) {
       this.getProductReviews()
     }
     this.showContent = 2;
   }
 
   productQaAClick() {
+    if(this.questionsAnswers.length == 0){
+      this.getProductQuestionsAnswers()
+    }
     this.showContent = 3;
   }
 
-  checkAuth(){
-    this.authService.checkAuth().subscribe((data: any) => this.showInputs = this.authService.getAuth())
+  checkAuth() {
+    this.authService.checkAuth().subscribe((data: any) => {
+      this.showInputs = this.authService.getAuth()
+      this.showManagerInputs = (data.userDto.role == 1 || data.userDto.role == 2)
+    })
   }
 }

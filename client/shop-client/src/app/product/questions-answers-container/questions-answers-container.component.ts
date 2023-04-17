@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { QuestionAnswer } from 'src/app/shared/models/question-answer';
 
 @Component({
   selector: 'app-questions-answers-container',

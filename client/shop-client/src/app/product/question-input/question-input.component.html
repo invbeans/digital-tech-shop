@@ -1,0 +1,6 @@
+<div class="wrapper">
+    <div class="horiz-div">
+        <textarea placeholder="Текст вопроса" maxlength="500" [(ngModel)]="text" (ngModelChange)="checkInput()"></textarea>
+        <button [disabled]="inputBtnDisabled" (click)="sendQuestion()">Отправить</button>
+    </div>
+</div>

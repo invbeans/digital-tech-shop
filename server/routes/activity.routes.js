@@ -2,24 +2,25 @@ const Router = require('express')
 const router = new Router()
 const controller = require('../controllers/activity.controller')
 const userMiddleware = require('../middlewares/user-auth.middleware')
+const managerMiddleware = require('../middlewares/manager-auth.middleware')
 
 // --------- review CRUD ----------
 router.post('/review', userMiddleware, controller.createReview)
 router.put('/review/:id', controller.updateReview)
 router.delete('/review/:id', controller.deleteReview)
-router.get('/review/by_product/:id', controller.getReviewByProduct)
+router.get('/review/by_product/:id', controller.getReviewByProductForProdPage)
 
 // --------- question CRUD ----------
-router.post('/question', controller.createQuestion)
+router.post('/question', userMiddleware, controller.createQuestion)
 router.put('/question/:id', controller.updateQuestion)
 router.delete('/question/:id', controller.deleteQuestion)
-router.get('/question/by_product/:id', controller.getQuestionByProduct)
+router.get('/question/by_product/:id', controller.getQuestionByProductForProdPage)
 
 // --------- answer CRUD ----------
-router.post('/answer', controller.createAnswer)
+router.post('/answer', managerMiddleware, controller.createAnswer)
 router.put('/answer/:id', controller.updateAnswer)
 router.delete('/answer/:id', controller.deleteAnswer)
-router.get('/answer/by_question/:id', controller.getAnswerByQuestion)
+router.get('/answer/by_question/:id', controller.getAnswerByQuestionForProdPage)
 
 // --------- return application CRUD ----------
 router.post('/return_application', controller.createReturnApplication)

@@ -1,0 +1,23 @@
+.wrapper {
+    width: 80vw;
+    border: 1px solid #183719;
+}
+
+.question {
+    background-color: #1f221f;
+    padding-left: 5vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+.answers {
+    padding-top: 2vh;
+    padding-left: 15vw;
+}
+
+.horiz-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    column-gap: 5vw;
+}
