@@ -4,7 +4,7 @@
         <p>{{product_name}}</p>
     </div>
     <div class="small-font-info">
-        <p class="price">{{product_price}}</p>
-        <p class="rate">{{product_rate}}</p>
+        <p class="price">{{product_price | currency:'RUB':'symbol-narrow'}}</p>
+        <p class="rate">{{product_rate}}⭐</p>
     </div>
 </div>

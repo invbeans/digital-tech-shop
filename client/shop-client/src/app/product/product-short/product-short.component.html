@@ -5,9 +5,9 @@
             <p>{{product!.manufacturer}}</p>
         </div>
         <div class="column-right">
-            <p>{{product!.name}}</p>
-            <p>{{product!.price}}</p>
-            <p>{{product!.rating}}</p>
+            <p class="bigger-font">{{product!.name}}</p>
+            <p>{{product!.price | currency:'RUB':'symbol-narrow'}}</p>
+            <p>{{product!.rating}}⭐</p>
         </div>
     </div>
     <div class="add-to-basket">Добавить в Корзину</div>

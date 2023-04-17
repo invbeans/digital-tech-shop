@@ -17,6 +17,8 @@ export class MainPageComponent implements OnInit {
   bestProducts: Product[] = [];
   mainCategories: MainCategory[] = [];
   actionFeedTitle = "Самое последнее предложение";
+  discountsLink = "/discounts"
+  discountsLinkText = "К другим акциям ->"
   showAction = true;
 
   constructor(private mainService: MainService, private router: Router, private authService: AuthService) {

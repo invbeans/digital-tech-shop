@@ -5,3 +5,9 @@
     column-gap: 1vw;
     row-gap: 1vh;
 }
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

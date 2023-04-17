@@ -1,5 +1,8 @@
 <article>
-    <header>{{actionType}}</header>
+    <header>
+        <p>{{actionType}}</p>
+        <a *ngIf="showLink" routerLink={{link}}>{{linkText}}</a>
+    </header>
     <div class="wrapper">
         <ng-content></ng-content>
     </div>
