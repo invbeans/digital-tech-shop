@@ -1,7 +1,6 @@
 <div class="main-wrapper">
-    <app-navigation></app-navigation>
-    
-    <app-sidebar></app-sidebar>
+    <app-navigation [isLogin]="isLogin"></app-navigation>
+    <app-sidebar [userRole]="userRole"></app-sidebar>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
     

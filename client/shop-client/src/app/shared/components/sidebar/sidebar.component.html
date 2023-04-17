@@ -2,8 +2,7 @@
     <aside>
         <nav>
             <ul>
-                <li><a>Первый элемент</a></li>
-                <li><a>Второй элемент</a></li>
+                <li *ngFor="let elem of sidebarElements"><a routerLink={{elem.link}}>{{elem.name}}</a></li>
             </ul>
         </nav>
     </aside>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { SidebarService } from '../../services/show-sidebar/sidebar.service';
 import { SearchService } from '../../services/search/search.service';
 import { Product } from '../../models/product';
@@ -12,8 +12,8 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./navigation.component.scss'],
   providers: [SearchService]
 })
-export class NavigationComponent implements OnInit {
-  isLogin = true;
+export class NavigationComponent implements OnChanges {
+  @Input() isLogin = true;
   LOGIN_A_TEXT = "Войти/Зарегистрироваться"
   LOGOUT_A_TEXT = "Выйти"
   LOGIN_LINK = "/auth"
@@ -23,27 +23,17 @@ export class NavigationComponent implements OnInit {
 
   constructor(public sidebarService: SidebarService,
     private router: Router,
-    private route: ActivatedRoute,
     private searchService: SearchService,
     private searchProductsService: SearchProductsService,
     private authService: AuthService) {
-      this.route.queryParams.subscribe(params => {
-        if (params['refresh'] === 'true') {
-          this.router.navigate(['/']).then(() => location.reload())
-        }
-      })
-      
-  }
+    }
 
-  ngOnInit(): void {
-    this.authService.checkAuth().subscribe((data: any) => {
-      if (localStorage.getItem('token')) {
-        this.isLogin = false
-      } else this.isLogin = true
-      console.log(this.isLogin)
-      this.login_logout_a_text = (this.isLogin) ? this.LOGIN_A_TEXT : this.LOGOUT_A_TEXT
-    })
-
+  ngOnChanges(changes: SimpleChanges): void {
+    for(const isLogin in changes){
+      const change = changes[isLogin]
+      this.isLogin = change.currentValue
+    }
+    this.login_logout_a_text = (this.isLogin) ? this.LOGIN_A_TEXT : this.LOGOUT_A_TEXT
   }
 
   inputString = ''

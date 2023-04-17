@@ -15,13 +15,18 @@ export class SubCatPageComponent implements OnInit {
   subCategories: SubCategory[] = [];
   products: Product[] = [];
 
-  private subscription: Subscription;
+  //private subscription: Subscription;
   constructor(private storefrontService: StorefrontService, private activateRoute: ActivatedRoute, private router: Router) {
-    this.subscription = activateRoute.params.subscribe(params => this.id = params['id']);
+    //this.subscription = activateRoute.params.subscribe(params => this.id = params['id']);
   }
 
   ngOnInit(): void {
-    this.getSubCategories()
+    let subscription: Subscription = this.activateRoute.params
+    .subscribe(params => {
+      this.id = params['id']
+      this.getSubCategories()
+    });
+    
   }
 
   getSubCategories() {

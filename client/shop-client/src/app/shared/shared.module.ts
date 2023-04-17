@@ -19,6 +19,7 @@ import { CookieModule } from 'ngx-cookie';
 import { AuthService } from './services/auth/auth.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/interceptors/auth-interceptor.interceptor';
+import { LoadInitDataService } from './services/load-init-data/load-init-data.service';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { AuthInterceptor } from './services/interceptors/auth-interceptor.interc
   providers: [
     SidebarService,
     AuthService,
+    LoadInitDataService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
