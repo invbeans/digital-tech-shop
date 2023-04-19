@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Manufacturer } from 'src/app/shared/models/manufacturer';
 import { Product } from 'src/app/shared/models/product';
 import { ProductProdPage } from 'src/app/shared/models/product-prod-page';
 import { PropertyValueInfo } from 'src/app/shared/models/property-value-info';
@@ -21,10 +22,22 @@ export class StorefrontService {
   }
 
   getProductById(id: number){
-    return this.http.get<ProductProdPage | null>(this.mapping + `product/${id}`)
+    return this.http.get<Product | null>(this.mapping + `product/${id}`)
+  }
+
+  getProductProdPageById(id: number){
+    return this.http.get<ProductProdPage | null>(this.mapping + `product_prod_page/${id}`)
   }
 
   getProductPropValInfo(id: number){
     return this.http.get<PropertyValueInfo | null>(this.mapping + `product_prop_val_info/by_product/${id}`)
+  }
+
+  getSubCategoryById(id: number){
+    return this.http.get<SubCategory | null>(this.mapping + `sub_category/${id}`)
+  }
+
+  getManufacturerById(id: number){
+    return this.http.get<Manufacturer | null>(this.mapping + `manufacturer/${id}`)
   }
 }

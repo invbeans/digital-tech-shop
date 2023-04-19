@@ -36,7 +36,7 @@ export class ProductPageComponent implements OnInit {
   }
 
   getProduct() {
-    this.storefrontService.getProductById(this.id)
+    this.storefrontService.getProductProdPageById(this.id)
       .subscribe((data: any) => {
         this.product = data
       })

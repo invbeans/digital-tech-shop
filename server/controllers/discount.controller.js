@@ -7,6 +7,7 @@ const DoubleAction = require('../models/DoubleAction')
 const BrandAction = require('../models/BrandAction')
 
 class discountController {
+
     // --------- action CRUD ----------
     async createAction(req, res) {
         const { name, date_begin, date_end, percent, image, action_type } = req.body
@@ -70,6 +71,58 @@ class discountController {
             .first("*")
             .then(action => res.json(action))
             .catch(err => res.json(err.message))
+    }
+
+    async getActionInfoById(req, res) {
+        const id = req.params.id
+        let actionInfo = {}
+        await Action.query()
+            .findById(id)
+            .then(async action => {
+                actionInfo.action = action
+                let actionType = Number(action.action_type)
+                switch (actionType) {
+                    case 1:
+                        await SubCategoryAction.query()
+                            .first("*")
+                            .where('action', id)
+                            .then(info => {
+                                actionInfo.info = info
+                                res.json(actionInfo)
+                            })
+                        break
+                    case 2:
+                        await HolidayAction.query()
+                            .first("*")
+                            .where('action', id)
+                            .then(info => {
+                                actionInfo.info = info
+                                res.json(actionInfo)
+                            })
+                        break
+                    case 3:
+                        await BrandAction.query()
+                            .first("*")
+                            .where('action', id)
+                            .then(info => {
+                                actionInfo.info = info
+                                res.json(actionInfo)
+                            })
+                        break
+                    case 4:
+                        await DoubleAction.query()
+                            .first("*")
+                            .where('action', id)
+                            .then(info => {
+                                actionInfo.info = info
+                                res.json(actionInfo)
+                            })
+                        break
+                    default:
+                        res.json({})
+                        break
+                }
+            }).catch(err => res.json(err.message))
     }
 
     // --------- action type CRUD ----------

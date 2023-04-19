@@ -9,6 +9,7 @@ router.delete('/action/:id', controller.deleteAction)
 router.get('/action/by_type/:id', controller.getActionsByActionType)
 router.get('/action/last', controller.getLastAction)
 router.get('/action/:id', controller.getActionById)
+router.get('/action_info/:id', controller.getActionInfoById)
 router.get('/action', controller.getActions)
 
 // --------- action type CRUD ----------
@@ -35,7 +36,7 @@ router.get('/sub_category_action', controller.getSubCategoryActions)
 router.post('/holiday_action', controller.createHolidayAction)
 router.put('/holiday_action/:id', controller.updateHolidayAction)
 router.delete('/holiday_action/:id', controller.deleteHolidayAction)
-router.get('/holiday_action/:id', controller.getHolidayActionById)
+router.get('/holiday_action/by_action/:id', controller.getHolidayActionById)
 router.get('/holiday_action', controller.getHolidayActions)
 
 // --------- double action CRUD ----------

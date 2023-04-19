@@ -13,6 +13,7 @@ router.post('/sub_category', controller.createSubCategory)
 router.put('/sub_category/:id', controller.updateSubCategory)
 router.delete('/sub_category/:id', controller.deleteSubCategory)
 router.get('/sub_category/by_main_category/:id', controller.getSubCategoriesByMainCategory)
+router.get('/sub_category/:id', controller.getSubCategoryById)
 router.get('/sub_category', controller.getSubCategories)
 
 // --------- product CRUD and more ----------
@@ -22,7 +23,8 @@ router.post('/product', controller.createProduct)
 router.put('/product/:id', controller.updateProduct)
 router.delete('/product/:id', controller.deleteProduct)
 router.get('/product/by_sub_category/:id', controller.getProductsBySubCategory)
-router.get('/product/:id', controller.getProductByIdForProdPage)
+router.get('/product/:id', controller.getProductById)
+router.get('/product_prod_page/:id', controller.getProductByIdForProdPage)
 router.get('/product', controller.getProducts)
 
 // --------- property CRUD ----------
@@ -73,7 +75,7 @@ router.delete('/supplier/:id', controller.deleteSupplier)
 router.get('/supplier/:id', controller.getSupplierById)
 router.get('/supplier', controller.getSuppliers)
 
-// --------- product image CRUD ----------
+// --------- manufacturer CRUD ----------
 router.post('/manufacturer', controller.createManufacturer)
 router.put('/manufacturer/:id', controller.updateManufacturer)
 router.delete('/manufacturer/:id', controller.deleteManufacturer)

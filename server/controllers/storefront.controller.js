@@ -97,6 +97,14 @@ class storefrontController {
             .catch(err => res.json(err.message))
     }
 
+    async getSubCategoryById(req, res) {
+        const id = req.params.id
+        await SubCategory.query()
+            .findById(id)
+            .then(subCategory => res.json(subCategory))
+            .catch(err => res.json(err.message))
+    }
+
     async getSubCategoriesByMainCategory(req, res) {
         const main_category = req.params.id
         await SubCategory.query()
@@ -142,6 +150,14 @@ class storefrontController {
 
     async getProducts(req, res) {
         await Product.query()
+            .then(product => res.json(product))
+            .catch(err => res.json(err.message))
+    }
+
+    async getProductById(req, res) {
+        const id = req.params.id
+        await Product.query()
+            .findById(id)
             .then(product => res.json(product))
             .catch(err => res.json(err.message))
     }
@@ -540,22 +556,22 @@ class storefrontController {
         let productPropVals = []
         const product = req.params.id
         await PropertyValue.query()
-        .select("*")
-        .joinRelated('product_property_values_rel', {alias: 'ppv'})
-        .where('ppv.product', product)
-        .then(async propertyValues => {
-            for(const propVal of propertyValues){
-                let prodPropValElem = {}
-                await Property.query()
-                .findById(propVal.property)
-                .then(property => {
-                    prodPropValElem.property = property.name
-                    prodPropValElem.property_value = propVal.value
-                    productPropVals.push(prodPropValElem)
-                })
-            }
-            res.json(productPropVals)
-        }).catch(err => res.json(err.message))
+            .select("*")
+            .joinRelated('product_property_values_rel', { alias: 'ppv' })
+            .where('ppv.product', product)
+            .then(async propertyValues => {
+                for (const propVal of propertyValues) {
+                    let prodPropValElem = {}
+                    await Property.query()
+                        .findById(propVal.property)
+                        .then(property => {
+                            prodPropValElem.property = property.name
+                            prodPropValElem.property_value = propVal.value
+                            productPropVals.push(prodPropValElem)
+                        })
+                }
+                res.json(productPropVals)
+            }).catch(err => res.json(err.message))
     }
 
     // --------- product remains CRUD ----------
