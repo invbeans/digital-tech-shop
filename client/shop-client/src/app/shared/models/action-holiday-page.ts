@@ -3,5 +3,5 @@ import { HolidayAction } from "./holiday-action";
 
 export class ActionHolidayPage {
     constructor(public action: Action,
-        public holidayAction: HolidayAction) { }
+        public holidayAction: HolidayAction[]) { }
 }

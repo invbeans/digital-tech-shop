@@ -93,7 +93,7 @@ class discountController {
                         break
                     case 2:
                         await HolidayAction.query()
-                            .first("*")
+                            .select("*")
                             .where('action', id)
                             .then(info => {
                                 actionInfo.info = info

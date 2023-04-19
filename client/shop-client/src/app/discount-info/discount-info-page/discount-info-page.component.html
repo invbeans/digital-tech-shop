@@ -1,1 +1,15 @@
-<p>{{actionInfoPromise | async}}</p>
+<div class="wrapper">
+    <div class="left-col">
+        <img src={{action.image}}>
+    </div>
+    <div class="right-col">
+        <p class="bigger-font">{{action.name}}</p>
+        <p>Выгода составит {{action.percent}}%!</p>
+        <p>Срок действия акции:</p>
+        <div class="dates-div">
+            <p>{{action.dateBegin | date: 'dd.MM.yyyy'}}</p>
+            <p>-</p>
+            <p>{{action.dateEnd | date: 'dd.MM.yyyy'}}</p>
+        </div>
+    </div>
+</div>
