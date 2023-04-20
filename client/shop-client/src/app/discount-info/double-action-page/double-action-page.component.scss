@@ -1,5 +1,20 @@
-.wrapper{
+.main-wrapper {
+    padding-bottom: 30vh;
+    width: 100%;
+}
+
+.feed {
+    padding-top: 5vh;
+    display: flex;
+    justify-content: space-around;
+}
+
+.bigger-font {
+    font-size: x-large;
+    padding-top: 10vh;
+}
+
+.wrapper {
     display: flex;
     justify-content: center;
-    padding-bottom: 30vh;
 }

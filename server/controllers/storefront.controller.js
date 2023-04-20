@@ -224,6 +224,25 @@ class storefrontController {
             .catch(err => res.json(err.message))
     }
 
+    async getProductsByManufacturer(req, res) {
+        const manufacturer = req.params.id
+        let prods = []
+        await Manufacturer.relatedQuery('product_rel')
+            .for(manufacturer)
+            .orderBy('rating', 'desc')
+            .then(async products => {
+                for (const product of products) {
+                    let prodElem = {}
+                    prodElem = { ...product }
+                    await ProductImage.query().where('product', '=', product.id).then(productImg => { prodElem.image_link = productImg[0].image_link })
+                    await ProductRemains.query().where('product', '=', product.id).then(productAmt => { prodElem.amount = productAmt[0].amount })
+                    prods.push(prodElem)
+                }
+                res.json(prods)
+            })
+            .catch(err => res.json(err.message))
+    }
+
     //хаха а что делать...
     //апдейт все еще не знаю ЛОЛ БЛИН
     async getFilteredProducts(req, res) {

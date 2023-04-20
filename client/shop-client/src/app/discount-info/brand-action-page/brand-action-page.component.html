@@ -1,3 +1,6 @@
-<div class="wrapper">
-    <app-discount-info-page [action]="actionInfo.action"></app-discount-info-page>
+<div class="main-wrapper">
+    <div class="wrapper">
+        <app-discount-info-page [action]="actionInfo.action"></app-discount-info-page>
+    </div>
+    <div class="link-div" (click)="onBrandClick()">Перейти на страницу {{manufacturer.name}}</div>
 </div>

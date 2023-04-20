@@ -4,7 +4,7 @@ import { AdminPageModule } from './admin-page/admin-page.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrandModule } from './brand/brand.module';
+//import { BrandModule } from './brand/brand.module';
 import { ContentPageModule } from './content-page/content-page.module';
 //import { DiscountsModule } from './discounts/discounts.module';
 //import { MainCatModule } from './main-cat/main-cat.module';
@@ -33,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     //SubCatModule,
     //ProductModule,
     //DiscountsModule,
-    BrandModule,
+    //BrandModule,
     MakeOrderModule,
     TrackOrderModule,
     ReturnModule,

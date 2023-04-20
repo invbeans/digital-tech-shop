@@ -40,4 +40,8 @@ export class StorefrontService {
   getManufacturerById(id: number){
     return this.http.get<Manufacturer | null>(this.mapping + `manufacturer/${id}`)
   }
+
+  getProductsByManufacturer(id: number){
+    return this.http.get<Product | null>(this.mapping + `product/by_manufacturer/${id}`)
+  }
 }

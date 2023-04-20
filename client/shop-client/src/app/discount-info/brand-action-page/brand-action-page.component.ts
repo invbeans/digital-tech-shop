@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DiscountService } from 'src/app/services/discount-service/discount.service';
 import { StorefrontService } from 'src/app/services/storefront-service/storefront.service';
 import { Action } from 'src/app/shared/models/action';
@@ -17,7 +17,7 @@ export class BrandActionPageComponent implements OnInit {
   actionInfo: ActionBrandPage = {} as ActionBrandPage;
   manufacturer: Manufacturer = {} as Manufacturer;
 
-  constructor(private discountService: DiscountService, private activateRoute: ActivatedRoute, private storefrontService: StorefrontService) {
+  constructor(private discountService: DiscountService, private activateRoute: ActivatedRoute, private storefrontService: StorefrontService, private router: Router) {
     this.activateRoute.params
       .subscribe(params => {
         this.id = params['id']
@@ -36,8 +36,11 @@ export class BrandActionPageComponent implements OnInit {
           .subscribe((info: any) => {
             this.manufacturer = info
           })
-        console.log(this.actionInfo)
       })
+  }
+
+  onBrandClick() {
+    this.router.navigate([`/brand/${this.manufacturer.id}`])
   }
 
 }

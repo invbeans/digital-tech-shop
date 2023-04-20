@@ -1,5 +1,21 @@
-.wrapper{
+.main-wrapper {
+    padding-bottom: 30vh;
+    width: 100%;
+}
+
+.wrapper {
     display: flex;
     justify-content: center;
-    padding-bottom: 30vh;
+}
+
+.link-div {
+    margin-left: 5vw;
+    margin-top: 5vh;
+    min-width: fit-content;
+    height: 10vh;
+    width: 25vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #232823;
 }

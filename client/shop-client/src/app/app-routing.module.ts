@@ -13,7 +13,8 @@ const routes: Routes = [
   {path: 'discounts', loadChildren: () => import('./discounts/discounts.module').then(m => m.DiscountsModule)},
   {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
   {path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)},
-  {path: 'discount', loadChildren: () => import('./discount-info/discount-info.module').then(m => m.DiscountInfoModule)}
+  {path: 'discount', loadChildren: () => import('./discount-info/discount-info.module').then(m => m.DiscountInfoModule)},
+  {path: 'brand/:id', loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule)}
 
 ];
 

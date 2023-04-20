@@ -1,3 +1,20 @@
-<div class="wrapper">
-    <app-discount-info-page [action]="actionInfo.action"></app-discount-info-page>
+<div class="main-wrapper">
+    <div class="wrapper">
+        <app-discount-info-page [action]="actionInfo.action"></app-discount-info-page>
+    </div>
+    <div class="feed">
+        <div class="feed-item">
+            <p>Купите этот товар</p>
+            <app-product-card product_name={{fullPriceProduct.name}} product_price={{fullPriceProduct.price}}
+                product_rate={{fullPriceProduct.rating}} image_link={{fullPriceProduct.image_link}}
+                id={{fullPriceProduct.id}}></app-product-card>
+        </div>
+        <p class="bigger-font">+</p>
+        <div class="feed-item">
+            <p>чтобы сэкономить на этом!</p>
+            <app-product-card product_name={{discountProduct.name}} product_price={{discountProduct.price}}
+                product_rate={{discountProduct.rating}} image_link={{discountProduct.image_link}}
+                id={{discountProduct.id}}></app-product-card>
+        </div>
+    </div>
 </div>

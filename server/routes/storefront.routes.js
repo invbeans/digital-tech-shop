@@ -25,6 +25,7 @@ router.delete('/product/:id', controller.deleteProduct)
 router.get('/product/by_sub_category/:id', controller.getProductsBySubCategory)
 router.get('/product/:id', controller.getProductById)
 router.get('/product_prod_page/:id', controller.getProductByIdForProdPage)
+router.get('/product/by_manufacturer/:id', controller.getProductsByManufacturer)
 router.get('/product', controller.getProducts)
 
 // --------- property CRUD ----------

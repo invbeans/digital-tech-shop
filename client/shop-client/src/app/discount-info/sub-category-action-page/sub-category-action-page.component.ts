@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DiscountService } from 'src/app/services/discount-service/discount.service';
 import { StorefrontService } from 'src/app/services/storefront-service/storefront.service';
@@ -19,7 +19,7 @@ export class SubCategoryActionPageComponent implements OnInit {
    actionInfo: ActionSubCatPage = {} as ActionSubCatPage;
    subCategory: SubCategory = {} as SubCategory;
 
-  constructor(private discountService: DiscountService, private activateRoute: ActivatedRoute, private storefrontService: StorefrontService) {
+  constructor(private discountService: DiscountService, private activateRoute: ActivatedRoute, private storefrontService: StorefrontService, private router: Router) {
     this.activateRoute.params
       .subscribe(params => {
         this.id = params['id']
@@ -36,10 +36,14 @@ export class SubCategoryActionPageComponent implements OnInit {
       this.actionInfo = new ActionSubCatPage(tempAction, tempSubCategoryAction)
       this.storefrontService.getSubCategoryById(data.info.sub_category)
       .subscribe((info: any) => {
-        this.subCategory = info
+        let tempSubCategory = new SubCategory(info.id, info.main_category, info.name)
+        this.subCategory = tempSubCategory
       })
-      console.log(this.actionInfo)
     })
+  }
+
+  onSubCategoryClick(){
+    this.router.navigate([`/main_category/${this.subCategory.id}`])
   }
 
 }
