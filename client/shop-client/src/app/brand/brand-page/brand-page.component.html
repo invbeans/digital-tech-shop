@@ -1,3 +1,15 @@
-<app-product-container>
-    <app-product-card *ngFor="let prod of products; let index = index" product_name={{prod.name}} product_price={{prod.price}} product_rate={{prod.rating}} image_link={{prod.image_link}} id={{prod.id}}></app-product-card>
-</app-product-container>
+<div class="wrapper">
+    <app-categories-feed>
+        <app-category-item *ngFor="let category of mainCategories; let index = index" name={{category.name}}
+            id={{category.id}} (click)="onMainCategoryClick(category.id || 0)"></app-category-item>
+    </app-categories-feed>
+    <app-sub-category-feed *ngIf="showSubCategoriesFeed">
+        <app-sub-category-item *ngFor="let subCategory of subCategories; let index = index" name={{subCategory.name}}
+            (click)="onSubCategoryClick(subCategory.id || 0)"></app-sub-category-item>
+    </app-sub-category-feed>
+    <app-product-container *ngIf="showProductsFeed">
+        <app-product-card *ngFor="let prod of products; let index = index" product_name={{prod.name}}
+            product_price={{prod.price}} product_rate={{prod.rating}} image_link={{prod.image_link}}
+            id={{prod.id}}></app-product-card>
+    </app-product-container>
+</div>

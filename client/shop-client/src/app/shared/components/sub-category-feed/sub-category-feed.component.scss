@@ -1,8 +1,12 @@
 .wrapper {
     display: grid;
     width: 100%;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    background-color: var(--card-background-color);
+    grid-auto-columns: 12.0625vw;
+    grid-auto-flow: column;
     column-gap: 0.5vw;
-    row-gap: 0.5vh;
-    padding-bottom: 5vh;
+    row-gap: 1vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-bottom: 2vh;
 }

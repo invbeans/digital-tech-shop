@@ -6,6 +6,7 @@ const controller = require('../controllers/storefront.controller')
 router.post('/main_category', controller.createMainCategory)
 router.put('/main_category/:id', controller.updateMainCategory)
 router.delete('/main_category/:id', controller.deleteMainCategory)
+router.get('/main_category/by_manufacturer/:id', controller.getMainCategoriesByManufacturer)
 router.get('/main_category', controller.getMainCategories)
 
 // --------- sub category CRUD ----------
@@ -13,12 +14,14 @@ router.post('/sub_category', controller.createSubCategory)
 router.put('/sub_category/:id', controller.updateSubCategory)
 router.delete('/sub_category/:id', controller.deleteSubCategory)
 router.get('/sub_category/by_main_category/:id', controller.getSubCategoriesByMainCategory)
+router.post('/sub_category/by_manufacturer', controller.getSubCategoriesByManufacturer)
 router.get('/sub_category/:id', controller.getSubCategoryById)
 router.get('/sub_category', controller.getSubCategories)
 
 // --------- product CRUD and more ----------
 router.get('/product/filter', controller.getFilteredProducts)
 router.post('/product/search', controller.getProductsBySearch)
+router.post('/product/by_manufacturer_sub_category', controller.getProductsByManufacturerAndSubCategory)
 router.post('/product', controller.createProduct)
 router.put('/product/:id', controller.updateProduct)
 router.delete('/product/:id', controller.deleteProduct)

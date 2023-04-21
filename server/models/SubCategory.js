@@ -10,6 +10,7 @@ class SubCategory extends Model {
         const SubCategoryAction = require('./SubCategoryAction')
         const Product = require('./Product')
         const HolidayAction = require('./HolidayAction')
+        const MainCategory = require('./MainCategory')
 
         return {
             property_sub_category_rel: {
@@ -42,6 +43,14 @@ class SubCategory extends Model {
                 join: {
                     from: 'sub_category.id',
                     to: 'holiday_action.sub_category'
+                }
+            },
+            main_category_rel: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: MainCategory,
+                join: {
+                    from: 'sub_category.main_category',
+                    to: 'main_category.id'
                 }
             }
         }

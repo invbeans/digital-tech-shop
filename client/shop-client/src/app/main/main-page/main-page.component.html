@@ -1,12 +1,15 @@
-<app-discounts-feed actionType={{actionFeedTitle}} link={{discountsLink}} linkText={{discountsLinkText}}>
-    <app-discounts-feed-item *ngIf="showAction" actionName={{lastAction!.name}} [dateStart]="lastAction.dateBegin"
-        [dateEnd]="lastAction.dateEnd" image={{lastAction!.image}}></app-discounts-feed-item>
-</app-discounts-feed>
+<div class="wrapper">
+    <app-discounts-feed actionType={{actionFeedTitle}} link={{discountsLink}} linkText={{discountsLinkText}}>
+        <app-discounts-feed-item *ngIf="showAction" actionName={{lastAction!.name}} [dateStart]="lastAction.dateBegin"
+            [dateEnd]="lastAction.dateEnd" image={{lastAction!.image}}></app-discounts-feed-item>
+    </app-discounts-feed>
 
-<app-product-container>
-    <app-product-card *ngFor="let prod of bestProducts"></app-product-card>
-</app-product-container>
+    <app-product-container>
+        <app-product-card *ngFor="let prod of bestProducts"></app-product-card>
+    </app-product-container>
 
-<app-categories-feed>
-    <app-category-item *ngFor="let category of mainCategories; let index = index" name={{category.name}} id={{category.id}} (click)="toMainCatPage(category.id)"></app-category-item>
-</app-categories-feed>
+    <app-categories-feed>
+        <app-category-item *ngFor="let category of mainCategories; let index = index" name={{category.name}}
+            id={{category.id}} (click)="toMainCatPage(category.id)"></app-category-item>
+    </app-categories-feed>
+</div>

@@ -55,6 +55,16 @@ class storefrontController {
             .catch(err => res.json(err.message))
     }
 
+    async getMainCategoriesByManufacturer(req, res) {
+        const manufacturer = req.params.id
+        await MainCategory.query()
+            .distinct("main_category.*")
+            .joinRelated('sub_category_rel.product_rel')
+            .where('sub_category_rel:product_rel.manufacturer', manufacturer)
+            .then(mainCategories => res.json(mainCategories))
+            .catch(err => res.json(err.message))
+    }
+
     // --------- sub category CRUD ----------
     async createSubCategory(req, res) {
         const { main_category, name } = req.body
@@ -110,6 +120,17 @@ class storefrontController {
         await SubCategory.query()
             .select("*")
             .where("main_category", "=", main_category)
+            .then(subCategories => res.json(subCategories))
+            .catch(err => res.json(err.message))
+    }
+
+    async getSubCategoriesByManufacturer(req, res) {
+        const { manufacturer, main_category } = req.body
+        await SubCategory.query()
+            .distinct("sub_category.*")
+            .where('main_category', main_category)
+            .joinRelated("product_rel")
+            .where("product_rel.manufacturer", manufacturer)
             .then(subCategories => res.json(subCategories))
             .catch(err => res.json(err.message))
     }
@@ -229,6 +250,26 @@ class storefrontController {
         let prods = []
         await Manufacturer.relatedQuery('product_rel')
             .for(manufacturer)
+            .orderBy('rating', 'desc')
+            .then(async products => {
+                for (const product of products) {
+                    let prodElem = {}
+                    prodElem = { ...product }
+                    await ProductImage.query().where('product', '=', product.id).then(productImg => { prodElem.image_link = productImg[0].image_link })
+                    await ProductRemains.query().where('product', '=', product.id).then(productAmt => { prodElem.amount = productAmt[0].amount })
+                    prods.push(prodElem)
+                }
+                res.json(prods)
+            })
+            .catch(err => res.json(err.message))
+    }
+
+    async getProductsByManufacturerAndSubCategory(req, res) {
+        const { manufacturer, sub_category } = req.body
+        let prods = []
+        await Manufacturer.relatedQuery('product_rel')
+            .for(manufacturer)
+            .andWhere('sub_category', sub_category)
             .orderBy('rating', 'desc')
             .then(async products => {
                 for (const product of products) {

@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MainCategory } from 'src/app/shared/models/main-category';
 import { Manufacturer } from 'src/app/shared/models/manufacturer';
 import { Product } from 'src/app/shared/models/product';
 import { ProductProdPage } from 'src/app/shared/models/product-prod-page';
@@ -43,5 +44,29 @@ export class StorefrontService {
 
   getProductsByManufacturer(id: number){
     return this.http.get<Product | null>(this.mapping + `product/by_manufacturer/${id}`)
+  }
+
+  getProductsByManufacturerAndSubCategory(manufacturer: number, sub_category: number){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    }
+    const body = { manufacturer, sub_category }
+    return this.http.post<Product | null>(this.mapping + `/product/by_manufacturer_sub_category`, body, httpOptions)
+  }
+
+  getMainCategoriesByManufacturer(id: number){
+    return this.http.get<MainCategory | null>(this.mapping + `main_category/by_manufacturer/${id}`)
+  }
+
+  getSubCategoriesByManufacturer(manufacturer: number, main_category: number){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    }
+    const body = { manufacturer, main_category }
+    return this.http.post<SubCategory | null>(this.mapping + `sub_category/by_manufacturer`, body, httpOptions)
   }
 }
