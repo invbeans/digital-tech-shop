@@ -8,7 +8,8 @@
             <p class="bigger-font">{{product!.name}}</p>
             <p>{{product!.price | currency:'RUB':'symbol-narrow'}}</p>
             <p>{{product!.rating}}⭐</p>
+            <p>В наличии: {{product.amount}}</p>
         </div>
     </div>
-    <div class="add-to-basket">Добавить в Корзину</div>
+    <div class="add-to-basket" (click)="onBasketClick()">Добавить в Корзину</div>
 </div>

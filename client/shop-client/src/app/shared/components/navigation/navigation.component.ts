@@ -70,4 +70,13 @@ export class NavigationComponent implements OnChanges {
       this.router.navigate(['/search_products'])
     })
   }
+
+  navigateBasketClick(){
+    if(this.isLogin){
+      this.router.navigate([this.LOGIN_LINK])
+    }
+    else {
+      this.router.navigate(['/basket'])
+    }
+  }
 }

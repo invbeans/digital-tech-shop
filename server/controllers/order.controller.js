@@ -4,10 +4,13 @@ const Order = require('../models/Order')
 const OrderProduct = require('../models/OrderProduct')
 const Check = require('../models/Check')
 const PaymentMethod = require('../models/PaymentMethod')
+const Product = require('../models/Product')
+const ProductImage = require('../models/ProductImage')
+const ProductRemains = require('../models/ProductRemains')
 
 class orderController {
     // --------- basket CRUD ----------
-    async createBasket(req, res) {
+    async createBasket(req, res) { //взмж стоит снести
         const { user, begin_date } = req.body
         await Basket.query()
             .insert({ user, begin_date })
@@ -36,26 +39,101 @@ class orderController {
             .where("user", "=", id)
             .then(basket => res.json(basket))
             .catch(err => res.json(err.message))
+    } //вот по сюда как раз и снести..... :D
+
+    async getOrCreateBasket(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let { user, begin_date } = req.body
+            if (!user) {
+                user = req.userData.id
+            }
+            await Basket.query()
+                .where('user', user)
+                .then(async basket => {
+                    if (basket.length == 0) {
+                        await Basket.query()
+                            .insert({ user, begin_date })
+                            .then(newBasket => {
+                                res.json(newBasket)
+                            })
+                    } else {
+                        res.json(basket[0])
+                    }
+                })
+                .catch(err => res.json(err.message))
+        }
+    }
+
+    async deleteBasket(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let user = req.userData.id
+            await Basket.query()
+                .delete()
+                .where('user', user)
+                .then(amount => {
+                    if (amount == 0) res.json("Такой корзины нет")
+                    else res.json(`Корзина с id = ${user} удалена`)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     // --------- basket product CRUD ----------
     async createBasketProduct(req, res) {
-        const { basket, product } = req.body
-        await BasketProduct.query()
-            .insert({ basket, product })
-            .then(basketProduct => res.json(basketProduct))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const { product } = req.body
+            let user = req.userData.id
+            let begin_date = new Date().toISOString()
+            await Basket.query()
+                .where('user', user)
+                .then(async basket => {
+                    if (basket.length == 0) {
+                        await Basket.query()
+                            .insert({ user, begin_date })
+                            .then(async () => {
+                                await BasketProduct.query()
+                                    .insert({ basket: user, product })
+                                    .then(basketProduct => res.json(basketProduct))
+                            })
+                    } else {
+                        await BasketProduct.query()
+                            .insert({ basket: user, product })
+                            .then(basketProduct => {
+
+                                console.log(basketProduct)
+                                res.json(basketProduct)
+                            })
+                    }
+                })
+                .catch(err => res.json(err.message))
+        }
+
     }
 
-    async deleteBasketProduct(req, res) {
-        const id = req.params.id
-        await BasketProduct.query()
-            .deleteById(id)
-            .then(amount => {
-                if (amount == 0) res.json("Такой записи 'товар-корзина' нет")
-                else res.json(`Товар-корзина с id = ${id} удалена`)
-            })
-            .catch(err => res.json(err.message))
+    async deleteBasketProductByProduct(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const product = req.params.id
+            await BasketProduct.query()
+                .delete()
+                .where('product', product)
+                .then(amount => {
+                    if (amount == 0) res.json("Такой записи 'товар-корзина' нет")
+                    else res.json(`Товар-корзина с id = ${id} удалена`)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async getBasketProductById(req, res) {
@@ -73,6 +151,31 @@ class orderController {
             .where("basket", "=", basket)
             .then(basketProduct => res.json(basketProduct))
             .catch(err => res.json(err.message))
+    }
+
+    async getProductsByBasket(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const basket = req.userData.id
+            let prods = []
+            await Product.query()
+                .select("product.*")
+                .joinRelated('basket_product_rel')
+                .where('basket_product_rel.basket', basket)
+                .then(async products => {
+                    for (const product of products) {
+                        let prodElem = {}
+                        prodElem = { ...product }
+                        await ProductImage.query().where('product', '=', product.id).then(productImg => { prodElem.image_link = productImg[0].image_link })
+                        await ProductRemains.query().where('product', '=', product.id).then(productAmt => { prodElem.amount = productAmt[0].amount })
+                        prods.push(prodElem)
+                    }
+                    res.json(prods)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     // --------- order CRUD ----------

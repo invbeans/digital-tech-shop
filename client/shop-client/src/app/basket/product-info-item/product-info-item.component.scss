@@ -1,0 +1,48 @@
+.wrapper {
+    width: 90vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin-bottom: 5vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    border: 1px solid #183719;
+}
+
+.column {
+    min-width: fit-content;
+    width: 15vw;
+    padding-left: 2vw;
+}
+
+.horiz {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+img {
+    width: 30vw;
+}
+
+.count {
+    width: 3vw;
+    height: 5vh;
+    padding: 0;
+    font-size: small;
+}
+
+.amount {
+    width: 5vw;
+}
+
+.smaller-font{
+    font-size: medium;
+}
+
+.smaller-btn {
+    width: 3vw;
+    height: 3vh;
+    padding: 0;
+    font-size: small;
+}

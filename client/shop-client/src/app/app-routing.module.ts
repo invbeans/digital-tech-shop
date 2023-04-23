@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from './main/main-page/main-page.component';
 import { MainCatPageComponent } from './main-cat/main-cat-page/main-cat-page.component';
+import { BasketModule } from './basket/basket.module';
 
 const routes: Routes = [
   //{path: '/main_categories', component: MainCatPageComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
   {path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)},
   {path: 'discount', loadChildren: () => import('./discount-info/discount-info.module').then(m => m.DiscountInfoModule)},
-  {path: 'brand/:id', loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule)}
+  {path: 'brand/:id', loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule)},
+  {path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule)}
 
 ];
 

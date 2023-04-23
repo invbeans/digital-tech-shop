@@ -1,15 +1,19 @@
 const Router = require('express')
 const router = new Router()
 const controller = require('../controllers/order.controller')
+const userMiddleware = require('../middlewares/user-auth.middleware')
 
 // --------- basket CRUD ----------
 router.post('/basket', controller.createBasket)
+router.post('/basket/by_user', userMiddleware, controller.getOrCreateBasket)
 router.put('/basket/:id', controller.updateBasket)
 router.get('/basket/:id', controller.getBasketById)
+router.delete('/basket/by_user', userMiddleware, controller.deleteBasket)
 
 // --------- basket product CRUD ----------
-router.post('/basket_product', controller.createBasketProduct)
-router.delete('/basket_product/:id', controller.deleteBasketProduct)
+router.post('/basket_product', userMiddleware, controller.createBasketProduct)
+router.delete('/basket_product/by_product/:id', userMiddleware, controller.deleteBasketProductByProduct)
+router.get('/product/by_basket', userMiddleware, controller.getProductsByBasket)
 router.get('/basket_product/by_basket/:id', controller.getBasketProductsByBasket)
 router.get('/basket_product/:id', controller.getBasketProductById)
 

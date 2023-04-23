@@ -1,0 +1,28 @@
+<div class="wrapper">
+    <div class="column">
+        <img src={{product.product.image_link}}>
+    </div>
+    <div class="column">
+        <p class="smaller-font">{{product.product.name}}</p>
+        <p>{{product.product.rating}}</p>
+        <p class="smaller-font">Осталось: {{product.product.amount}}</p>
+    </div>
+    <div class="column">
+        <p>{{product.product.price}}</p>
+    </div>
+    <div class="column">
+        <p>Сумма:</p>
+        <p>{{fullPrice}}</p>
+    </div>
+    <div class="column">
+        <div class="horiz">
+            <button class="count" (click)="onMinusClick()">-</button>
+            <input type="text" [(ngModel)]="product.count" class="amount">
+            <button class="count" (click)="onPlusClick()">+</button>
+        </div>
+        <div *ngIf="showDeleteProduct">
+            <p class="smaller-font">Удалить товар из корзины?</p>
+            <button class="smaller-btn" (click)="onDeleteClick()">Да</button>
+        </div>
+    </div>
+</div>
