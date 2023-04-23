@@ -38,6 +38,10 @@ export class AuthService {
     return this.errorMessage
   }
 
+  getUserDto(){
+    return this.userDto
+  }
+
   login(loginUser: LoginUser) {
     const httpOptions = {
       headers: new HttpHeaders({

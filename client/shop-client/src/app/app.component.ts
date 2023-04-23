@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     this.authService.checkAuth().subscribe((data: any) => {
       if (localStorage.getItem('token')) {
         this.isLogin = false
-        this.userRole = data.userDto.role
+        //this.userRole = data.userDto.role
       } else this.isLogin = true
     })
   }

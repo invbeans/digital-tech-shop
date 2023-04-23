@@ -27,6 +27,7 @@ module.exports = async function (req, res, next) {
         next()
     } catch (err) {
         req.message = err.message
+        next()
         //next(err)
     }
 }

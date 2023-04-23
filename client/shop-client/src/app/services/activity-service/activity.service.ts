@@ -69,10 +69,11 @@ export class ActivityService {
             this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
+                this.postReview(text, points, product)
               }
             })
           }
-          this.http.post<Review | null>(this.mapping + 'review', body, httpOptions)
+          else return data
         })
       )
   }
@@ -94,10 +95,11 @@ export class ActivityService {
             this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
+                this.postQuestion(text, product)
               }
             })
           }
-          this.http.post<Question | null>(this.mapping + 'question', body, httpOptions)
+          else return data
         })
       )
   }
@@ -119,10 +121,11 @@ export class ActivityService {
             this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
+                this.postAnswer(text, question)
               }
             })
           }
-          this.http.post<Answer | null>(this.mapping + 'answer', body, httpOptions)
+          else return data
         })
       )
   }

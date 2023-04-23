@@ -32,6 +32,7 @@ export class MainService {
       withCredentials: true,
       "observe?": "response"
     }
+    console.log("делаем запрос") //метод чтоб тестить, не смотреть сюда 
     return this.http.get<User | null>(this.mapping + 'user/user', httpOptions)
     .pipe(
       map((data: any) => {
@@ -39,10 +40,11 @@ export class MainService {
           this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
             if(refreshData){
               localStorage.setItem('token', refreshData.accessToken) //это должен быть рефреш по истечению времени вроде
+              this.getAllUsers()
             }
           })
         }
-        this.http.get<User | null>(this.mapping + 'user/user', httpOptions)
+        else return data
       })
     )
   }
