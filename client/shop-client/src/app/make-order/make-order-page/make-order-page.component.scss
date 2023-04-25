@@ -1,0 +1,21 @@
+.wrapper {
+    padding-bottom: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bigger-font {
+    font-size: larger;
+}
+
+button {
+    width: fit-content;
+}
+
+.info-field {
+    display: flex;
+    width: 90vw;
+    flex-direction: row;
+    justify-content: space-around;
+}

@@ -1,0 +1,25 @@
+.wrapper {
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    min-width: fit-content;
+    width: 5vw;
+    height: 5vh;
+}
+
+.promocode-input {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: space-between;
+}
+
+button {
+    width: 12vw;
+    height: 5vh;
+    padding: 0;
+}

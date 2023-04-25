@@ -4,6 +4,8 @@ import { map } from 'rxjs';
 import { AuthResponse } from 'src/app/shared/models/auth-response';
 import { Basket } from 'src/app/shared/models/basket';
 import { BasketProduct } from 'src/app/shared/models/basket-product';
+import { BasketProductPage } from 'src/app/shared/models/basket-product-page';
+import { PaymentMethod } from 'src/app/shared/models/payment-method';
 import { Product } from 'src/app/shared/models/product';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
@@ -12,7 +14,23 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 })
 export class OrderService {
   mapping: string = 'http://localhost:3000/order/';
+  products: BasketProductPage[] = []
+
   constructor(private http: HttpClient, private authService: AuthService) { }
+
+  fillOrderProducts(products: BasketProductPage[]){
+    this.products = []
+    products = products.filter(prod => prod.count > 0)
+    this.products = products
+  }
+
+  getOrderProducts(){
+    return this.products
+  }
+
+  clearOrderProducts(){
+    this.products = []
+  }
 
   getBasket() {
     const httpOptions = {
@@ -112,5 +130,9 @@ export class OrderService {
           else return data
         })
       )
+  }
+
+  getPaymentMethods(){
+    return this.http.get<PaymentMethod | null>(this.mapping + `/payment_method`)
   }
 }

@@ -1,0 +1,8 @@
+<div class="wrapper">
+    <p>Введите промокод:</p>
+    <div class="promocode-input">
+        <input type="text" [(ngModel)]="promocode">
+        <button (click)="onInputClick(promocode)">+</button>
+    </div>
+    <p *ngIf="promocodeUsed">Промокод успешно применён!</p>
+</div>

@@ -34,7 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
     //ProductModule,
     //DiscountsModule,
     //BrandModule,
-    MakeOrderModule,
+    //MakeOrderModule,
     TrackOrderModule,
     ReturnModule,
     AdminPageModule,

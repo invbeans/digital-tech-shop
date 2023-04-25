@@ -161,11 +161,16 @@ class discountController {
 
     // --------- promocode CRUD ----------
     async createPromocode(req, res) {
-        const { text, percent, is_active } = req.body
-        await Promocode.query()
-            .insert({ text, percent, is_active })
-            .then(promocode => res.json(promocode))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const { text, percent, is_active } = req.body
+            await Promocode.query()
+                .insert({ text, percent, is_active })
+                .then(promocode => res.json(promocode))
+                .catch(err => res.json(err.message))
+        }
     }
 
     async deletePromocode(req, res) {
@@ -199,11 +204,12 @@ class discountController {
             .catch(err => res.json(err.message))
     }
 
-    async getPromocodeByText(req, res) { //post method
+    async getPromocodeByText(req, res) {
         const { text } = req.body
         await Promocode.query()
             .select("*")
             .where("text", "=", text)
+            .andWhere("is_active", true)
             .then(promocode => res.json(promocode))
             .catch(err => res.json(err.message))
     }

@@ -1,0 +1,19 @@
+<div class="wrapper">
+    <form [formGroup]="adressForm" class="form" novalidate (ngSubmit)="submit()">
+        <div class="control">
+            <select (change)="changeRegion($event)">
+                <option value="">Выберите регион...</option>
+                <option *ngFor="let region of regions" formContolName="region" value={{region.id}}>{{region.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="showCities" class="contol">
+            <select (change)="changeCity($event)">
+                <option value="">Выберите город...</option>
+                <option *ngFor="let city of cities" formContolName="city" value={{city.id}}>{{city.name}}</option>
+            </select>
+        </div>
+        <div class="control">
+            <button>Готово</button>
+        </div>
+    </form>
+</div>

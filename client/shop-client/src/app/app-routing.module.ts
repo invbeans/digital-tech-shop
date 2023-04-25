@@ -16,7 +16,8 @@ const routes: Routes = [
   {path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)},
   {path: 'discount', loadChildren: () => import('./discount-info/discount-info.module').then(m => m.DiscountInfoModule)},
   {path: 'brand/:id', loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule)},
-  {path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule)}
+  {path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule)},
+  {path: 'make_order', loadChildren: () => import('./make-order/make-order.module').then(m => m.MakeOrderModule)}
 
 ];
 

@@ -1,0 +1,8 @@
+<div class="wrapper">
+    <p>Выберите метод оплаты:</p>
+    <div class="radio-btns">
+        <label *ngFor="let method of paymentMethods; let index = index">
+            <input type="radio" name="payment-method" (click)="onRadioClick(index)">{{method.name}}
+        </label>
+    </div>
+</div>

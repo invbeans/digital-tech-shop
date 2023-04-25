@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <app-product-info-feed>
+        <app-product-info-item *ngFor="let product of products"
+            [product]="product" [changeAmount]="false"></app-product-info-item>
+    </app-product-info-feed>
+    <div class="info-field">
+        <app-promocode (promocodePercent)="onPromocodeUsed($event)"></app-promocode>
+        <app-delivery (shippingMethodChange)="onShippingMethodChange($event)"></app-delivery>
+        <app-payment-method (paymentMethodChange)="onPaymentMethodChange($event)"></app-payment-method>
+    </div>
+    <app-adress *ngIf="showAdressInput"></app-adress>
+    <div class="info-field">
+        <p class="bigger-font">Итого: {{finalPrice | currency:'RUB':'symbol-narrow'}}</p>
+        <button>Заказать</button>
+    </div>
+    
+</div>

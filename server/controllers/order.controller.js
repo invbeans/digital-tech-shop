@@ -108,8 +108,6 @@ class orderController {
                         await BasketProduct.query()
                             .insert({ basket: user, product })
                             .then(basketProduct => {
-
-                                console.log(basketProduct)
                                 res.json(basketProduct)
                             })
                     }
