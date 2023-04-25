@@ -9,6 +9,7 @@ import { BasketProductPage } from 'src/app/shared/models/basket-product-page';
 export class ProductInfoItemComponent implements OnInit {
   @Input() product: BasketProductPage = {} as BasketProductPage
   showDeleteProduct = false
+  @Input() changeAmount = false
 
   fullPrice = 0
   @Output() fullPriceChange = new EventEmitter<number>()

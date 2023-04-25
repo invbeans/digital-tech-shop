@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order-service/order.service';
 import { Basket } from 'src/app/shared/models/basket';
 import { BasketProductPage } from 'src/app/shared/models/basket-product-page';
@@ -13,7 +14,7 @@ export class BasketPageComponent implements OnInit {
   products: BasketProductPage[] = []
   finalPrice = 0
 
-  constructor(private orderService: OrderService){}
+  constructor(private orderService: OrderService, private router: Router){}
 
   ngOnInit(): void {
     this.getBasket()
@@ -68,6 +69,12 @@ export class BasketPageComponent implements OnInit {
       console.log(data)
       this.getBasketProducts()
     })
+  }
+
+  onMakeOrderClick(){
+    this.orderService.fillOrderProducts(this.products)
+    this.router.navigate([`/make_order`])
+    //корзину будем удалять только после успешного оформления заказа ВОТ
   }
 
 }

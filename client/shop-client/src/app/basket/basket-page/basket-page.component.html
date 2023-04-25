@@ -1,10 +1,11 @@
 <div class="wrapper">
     <app-product-info-feed>
         <app-product-info-item *ngFor="let product of products" (fullPriceChange)="onFinalPriceChange()" (productsChange)="onProductsChange($event)"
-            [product]="product"></app-product-info-item>
+            [product]="product" [changeAmount]="true"></app-product-info-item>
     </app-product-info-feed>
     <div class="info-field">
-        <p class="bigger-font">Итого: {{finalPrice}}</p>
+        <p class="bigger-font">Итого: {{finalPrice | currency:'RUB':'symbol-narrow'}}</p>
+        <button (click)="onMakeOrderClick()">Оформить заказ</button>
     </div>
 
 </div>

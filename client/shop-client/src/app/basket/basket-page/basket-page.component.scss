@@ -8,3 +8,14 @@
 .bigger-font {
     font-size: larger;
 }
+
+button {
+    width: fit-content;
+}
+
+.info-field {
+    display: flex;
+    width: 50vw;
+    flex-direction: row;
+    justify-content: space-around;
+}

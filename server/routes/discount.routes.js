@@ -1,6 +1,7 @@
 const Router = require('express')
 const router = new Router()
 const controller = require('../controllers/discount.controller')
+const contentMiddleware = require('../middlewares/content-auth.middleware')
 
 // --------- action CRUD ----------
 router.post('/action', controller.createAction)
@@ -20,7 +21,7 @@ router.get('/action_type', controller.getActionTypes)
 
 // --------- promocode CRUD ----------
 router.post('/promocode/get_by_text', controller.getPromocodeByText)
-router.post('/promocode', controller.createPromocode)
+router.post('/promocode', contentMiddleware, controller.createPromocode)
 router.delete('/promocode/:id', controller.deletePromocode)
 router.put('/promocode/:id', controller.updatePromocode)
 router.get('/promocode', controller.getPromocodes)

@@ -20,6 +20,8 @@ import { AuthService } from './services/auth/auth.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/interceptors/auth-interceptor.interceptor';
 import { LoadInitDataService } from './services/load-init-data/load-init-data.service';
+import { ProductInfoFeedComponent } from './components/product-info-feed/product-info-feed.component';
+import { ProductInfoItemComponent } from './components/product-info-item/product-info-item.component';
 
 @NgModule({
   imports: [
@@ -41,7 +43,9 @@ import { LoadInitDataService } from './services/load-init-data/load-init-data.se
     CategoriesFeedComponent,
     CategoryItemComponent,
     SubCategoryFeedComponent,
-    SubCategoryItemComponent
+    SubCategoryItemComponent,
+    ProductInfoFeedComponent,
+    ProductInfoItemComponent
   ],
   providers: [
     SidebarService,
@@ -66,6 +70,8 @@ import { LoadInitDataService } from './services/load-init-data/load-init-data.se
     CategoryItemComponent,
     SubCategoryFeedComponent,
     SubCategoryItemComponent,
+    ProductInfoFeedComponent,
+    ProductInfoItemComponent,
     FormsModule,
     ReactiveFormsModule
   ]
