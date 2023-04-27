@@ -1,11 +1,16 @@
 const Router = require('express')
 const router = new Router()
 const controller = require('../controllers/shipping.controller')
+const userMiddleware = require('../middlewares/user-auth.middleware')
+
+//---------- orders part ------------------
+router.post('/make_order', userMiddleware, controller.makeOrder)
 
 // --------- shipping service CRUD ----------
 router.post('/shipping_service', controller.createShippingService)
 router.put('/shipping_service/:id', controller.updateShippingService)
 router.delete('/shipping_service/:id', controller.deleteShippingService)
+router.get('/shipping_service/by_method/:id', controller.getShippingServiceByShippingMethod)
 router.get('/shipping_service/:id', controller.getShippingServiceById)
 router.get('/shipping_service', controller.getShippingServices)
 
@@ -45,6 +50,7 @@ router.get('/city/:id', controller.getCityById)
 router.get('/city', controller.getCities)
 
 // --------- street CRUD ----------
+router.post('/street/by_district_and_city', controller.getStreetByDistrictAndCity)
 router.post('/street', controller.createStreet)
 router.put('/street/:id', controller.updateStreet)
 router.delete('/street/:id', controller.deleteStreet)
@@ -55,6 +61,7 @@ router.get('/street', controller.getStreets)
 router.post('/district', controller.createDistrict)
 router.put('/district/:id', controller.updateDistrict)
 router.delete('/district/:id', controller.deleteDistrict)
+router.get('/district/by_city/:id', controller.getDistrictByCity)
 router.get('/district/:id', controller.getDistrictById)
 router.get('/district', controller.getDistricts)
 

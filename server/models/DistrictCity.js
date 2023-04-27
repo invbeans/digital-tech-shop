@@ -1,4 +1,5 @@
 const { Model } = require('objection');
+const DistrictStreet = require('./DistrictStreet');
 
 class DistrictCity extends Model {
     static get tableName() {
@@ -24,6 +25,14 @@ class DistrictCity extends Model {
                 join: {
                     from: 'district_city.district',
                     to: 'district.id'
+                }
+            },
+            district_street_rel: {
+                relation: Model.HasOneRelation,
+                modelClass: DistrictStreet,
+                join: {
+                    from: 'district_city.id',
+                    to: 'district_street.district_city'
                 }
             }
         }

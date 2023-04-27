@@ -14,7 +14,36 @@ const ShippingHistory = require('../models/ShippingHistory')
 const ShippingStatus = require('../models/ShippingStatus')
 
 class shippingController {
-    //здесь тоже нужно будет проверять роль пользователя (тут все на админе и история на менеджере)
+
+    //---------- orders part ------------------
+    async makeOrder(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let { user, date, order, adress, shipping_service, pickup_point_type } = req.body
+            if (!user) {
+                user = req.userData.id
+            }
+            await Adress.query()
+                .insert({ order_adress: adress.orderAdress, street_type: adress.streetType, house: adress.house, building: adress.building, apartment: adress.apartment, postcode: adress.postcode })
+                .then(async adress => {
+                    await OrderShipping.query()
+                        .insert({ order, shipping_service: shipping_service.id, adress: adress.id, pickup_point_type: pickup_point_type.id })
+                        .then(res => { })
+                    await ShippingStatus.query()
+                    .select("*")
+                    .where("name", "Ожидает оплаты")
+                    .then(async status => {
+                        await ShippingHistory.query()
+                        .insert({ order, date, shipping_status: status[0].id })
+                        .then(history => res.json(history))
+                    })
+                    
+                })
+                .catch(err => res.json(err.message))
+        }
+    }
 
     // --------- shipping service CRUD ----------
     async createShippingService(req, res) {
@@ -60,6 +89,15 @@ class shippingController {
         const id = req.params.id
         await ShippingService.query()
             .findById(id)
+            .then(shippingService => res.json(shippingService))
+            .catch(err => res.json(err.message))
+    }
+
+    async getShippingServiceByShippingMethod(req, res) {
+        const method = req.params.id
+        await ShippingService.query()
+            .select("*")
+            .where("shipping_method", method)
             .then(shippingService => res.json(shippingService))
             .catch(err => res.json(err.message))
     }
@@ -355,6 +393,17 @@ class shippingController {
             .catch(err => res.json(err.message))
     }
 
+    async getStreetByDistrictAndCity(req, res) {
+        const { city, district } = req.body
+        await DistrictCity.query()
+            .select("*")
+            .where("city", city)
+            .andWhere("district", district)
+            .joinRelated("district_street_rel.street_rel")
+            .then(street => res.json(street))
+            .catch(err => res.json(err.message))
+    }
+
     // --------- district CRUD ----------
     async createDistrict(req, res) {
         const { name } = req.body
@@ -399,6 +448,16 @@ class shippingController {
         const id = req.params.id
         await District.query()
             .findById(id)
+            .then(district => res.json(district))
+            .catch(err => res.json(err.message))
+    }
+
+    async getDistrictByCity(req, res) {
+        const city = req.params.id
+        await District.query()
+            .distinct("district.*")
+            .joinRelated("district_city_rel")
+            .where("district_city_rel.city", city)
             .then(district => res.json(district))
             .catch(err => res.json(err.message))
     }

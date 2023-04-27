@@ -1,8 +1,11 @@
 <div class="wrapper">
     <p>Выберите способ доставки:</p>
-    <div class="radio-btns">
-        <label *ngFor="let method of shippingMethods; let index = index">
-            <input type="radio" name="shipping-method" (click)="onRadioClick(index)">{{method.name}}
-        </label>
+    <div class="methods">
+        <div class="radio-btns" *ngFor="let method of shippingMethods; let index = index">
+            <label>
+                <input type="radio" name="shipping-method" (click)="onRadioClick(index)">{{method.name}}
+            </label>
+            <label class="smaller-font">{{method.shippingTime}} + {{shippingServices[index].price}} рублей</label>
+        </div>
     </div>
 </div>

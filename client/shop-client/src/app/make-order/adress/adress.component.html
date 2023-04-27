@@ -1,4 +1,5 @@
 <div class="wrapper">
+    <p>Адрес доставки:</p>
     <form [formGroup]="adressForm" class="form" novalidate (ngSubmit)="submit()">
         <div class="control">
             <select (change)="changeRegion($event)">
@@ -12,8 +13,38 @@
                 <option *ngFor="let city of cities" formContolName="city" value={{city.id}}>{{city.name}}</option>
             </select>
         </div>
+        <div *ngIf="showDistricts" class="contol">
+            <select (change)="changeDistrict($event)">
+                <option value="">Выберите район...</option>
+                <option *ngFor="let district of districts" formContolName="district" value={{district.id}}>{{district.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="showStreets" class="contol">
+            <select (change)="changeStreet($event)">
+                <option value="">Выберите улицу...</option>
+                <option *ngFor="let street of streets" formContolName="street" value={{street.id}}>{{street.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="showStreetTypes" class="contol">
+            <select (change)="changeStreetType($event)">
+                <option value="">Выберите тип улицы...</option>
+                <option *ngFor="let streetType of streetTypes" formContolName="streetType" value={{streetType.id}}>{{streetType.name}}</option>
+            </select>
+        </div>
         <div class="control">
-            <button>Готово</button>
+            <input type="text" formControlName="house" placeholder="Номер дома" [ngClass]="{borderRed:adressForm.controls['house'].invalid}">
+        </div>
+        <div class="control">
+            <input type="text" formControlName="building" placeholder="Литера строения (если есть)" [ngClass]="{borderRed:adressForm.controls['building'].invalid}">
+        </div>
+        <div class="control">
+            <input type="text" formControlName="apartment" placeholder="Номер квартиры" [ngClass]="{borderRed:adressForm.controls['apartment'].invalid}">
+        </div>
+        <div class="control">
+            <input type="text" formControlName="postcode" placeholder="Почтовый индекс" [ngClass]="{borderRed:adressForm.controls['postcode'].invalid}">
+        </div>
+        <div class="control">
+            <button [disabled]="adressForm.invalid">Подтвердить адрес</button>
         </div>
     </form>
 </div>

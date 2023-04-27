@@ -7,6 +7,7 @@ import { PromocodeComponent } from './promocode/promocode.component';
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
 import { DeliveryComponent } from './delivery/delivery.component';
 import { AdressComponent } from './adress/adress.component';
+import { PickupPointTypeComponent } from './pickup-point-type/pickup-point-type.component';
 
 const routes: Routes = [
   { path: '', component: MakeOrderPageComponent }
@@ -18,7 +19,8 @@ const routes: Routes = [
     PromocodeComponent,
     PaymentMethodComponent,
     DeliveryComponent,
-    AdressComponent
+    AdressComponent,
+    PickupPointTypeComponent
   ],
   imports: [
     CommonModule,

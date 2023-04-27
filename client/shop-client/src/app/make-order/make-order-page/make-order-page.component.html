@@ -8,10 +8,11 @@
         <app-delivery (shippingMethodChange)="onShippingMethodChange($event)"></app-delivery>
         <app-payment-method (paymentMethodChange)="onPaymentMethodChange($event)"></app-payment-method>
     </div>
-    <app-adress *ngIf="showAdressInput"></app-adress>
+    <app-pickup-point-type [pickupPointTypes]="pickupPointTypes" *ngIf="showPickupPointType" (pickupPointTypeChange)="onPickupPointTypeChange($event)"></app-pickup-point-type>
+    <app-adress *ngIf="showAdressInput" (adressChange)="onAdressChange($event)"></app-adress>
     <div class="info-field">
         <p class="bigger-font">Итого: {{finalPrice | currency:'RUB':'symbol-narrow'}}</p>
-        <button>Заказать</button>
+        <button [disabled]="orderDisabled" (click)="onOrderClick()">Заказать</button>
     </div>
     
 </div>

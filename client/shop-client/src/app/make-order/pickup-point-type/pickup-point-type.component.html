@@ -1,0 +1,11 @@
+<div class="wrapper">
+    <p>Выберите пункт выдачи:</p>
+    <div class="types">
+        <div class="radio-btns" *ngFor="let pointType of pickupPointTypes; let index = index">
+            <label>
+                <input type="radio" name="pickup-point-type" (click)="onRadioClick(index)">{{pointType.name}}
+            </label>
+            <label class="smaller-font" *ngIf="pointType.storageDays > 0">Хранение в течении {{pointType.storageDays}} дней</label>
+        </div>
+    </div>
+</div>

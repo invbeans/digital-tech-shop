@@ -185,6 +185,40 @@ class orderController {
             .catch(err => res.json(err.message))
     }
 
+    async makeOrder(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let { user, date, products, payment_method, full_price } = req.body
+            if (!user) {
+                user = req.userData.id
+            }
+            await Order.query()
+                .insert({ user, date })
+                .then(async order => {
+                    for (let product of products) {
+                        for (let i = 0; i < product.count; i++) {
+                            await OrderProduct.query()
+                                .insert({ product: product.product.id, order: order.id })
+                                .then(async () => {
+                                    await Basket.query()
+                                        .delete()
+                                        .where('user', user)
+                                        .then(() => { })
+                                })
+                        }
+                    }
+                    await Check.query()
+                        .insert({ order: order.id, payment_method: payment_method.id, full_price })
+                        .then(() => {
+                            res.json(order)
+                        })
+                })
+                .catch(err => res.json(err.message))
+        }
+    }
+
     async deleteOrder(req, res) {
         const id = req.params.id
         await Order.query()

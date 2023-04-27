@@ -19,6 +19,7 @@ router.get('/basket_product/:id', controller.getBasketProductById)
 
 // --------- order CRUD ----------
 router.post('/order', controller.createOrder)
+router.post('/make_order', userMiddleware, controller.makeOrder)
 router.delete('/order/:id', controller.deleteOrder)
 router.get('/order/by_user/:id', controller.getOrdersByUser)
 router.get('/order/:id', controller.getOrderById)
@@ -27,7 +28,7 @@ router.get('/order/:id', controller.getOrderById)
 router.post('/order_product', controller.createOrderProduct)
 router.delete('/order_product/:id', controller.deleteOrderProduct)
 router.get('/order_product/by_order/:id', controller.getOrderProductsByOrder)
-router.get('/order_product', controller.getOrderProductById)
+router.get('/order_product/:id', controller.getOrderProductById)
 
 // --------- check CRUD ----------
 router.post('/check', controller.createCheck)
