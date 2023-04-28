@@ -1,0 +1,5 @@
+<div class="wrapper">
+    <app-track-order-feed>
+        <app-track-order-item *ngFor="let item of trackOrderItems; let index = index" [index]="index + 1" [trackOrderItem]="item" (click)="onTrackOrderItemClick(index)"></app-track-order-item>
+    </app-track-order-feed>
+</div>

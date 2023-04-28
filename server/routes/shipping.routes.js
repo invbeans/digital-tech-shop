@@ -5,6 +5,7 @@ const userMiddleware = require('../middlewares/user-auth.middleware')
 
 //---------- orders part ------------------
 router.post('/make_order', userMiddleware, controller.makeOrder)
+router.get('/track_order_short', userMiddleware, controller.getTrackOrderShort)
 
 // --------- shipping service CRUD ----------
 router.post('/shipping_service', controller.createShippingService)

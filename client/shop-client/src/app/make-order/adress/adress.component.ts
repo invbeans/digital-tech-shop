@@ -123,11 +123,11 @@ export class AdressComponent implements OnInit {
   }
 
   prepareAdress(): string{
-    let stringAdress = this.regions.filter(reg => reg.id == this.adressForm.controls["region"].getRawValue())[0] 
-    + ", " + this.cities.filter(city => city.id == this.adressForm.controls["city"].getRawValue())[0] + ", " 
-    + this.districts.filter(dis => dis.id == this.adressForm.controls["district"].getRawValue())[0] 
-    + ", " + this.streets.filter(str => str.id == this.adressForm.controls["street"].getRawValue())[0] + " "
-    + this.streetTypes.filter(type => type.id == this.adressForm.controls["streetType"].getRawValue())[0]
+    let stringAdress = this.regions.filter(reg => reg.id == this.adressForm.controls["region"].getRawValue())[0].name 
+    + ", " + this.cities.filter(city => city.id == this.adressForm.controls["city"].getRawValue())[0].name + ", " 
+    + this.districts.filter(dis => dis.id == this.adressForm.controls["district"].getRawValue())[0].name 
+    + ", " + this.streets.filter(str => str.id == this.adressForm.controls["street"].getRawValue())[0].name + " "
+    + this.streetTypes.filter(type => type.id == this.adressForm.controls["streetType"].getRawValue())[0].name
     + ", д." + this.adressForm.controls["house"].getRawValue() 
     + this.adressForm.controls["building"].getRawValue() + ", кв." + this.adressForm.controls["apartment"].getRawValue() 
     + ", " + this.adressForm.controls["postcode"].getRawValue()

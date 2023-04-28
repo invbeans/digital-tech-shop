@@ -12,6 +12,7 @@ const StreetType = require('../models/StreetType')
 const OrderShipping = require('../models/OrderShipping')
 const ShippingHistory = require('../models/ShippingHistory')
 const ShippingStatus = require('../models/ShippingStatus')
+const Order = require('../models/Order')
 
 class shippingController {
 
@@ -32,14 +33,57 @@ class shippingController {
                         .insert({ order, shipping_service: shipping_service.id, adress: adress.id, pickup_point_type: pickup_point_type.id })
                         .then(res => { })
                     await ShippingStatus.query()
-                    .select("*")
-                    .where("name", "Ожидает оплаты")
-                    .then(async status => {
-                        await ShippingHistory.query()
-                        .insert({ order, date, shipping_status: status[0].id })
-                        .then(history => res.json(history))
-                    })
-                    
+                        .select("*")
+                        .where("name", "Ожидает оплаты")
+                        .then(async status => {
+                            await ShippingHistory.query()
+                                .insert({ order, date, shipping_status: status[0].id })
+                                .then(history => res.json(history))
+                        })
+
+                })
+                .catch(err => res.json(err.message))
+        }
+    }
+
+    async getTrackOrderShort(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let trackOrders = []
+            let { user } = req.body
+            if (!user) {
+                user = req.userData.id
+            }
+            await Order.query()
+                .select("*")
+                .where("user", user)
+                .then(async orders => {
+                    for (let order of orders) {
+                        let trackOrderShort = {}
+                        trackOrderShort.order = order.id
+                        trackOrderShort.date = order.date
+                        await ShippingMethod.query()
+                            .joinRelated("shipping_service_rel.order_shipping_rel")
+                            .where("shipping_service_rel:order_shipping_rel.order", order.id)
+                            .select("shipping_method.name")
+                            .then(async method => {
+                                trackOrderShort.shipping_method = method[0].name
+                                await ShippingHistory.query()
+                                .joinRelated("shipping_status_rel")
+                                .where("order", order.id)
+                                .select("name")
+                                .then(status => {
+                                    trackOrderShort.shipping_status = status[0].name
+                                    trackOrders.push(trackOrderShort)
+                                })
+                                
+                            })
+                            
+                    }
+
+                    res.json(trackOrders)
                 })
                 .catch(err => res.json(err.message))
         }

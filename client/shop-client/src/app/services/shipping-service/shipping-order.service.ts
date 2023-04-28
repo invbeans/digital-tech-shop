@@ -12,6 +12,7 @@ import { ShippingMethod } from 'src/app/shared/models/shipping-method';
 import { ShippingService } from 'src/app/shared/models/shipping-service';
 import { Street } from 'src/app/shared/models/street';
 import { StreetType } from 'src/app/shared/models/street-type';
+import { TrackOrderShort } from 'src/app/shared/models/track-order-short';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Injectable({
@@ -77,6 +78,30 @@ export class ShippingOrderService {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
                 this.makeOrder(dateTime, orderId, adress, shippingService, pickupPointType)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  getTrackOrderShort() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<TrackOrderShort | null>(this.mapping + `track_order_short/`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getTrackOrderShort()
               }
             })
           }

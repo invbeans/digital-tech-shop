@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order-service/order.service';
 import { ShippingOrderService } from 'src/app/services/shipping-service/shipping-order.service';
 import { Adress } from 'src/app/shared/models/adress';
@@ -7,6 +8,7 @@ import { PaymentMethod } from 'src/app/shared/models/payment-method';
 import { PickupPointType } from 'src/app/shared/models/pickup-point-type';
 import { ShippingMethod } from 'src/app/shared/models/shipping-method';
 import { ShippingService } from 'src/app/shared/models/shipping-service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-make-order-page',
@@ -33,9 +35,10 @@ export class MakeOrderPageComponent implements OnInit {
   orderDisabled = true
 
 
-  constructor(private orderService: OrderService, private shippingOrderService: ShippingOrderService) { }
+  constructor(private orderService: OrderService, private shippingOrderService: ShippingOrderService, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.checkAuth()
     this.getProducts()
     this.getPickupPointTypes()
   }
@@ -109,6 +112,15 @@ export class MakeOrderPageComponent implements OnInit {
           //should redirect to orders tracking page
           console.log(res)
         })
+      }
+    })
+  }
+
+  checkAuth() {
+    this.authService.checkAuth().subscribe((data: any) => {
+      let logined = this.authService.getAuth()
+      if(!logined){
+        this.router.navigate(['/auth'])
       }
     })
   }

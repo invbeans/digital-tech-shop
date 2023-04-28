@@ -79,4 +79,13 @@ export class NavigationComponent implements OnChanges {
       this.router.navigate(['/basket'])
     }
   }
+
+  navigateTrackClick(){
+    if(this.isLogin){
+      this.router.navigate([this.LOGIN_LINK])
+    }
+    else {
+      this.router.navigate(['/track-order'])
+    }
+  }
 }

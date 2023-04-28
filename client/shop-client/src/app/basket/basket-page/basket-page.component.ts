@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order-service/order.service';
 import { Basket } from 'src/app/shared/models/basket';
 import { BasketProductPage } from 'src/app/shared/models/basket-product-page';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-basket-page',
@@ -14,9 +15,10 @@ export class BasketPageComponent implements OnInit {
   products: BasketProductPage[] = []
   finalPrice = 0
 
-  constructor(private orderService: OrderService, private router: Router){}
+  constructor(private orderService: OrderService, private router: Router, private authService: AuthService){}
 
   ngOnInit(): void {
+    this.checkAuth()
     this.getBasket()
     this.getBasketProducts()
   }
@@ -75,6 +77,15 @@ export class BasketPageComponent implements OnInit {
     this.orderService.fillOrderProducts(this.products)
     this.router.navigate([`/make_order`])
     //корзину будем удалять только после успешного оформления заказа ВОТ
+  }
+
+  checkAuth() {
+    this.authService.checkAuth().subscribe((data: any) => {
+      let logined = this.authService.getAuth()
+      if(!logined){
+        this.router.navigate(['/auth'])
+      }
+    })
   }
 
 }
