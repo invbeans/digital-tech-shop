@@ -15,65 +15,50 @@ export class BasketPageComponent implements OnInit {
   products: BasketProductPage[] = []
   finalPrice = 0
 
-  constructor(private orderService: OrderService, private router: Router, private authService: AuthService){}
+  constructor(private orderService: OrderService, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.checkAuth()
     this.getBasket()
     this.getBasketProducts()
+
   }
 
-  getBasket(){
+  getBasket() {
     this.orderService.getBasket()
-    .subscribe((data: any) => {
-      let tempDate = new Date(data.begin_date)
-      this.basket = new Basket(data.user, tempDate)
-    })
+      .subscribe((data: any) => {
+        let tempDate = new Date(data.begin_date)
+        this.basket = new Basket(data.user, tempDate)
+      })
   }
 
-  getBasketProducts(){
+  getBasketProducts() {
     this.products = []
     this.finalPrice = 0
     this.orderService.getProductsByBasket()
-    .subscribe((data: any) => {
-      let count: Map<any, number> = new Map<any, number>()
-      for(let elem of data){
-        let id = elem.id
-        if(count.has(id)){
-          let curr: number = count.get(id) || 0
-          count.set(id, curr + 1)
-        }
-        else {
-          count.set(id, 1)
-          this.products.push(new BasketProductPage(elem, 0))
-        }
-      }
-      let ind = 0
-      for(let entry of count.entries()){
-        this.products[ind].count = entry[1]
-        this.finalPrice += this.products[ind].product.price * this.products[ind].count
-        ind += 1
-      }
-    })
+      .subscribe((data: any) => {
+        this.products = data
+        this.finalPrice = this.orderService.getAllProductsPrice()
+      })
   }
 
-  onFinalPriceChange(){
+  onFinalPriceChange() {
     this.finalPrice = 0
-    for(let product of this.products){
+    for (let product of this.products) {
       this.finalPrice += product.product.price * product.count
     }
   }
 
-  onProductsChange(id: number){
+  onProductsChange(id: number) {
     console.log("delete", id)
     this.orderService.deleteBasketProductByProduct(id)
-    .subscribe((data: any) => {
-      console.log(data)
-      this.getBasketProducts()
-    })
+      .subscribe((data: any) => {
+        console.log(data)
+        this.getBasketProducts()
+      })
   }
 
-  onMakeOrderClick(){
+  onMakeOrderClick() {
     this.orderService.fillOrderProducts(this.products)
     this.router.navigate([`/make_order`])
     //корзину будем удалять только после успешного оформления заказа ВОТ
@@ -82,7 +67,7 @@ export class BasketPageComponent implements OnInit {
   checkAuth() {
     this.authService.checkAuth().subscribe((data: any) => {
       let logined = this.authService.getAuth()
-      if(!logined){
+      if (!logined) {
         this.router.navigate(['/auth'])
       }
     })

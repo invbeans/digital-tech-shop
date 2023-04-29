@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { BasketProductPage } from 'src/app/shared/models/basket-product-page'; 
 
 @Component({
@@ -10,6 +11,8 @@ export class ProductInfoItemComponent implements OnInit {
   @Input() product: BasketProductPage = {} as BasketProductPage
   showDeleteProduct = false
   @Input() changeAmount = false
+
+  constructor(private router: Router){}
 
   fullPrice = 0
   @Output() fullPriceChange = new EventEmitter<number>()
@@ -39,5 +42,9 @@ export class ProductInfoItemComponent implements OnInit {
 
   onDeleteClick(){
     this.productsChange.emit(this.product.product.id || 0)
+  }
+
+  onImageClick(){
+    this.router.navigate(['/product'], {state: {productId: this.product.product.id}})
   }
 }

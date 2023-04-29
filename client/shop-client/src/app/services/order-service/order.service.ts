@@ -6,6 +6,7 @@ import { AuthResponse } from 'src/app/shared/models/auth-response';
 import { Basket } from 'src/app/shared/models/basket';
 import { BasketProduct } from 'src/app/shared/models/basket-product';
 import { BasketProductPage } from 'src/app/shared/models/basket-product-page';
+import { Check } from 'src/app/shared/models/check';
 import { Order } from 'src/app/shared/models/order';
 import { PaymentMethod } from 'src/app/shared/models/payment-method';
 import { PickupPointType } from 'src/app/shared/models/pickup-point-type';
@@ -19,7 +20,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 export class OrderService {
   mapping: string = 'http://localhost:3000/order/';
   products: BasketProductPage[] = []
-
+  allProductsPrice = 0
 
 
   constructor(private http: HttpClient, private authService: AuthService) { }
@@ -36,6 +37,10 @@ export class OrderService {
 
   clearOrderProducts() {
     this.products = []
+  }
+
+  getAllProductsPrice() {
+    return this.allProductsPrice
   }
 
   getBasket() {
@@ -101,6 +106,7 @@ export class OrderService {
     return this.http.get<Product | null>(this.mapping + 'product/by_basket', httpOptions)
       .pipe(
         map((data: any) => {
+          this.products = []
           if (data.status === 401) {
             this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
               if (refreshData) {
@@ -109,9 +115,62 @@ export class OrderService {
               }
             })
           }
-          else return data
+          else {
+            this.makeProductPageArray(data)
+          }
+          return this.products
         })
       )
+  }
+
+  getProductsByOrder(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<Product | null>(this.mapping + `product/by_order/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          this.products = []
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getProductsByOrder(id)
+              }
+            })
+          }
+          else {
+            this.makeProductPageArray(data)
+          }
+          return this.products
+        })
+      )
+  }
+
+  makeProductPageArray(data: any) {
+    let count: Map<any, number> = new Map<any, number>()
+    for (let elem of data) {
+      let id = elem.id
+      if (count.has(id)) {
+        let curr: number = count.get(id) || 0
+        count.set(id, curr + 1)
+      }
+      else {
+        count.set(id, 1)
+        this.products.push(new BasketProductPage(elem, 0))
+      }
+    }
+    let ind = 0
+    this.allProductsPrice = 0
+    for (let entry of count.entries()) {
+      this.products[ind].count = entry[1]
+      this.allProductsPrice += this.products[ind].product.price * this.products[ind].count
+      ind += 1
+    }
   }
 
   deleteBasketProductByProduct(id: number) {
@@ -150,7 +209,7 @@ export class OrderService {
       withCredentials: true,
       "observe?": "response"
     }
-    const body = {date: dateTime, products: products, payment_method: paymentMethod, full_price: finalPrice}
+    const body = { date: dateTime, products: products, payment_method: paymentMethod, full_price: finalPrice }
     return this.http.post<Order | null>(this.mapping + `make_order/`, body, httpOptions)
       .pipe(
         map((data: any) => {
@@ -159,6 +218,30 @@ export class OrderService {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
                 this.makeOrder(dateTime, products, paymentMethod, finalPrice)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  getCheckByOrder(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<Check | null>(this.mapping + `check/by_order/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getCheckByOrder(id)
               }
             })
           }

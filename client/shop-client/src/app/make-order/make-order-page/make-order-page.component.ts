@@ -98,19 +98,13 @@ export class MakeOrderPageComponent implements OnInit {
   }
 
   onOrderClick() {
-    console.log(this.shippingMethod)
-    console.log(this.paymentMethod)
-    console.log(this.adress)
-    console.log(this.pickupPointType)
     let dateTime = new Date().toISOString()
     this.orderService.makeOrder(dateTime, this.products, this.paymentMethod, this.finalPrice)
     .subscribe((data: any) => {
-      console.log(data.id)
-      if(data.id){
-        this.shippingOrderService.makeOrder(dateTime, data.id, this.adress, this.shippingService, this.pickupPointType)
+      if(data.order){
+        this.shippingOrderService.makeOrder(dateTime, data.order, data.user, this.adress, this.shippingService, this.pickupPointType)
         .subscribe((res: any) => {
-          //should redirect to orders tracking page
-          console.log(res)
+          this.router.navigate(['/track-order'])
         })
       }
     })
