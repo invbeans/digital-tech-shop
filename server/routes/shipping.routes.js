@@ -26,6 +26,7 @@ router.get('/shipping_method', controller.getShippingMethods)
 router.post('/pickup_point_type', controller.createPickupPointType)
 router.put('/pickup_point_type/:id', controller.updatePickupPointType)
 router.delete('/pickup_point_type/:id', controller.deletePickupPointType)
+router.get('/pickup_point_type/by_order/:id', userMiddleware, controller.getPickupPointByOrder)
 router.get('/pickup_point_type/:id', controller.getPickupPointTypeById)
 router.get('/pickup_point_type', controller.getPickupPointTypes)
 
@@ -33,6 +34,7 @@ router.get('/pickup_point_type', controller.getPickupPointTypes)
 router.post('/adress', controller.createAdress)
 router.put('/adress/:id', controller.updateAdress)
 router.delete('/adress/:id', controller.deleteAdress)
+router.get('/adress/by_order/:id', userMiddleware, controller.getAdressByOrder)
 router.get('/adress/:id', controller.getAdressById)
 
 // --------- region CRUD ----------
@@ -97,6 +99,7 @@ router.get('/order_shipping/by_order/:id', controller.getOrderShippingByOrder)
 router.post('/shipping_history', controller.createShippingHistory)
 router.delete('/shipping_history/:id', controller.deleteShippingHistory)
 router.get('/shipping_history/by_shipping_status/:id', controller.getShippingHistoryByShippingStatus)
+router.get('/shipping_history_track/by_order/:id', userMiddleware, controller.getShippingHistoryTrackByOrder)
 router.get('/shipping_history/by_order/:id', controller.getShippingHistoryByOrder)
 router.get('/shipping_history', controller.getShippingHistories)
 

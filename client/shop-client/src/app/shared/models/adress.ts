@@ -3,8 +3,8 @@ export class Adress {
         public orderAdress: string,
         public region: number,
         public streetType: number,
-        public house: string | null,
-        public building: string,
+        public house: string,
+        public building: string | null,
         public apartment: number,
         public postcode: number) { }
 }

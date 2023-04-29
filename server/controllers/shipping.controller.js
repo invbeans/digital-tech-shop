@@ -22,27 +22,34 @@ class shippingController {
             res.status(401).json(req.message)
         }
         else {
-            let { user, date, order, adress, shipping_service, pickup_point_type } = req.body
-            if (!user) {
-                user = req.userData.id
+            let { date, order, user, adress, shipping_service, pickup_point_type } = req.body
+            let tokenUser = req.userData.id
+            if (tokenUser !== user) {
+                await Order.query()
+                    .delete()
+                    .where('user', user)
+                    .andWhere('id', order)
+                    .then(() => res.status(401).json(req.message))
             }
-            await Adress.query()
-                .insert({ order_adress: adress.orderAdress, street_type: adress.streetType, house: adress.house, building: adress.building, apartment: adress.apartment, postcode: adress.postcode })
-                .then(async adress => {
-                    await OrderShipping.query()
-                        .insert({ order, shipping_service: shipping_service.id, adress: adress.id, pickup_point_type: pickup_point_type.id })
-                        .then(res => { })
-                    await ShippingStatus.query()
-                        .select("*")
-                        .where("name", "Ожидает оплаты")
-                        .then(async status => {
-                            await ShippingHistory.query()
-                                .insert({ order, date, shipping_status: status[0].id })
-                                .then(history => res.json(history))
-                        })
+            else {
+                await Adress.query()
+                    .insert({ order_adress: adress.orderAdress, street_type: adress.streetType, house: adress.house, building: adress.building, apartment: adress.apartment, postcode: adress.postcode })
+                    .then(async adress => {
+                        await OrderShipping.query()
+                            .insert({ order, shipping_service: shipping_service.id, adress: adress.id, pickup_point_type: pickup_point_type.id })
+                            .then(res => { })
+                        await ShippingStatus.query()
+                            .select("*")
+                            .where("name", "Ожидает оплаты")
+                            .then(async status => {
+                                await ShippingHistory.query()
+                                    .insert({ order, date, shipping_status: status[0].id })
+                                    .then(history => res.json(history))
+                            })
 
-                })
-                .catch(err => res.json(err.message))
+                    })
+                    .catch(err => res.json(err.message))
+            }
         }
     }
 
@@ -52,10 +59,7 @@ class shippingController {
         }
         else {
             let trackOrders = []
-            let { user } = req.body
-            if (!user) {
-                user = req.userData.id
-            }
+            let user = req.userData.id
             await Order.query()
                 .select("*")
                 .where("user", user)
@@ -71,18 +75,17 @@ class shippingController {
                             .then(async method => {
                                 trackOrderShort.shipping_method = method[0].name
                                 await ShippingHistory.query()
-                                .joinRelated("shipping_status_rel")
-                                .where("order", order.id)
-                                .select("name")
-                                .then(status => {
-                                    trackOrderShort.shipping_status = status[0].name
-                                    trackOrders.push(trackOrderShort)
-                                })
-                                
+                                    .joinRelated("shipping_status_rel")
+                                    .where("order", order.id)
+                                    .select("name")
+                                    .orderBy('shipping_history.id', 'desc')
+                                    .first("*")
+                                    .then(status => {
+                                        trackOrderShort.shipping_status = status.name
+                                        trackOrders.push(trackOrderShort)
+                                    })
                             })
-                            
                     }
-
                     res.json(trackOrders)
                 })
                 .catch(err => res.json(err.message))
@@ -242,6 +245,23 @@ class shippingController {
             .catch(err => res.json(err.message))
     }
 
+    async getPickupPointByOrder(req, res){
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const order = req.params.id
+            let user = req.userData.id
+            await PickupPointType.query()
+            .joinRelated("order_shipping_rel.order_rel")
+            .where("order_shipping_rel:order_rel.id", order)
+            .andWhere("order_shipping_rel:order_rel.user", user)
+            .first("pickup_point_type.*")
+            .then(pickupPointType => res.json(pickupPointType))
+            .catch(err => res.json(err.message))
+        }
+    }
+
     // --------- adress CRUD ----------
     async createAdress(req, res) {
         const { order_adress, street_type, house, building, apartment, postcode } = req.body
@@ -282,6 +302,25 @@ class shippingController {
             .findById(id)
             .then(adress => res.json(adress))
             .catch(err => res.json(err.message))
+    }
+
+    async getAdressByOrder(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let user = req.userData.id
+            const order = req.params.id
+            await Adress.query()
+                .joinRelated("order_shipping_rel.order_rel")
+                .where("order_shipping_rel:order_rel.id", order)
+                .andWhere("order_shipping_rel:order_rel.user", user)
+                .first("adress.*")
+                .then(adress => {
+                    res.json(adress)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     // --------- region CRUD ----------
@@ -722,6 +761,38 @@ class shippingController {
             .where("order", "=", order)
             .then(shippingHistory => res.json(shippingHistory))
             .catch(err => res.json(err.message))
+    }
+
+    async getShippingHistoryTrackByOrder(req, res){
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const order = req.params.id
+            let user = req.userData.id
+            let historyArray = []
+            await ShippingHistory.query()
+            .joinRelated("order_rel")
+            .where("order_rel.id", order)
+            .andWhere("order_rel.user", user)
+            .select("shipping_history.*")
+            .orderBy("shipping_history.id", "asc")
+            .then(async histories => {
+                for(let item of histories){
+                    let historyElem = {}
+                    historyElem.id = item.id
+                    historyElem.date = item.date
+                    await ShippingStatus.query()
+                    .findById(item.shipping_status)
+                    .then(status => {
+                        historyElem.shipping_status = status.name
+                        historyArray.push(historyElem)
+                    })
+                }
+                res.json(historyArray)
+            })
+            .catch(err => res.json(err.message))
+        }
     }
 
     async getShippingHistoryByShippingStatus(req, res) {

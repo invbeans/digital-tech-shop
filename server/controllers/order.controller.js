@@ -190,10 +190,8 @@ class orderController {
             res.status(401).json(req.message)
         }
         else {
-            let { user, date, products, payment_method, full_price } = req.body
-            if (!user) {
-                user = req.userData.id
-            }
+            let { date, products, payment_method, full_price } = req.body
+            let user = req.userData.id
             await Order.query()
                 .insert({ user, date })
                 .then(async order => {
@@ -212,7 +210,7 @@ class orderController {
                     await Check.query()
                         .insert({ order: order.id, payment_method: payment_method.id, full_price })
                         .then(() => {
-                            res.json(order)
+                            res.json({ order: order.id, user: user })
                         })
                 })
                 .catch(err => res.json(err.message))
@@ -284,6 +282,33 @@ class orderController {
             .catch(err => res.json(err.message))
     }
 
+    async getProductsByOrder(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const order = req.params.id
+            let user = req.userData.id
+            let prods = []
+            await Product.query()
+                .joinRelated('order_product_rel.order_rel')
+                .where('order_product_rel:order_rel.id', order)
+                .andWhere('order_product_rel:order_rel.user', user)
+                .select("product.*")
+                .then(async products => {
+                    for (const product of products) {
+                        let prodElem = {}
+                        prodElem = { ...product }
+                        await ProductImage.query().where('product', '=', product.id).then(productImg => { prodElem.image_link = productImg[0].image_link })
+                        await ProductRemains.query().where('product', '=', product.id).then(productAmt => { prodElem.amount = productAmt[0].amount })
+                        prods.push(prodElem)
+                    }
+                    res.json(prods)
+                })
+                .catch(err => res.json(err.message))
+        }
+    }
+
     // --------- check CRUD ----------
     async createCheck(req, res) {
         const { order, payment_method, full_price } = req.body
@@ -294,12 +319,20 @@ class orderController {
     }
 
     async getCheckByOrder(req, res) {
-        const order = req.params.id
-        await Check.query()
-            .select("*")
-            .where("order", "=", order)
-            .then(check => res.json(check))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const order = req.params.id
+            let user = req.userData.id
+            await Check.query()
+            .joinRelated("order_rel")
+                .where("order_rel.id", order)
+                .andWhere("order_rel.user", user)
+                .first("check.*")
+                .then(check => res.json(check))
+                .catch(err => res.json(err.message))
+        }
     }
 
     // --------- payment method CRUD ----------

@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { TrackOrderFeedComponent } from './track-order-feed/track-order-feed.component';
 import { TrackOrderItemComponent } from './track-order-item/track-order-item.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 const routes: Routes = [
   {path: '', component: MainTrackPageComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
     MainTrackPageComponent,
     OrderTrackPageComponent,
     TrackOrderFeedComponent,
-    TrackOrderItemComponent
+    TrackOrderItemComponent,
+    OrderHistoryComponent
   ],
   imports: [
     CommonModule,

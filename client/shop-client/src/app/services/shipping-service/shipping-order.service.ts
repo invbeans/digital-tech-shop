@@ -8,6 +8,7 @@ import { District } from 'src/app/shared/models/district';
 import { PickupPointType } from 'src/app/shared/models/pickup-point-type';
 import { Region } from 'src/app/shared/models/region';
 import { ShippingHistory } from 'src/app/shared/models/shipping-history';
+import { ShippingHistoryTrackPage } from 'src/app/shared/models/shipping-history-track-page';
 import { ShippingMethod } from 'src/app/shared/models/shipping-method';
 import { ShippingService } from 'src/app/shared/models/shipping-service';
 import { Street } from 'src/app/shared/models/street';
@@ -61,7 +62,7 @@ export class ShippingOrderService {
     return this.http.get<ShippingService | null>(this.mapping + `shipping_service/by_method/${id}`)
   }
 
-  makeOrder(dateTime: string, orderId: number, adress: Adress, shippingService: ShippingService, pickupPointType: PickupPointType) {
+  makeOrder(dateTime: string, orderId: number, user: number, adress: Adress, shippingService: ShippingService, pickupPointType: PickupPointType) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -69,7 +70,7 @@ export class ShippingOrderService {
       withCredentials: true,
       "observe?": "response"
     }
-    const body = {date: dateTime, order: orderId, adress, shipping_service: shippingService, pickup_point_type: pickupPointType}
+    const body = {date: dateTime, order: orderId, user, adress, shipping_service: shippingService, pickup_point_type: pickupPointType}
     return this.http.post<ShippingHistory | null>(this.mapping + `make_order/`, body, httpOptions)
       .pipe(
         map((data: any) => {
@@ -77,7 +78,7 @@ export class ShippingOrderService {
             this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
-                this.makeOrder(dateTime, orderId, adress, shippingService, pickupPointType)
+                this.makeOrder(dateTime, orderId, user, adress, shippingService, pickupPointType)
               }
             })
           }
@@ -102,6 +103,78 @@ export class ShippingOrderService {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
                 this.getTrackOrderShort()
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  getAdressByOrder(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<Adress | null>(this.mapping + `/adress/by_order/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getAdressByOrder(id)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  getPickupPointByOrder(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<PickupPointType | null>(this.mapping + `/pickup_point_type/by_order/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getPickupPointByOrder(id)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  getShippingHistoryByOrder(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<ShippingHistoryTrackPage | null>(this.mapping + `/shipping_history_track/by_order/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getShippingHistoryByOrder(id)
               }
             })
           }

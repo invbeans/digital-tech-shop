@@ -27,12 +27,13 @@ router.get('/order/:id', controller.getOrderById)
 // --------- order product CRUD ----------
 router.post('/order_product', controller.createOrderProduct)
 router.delete('/order_product/:id', controller.deleteOrderProduct)
+router.get('/product/by_order/:id', userMiddleware, controller.getProductsByOrder)
 router.get('/order_product/by_order/:id', controller.getOrderProductsByOrder)
 router.get('/order_product/:id', controller.getOrderProductById)
 
 // --------- check CRUD ----------
 router.post('/check', controller.createCheck)
-router.get('/check/by_order/:id', controller.getCheckByOrder)
+router.get('/check/by_order/:id', userMiddleware, controller.getCheckByOrder)
 
 // --------- payment method CRUD ----------
 router.post('/payment_method', controller.createPaymentMethod)

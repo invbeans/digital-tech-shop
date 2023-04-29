@@ -1,2 +1,18 @@
-<p>order-track-page works!</p>
-<p>{{id}}</p>
+<div class="wrapper">
+    <div class="centered">
+        <p class="bigger-font">Детали заказа:</p>
+        <app-product-info-feed>
+            <app-product-info-item *ngFor="let product of products" [product]="product"
+                [changeAmount]="false"></app-product-info-item>
+        </app-product-info-feed>
+    </div>
+    <div class="columns">
+        <div class="info">
+            <p class="mid-font">Адрес: {{adress.orderAdress}}</p>
+            <p>{{pickupPointType.name}}</p>
+            <p *ngIf="showDays"> Хранение {{pickupPointType.storageDays}} дней</p>
+            <p>С учетом доставки и акций: {{check.fullPrice | currency:'RUB':'symbol-narrow'}}</p>
+        </div>
+        <app-order-history [shippingHistory]="shippingHistory"></app-order-history>
+    </div>
+</div>
