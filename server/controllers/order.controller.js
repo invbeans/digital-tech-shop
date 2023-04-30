@@ -237,12 +237,17 @@ class orderController {
     }
 
     async getOrdersByUser(req, res) {
-        const user = req.params.id
-        await Order.query()
-            .select("*")
-            .where("user", "=", user)
-            .then(order => res.json(order))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let user = req.userData.id
+            await Order.query()
+                .select("*")
+                .where("user", user)
+                .then(order => res.json(order))
+                .catch(err => res.json(err.message))
+        }
     }
 
     // --------- order product CRUD ----------
@@ -274,12 +279,19 @@ class orderController {
     }
 
     async getOrderProductsByOrder(req, res) {
-        const order = req.params.id
-        await OrderProduct.query()
-            .select("*")
-            .where("order", "=", order)
-            .then(orderProduct => res.json(orderProduct))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let user = req.userData.id
+            const order = req.params.id
+            await OrderProduct.query()
+                .joinRelated("order_rel")
+                .where("order_rel.id", order)
+                .select("order_product.*")
+                .then(orderProduct => res.json(orderProduct))
+                .catch(err => res.json(err.message))
+        }
     }
 
     async getProductsByOrder(req, res) {
@@ -309,6 +321,23 @@ class orderController {
         }
     }
 
+    async getShortProductsByOrder(req, res){
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let user = req.userData.id
+            const order = req.params.id
+            await Product.query()
+                .joinRelated("order_product_rel.order_rel")
+                .where("order_product_rel:order_rel.id", order)
+                .andWhere("order_product_rel:order_rel.user", user)
+                .select("product.*")
+                .then(orderProduct => res.json(orderProduct))
+                .catch(err => res.json(err.message))
+        }
+    }
+
     // --------- check CRUD ----------
     async createCheck(req, res) {
         const { order, payment_method, full_price } = req.body
@@ -326,7 +355,7 @@ class orderController {
             const order = req.params.id
             let user = req.userData.id
             await Check.query()
-            .joinRelated("order_rel")
+                .joinRelated("order_rel")
                 .where("order_rel.id", order)
                 .andWhere("order_rel.user", user)
                 .first("check.*")

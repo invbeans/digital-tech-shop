@@ -12,7 +12,7 @@ import { ContentPageModule } from './content-page/content-page.module';
 //import { MakeOrderModule } from './make-order/make-order.module';
 import { ManagerPageModule } from './manager-page/manager-page.module';
 //import { ProductModule } from './product/product.module';
-import { ReturnModule } from './return/return.module';
+//import { ReturnModule } from './return/return.module';
 import { SharedModule } from './shared/shared.module';
 //import { SubCatModule } from './sub-cat/sub-cat.module';
 //import { TrackOrderModule } from './track-order/track-order.module';
@@ -36,7 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
     //BrandModule,
     //MakeOrderModule,
     //TrackOrderModule,
-    ReturnModule,
+    //ReturnModule,
     AdminPageModule,
     ManagerPageModule,
     ContentPageModule

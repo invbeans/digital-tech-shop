@@ -4,8 +4,10 @@ import { map } from 'rxjs';
 import { Answer } from 'src/app/shared/models/answer';
 import { AnswerProdPage } from 'src/app/shared/models/answer-prod-page';
 import { AuthResponse } from 'src/app/shared/models/auth-response';
+import { ProductReturnPage } from 'src/app/shared/models/product-return-page';
 import { Question } from 'src/app/shared/models/question';
 import { QuestionProdPage } from 'src/app/shared/models/question-prod-page';
+import { ReturnApplication } from 'src/app/shared/models/return-application';
 import { Review } from 'src/app/shared/models/review';
 import { ReviewProdPage } from 'src/app/shared/models/review-prod-page';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -122,6 +124,56 @@ export class ActivityService {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
                 this.postAnswer(text, question)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  getReturnApplicationsByUser() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<ReturnApplication | null>(this.mapping + `return_application/by_user`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getReturnApplicationsByUser()
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  postReturnApplication(products: ProductReturnPage[], order: number, text: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    let dateTime = new Date().toISOString();
+    const body = { products, date: dateTime, order, text }
+    return this.http.post<ReturnApplication | null>(this.mapping + 'return_application', body, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.postReturnApplication(products, order, text)
               }
             })
           }

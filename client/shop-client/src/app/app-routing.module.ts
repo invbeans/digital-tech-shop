@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainPageComponent } from './main/main-page/main-page.component';
-import { MainCatPageComponent } from './main-cat/main-cat-page/main-cat-page.component';
-import { BasketModule } from './basket/basket.module';
 
 const routes: Routes = [
   //{path: '/main_categories', component: MainCatPageComponent},
@@ -18,7 +15,9 @@ const routes: Routes = [
   {path: 'brand/:id', loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule)},
   {path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule)},
   {path: 'make_order', loadChildren: () => import('./make-order/make-order.module').then(m => m.MakeOrderModule)},
-  {path: 'track-order', loadChildren: () => import('./track-order/track-order.module').then(m => m.TrackOrderModule)}
+  {path: 'track-order', loadChildren: () => import('./track-order/track-order.module').then(m => m.TrackOrderModule)},
+  {path: 'help', loadChildren: () => import('./help-page/help-page.module').then(m => m.HelpPageModule)},
+  {path: 'return', loadChildren: () => import('./return/return.module').then(m => m.ReturnModule)}
 
 ];
 

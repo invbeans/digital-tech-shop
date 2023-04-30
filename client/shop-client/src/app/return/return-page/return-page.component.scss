@@ -1,0 +1,27 @@
+.main-wrapper {
+    width: 100%;
+    padding-bottom: 30vh;
+}
+
+.form-container {
+    margin-top: 10vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    align-items: center;
+}
+
+.control {
+    width: 75vw;
+}
+
+button {
+    min-width: fit-content;
+    width: 10vw;
+}
+
+textarea{
+    resize: vertical;
+    min-height: 30vh;
+}

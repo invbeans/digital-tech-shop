@@ -23,9 +23,10 @@ router.delete('/answer/:id', controller.deleteAnswer)
 router.get('/answer/by_question/:id', controller.getAnswerByQuestionForProdPage)
 
 // --------- return application CRUD ----------
-router.post('/return_application', controller.createReturnApplication)
+router.post('/return_application', userMiddleware, controller.createReturnApplication)
 router.put('/return_application/:id', controller.updateReturnApplication)
 router.delete('/return_application/:id', controller.deleteReturnApplication)
+router.get('/return_application/by_user', userMiddleware, controller.getReturnApplicationsByUser)
 router.get('/return_application', controller.getReturnApplications)
 
 // --------- return product CRUD ----------

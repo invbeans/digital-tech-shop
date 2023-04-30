@@ -151,6 +151,30 @@ export class OrderService {
       )
   }
 
+  getShortProductsByOrder(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<Product | null>(this.mapping + `/short_product/by_order/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getShortProductsByOrder(id)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
   makeProductPageArray(data: any) {
     let count: Map<any, number> = new Map<any, number>()
     for (let elem of data) {
@@ -242,6 +266,30 @@ export class OrderService {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
                 this.getCheckByOrder(id)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  getOrdersByUser() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<Order | null>(this.mapping + `order/by_user`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getOrdersByUser()
               }
             })
           }

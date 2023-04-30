@@ -202,11 +202,25 @@ class activityController {
 
     // --------- return application CRUD ----------
     async createReturnApplication(req, res) {
-        const { date, order, text, approved } = req.body
-        await ReturnApplication.query()
-            .insert({ date, order, text, approved })
-            .then(returnApplication => res.json(returnApplication))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let user = req.userData.id
+            let approved = false
+            const { products, date, order, text } = req.body
+            await ReturnApplication.query()
+                .insert({ date, user, order, text, approved })
+                .then(async returnApplication => {
+                    for (let product of products) {
+                        await ReturnProduct.query()
+                            .insert({ return_application: returnApplication.id, product: product.product.id, proper_quality: product.properQuality })
+                            .then(() => { })
+                    }
+                    res.json(returnApplication)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async updateReturnApplication(req, res) {
@@ -238,6 +252,22 @@ class activityController {
         await ReturnApplication.query()
             .then(returnApplication => res.json(returnApplication))
             .catch(err => res.json(err.message))
+    }
+
+    async getReturnApplicationsByUser(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            let user = req.userData.id
+            await ReturnApplication.query()
+                .select("*")
+                .where("user", user)
+                .then(application => {
+                    res.json(application)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     // --------- return product CRUD ----------

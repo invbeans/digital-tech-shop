@@ -1,0 +1,9 @@
+.wrapper {
+    width: 75vw;
+    display: flex;
+    justify-content: center;
+    background-color: var(--card-background-color);
+    min-height: fit-content;
+    height: 10vh;
+    align-items: center;
+}

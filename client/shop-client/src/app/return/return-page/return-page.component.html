@@ -1,0 +1,21 @@
+<div class="main-wrapper">
+    <app-return-feed>
+        <app-return-item *ngFor="let application of returnApplications"
+            [returnApplication]="application"></app-return-item>
+    </app-return-feed>
+    <app-order-text-feed>
+        <app-order-text-item *ngFor="let order of orders" [order]="order" (orderClicked)="onOrderClick(order.id || 0)">
+            <app-product-text-feed *ngIf="openedOrder == order.id">
+                <app-product-text-item *ngFor="let product of products; let index = index" [product]="product" [listNumber]="index"></app-product-text-item>
+            </app-product-text-feed>
+        </app-order-text-item>
+    </app-order-text-feed>
+    <form class="form-container" [formGroup]="applicationForm" novalidate (ngSubmit)="submitApplication()">
+        <div class="control">
+            <textarea placeholder="Опишите причины возврата товаров..." maxlength="400" formControlName="text"></textarea>
+        </div>
+        <div class="control">
+            <button [disabled]="applicationForm.invalid || haveChosenProducts() == false">Отправить заявление</button>
+        </div>
+    </form>
+</div>
