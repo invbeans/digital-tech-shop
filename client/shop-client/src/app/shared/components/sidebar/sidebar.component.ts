@@ -10,25 +10,30 @@ import { AuthService } from '../../services/auth/auth.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
-  //@Input() userRole = 0;
-  userRole = 0
-  count = 0;
+export class SidebarComponent implements OnChanges {
+  @Input() userRole = 0;
   sidebarElements: SidebarElement[] = []
 
-  constructor(public sidebarService: SidebarService, private loadInitDataService: LoadInitDataService, private authService: AuthService){
+  constructor(public sidebarService: SidebarService, private loadInitDataService: LoadInitDataService, private authService: AuthService) {
   }
-  ngOnInit(): void {
-    let userDto = this.authService.getUserDto()
-    this.userRole = userDto.role
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    for (const userRole in changes) {
+      const change = changes[userRole]
+      this.userRole = change.currentValue
+    }
     this.loadData()
   }
 
-  loadData(){
-    this.loadInitDataService.getSidebarContent(this.userRole)
-    .subscribe((data: any) => {
-      this.sidebarElements = data
-    })
+
+
+  loadData() {
+    let userRole = this.authService.getRole()
+    this.loadInitDataService.getSidebarContent(userRole)
+      .subscribe((data: any) => {
+        if (this.sidebarElements.length == 0) this.sidebarElements = data
+      })
   }
 
 }

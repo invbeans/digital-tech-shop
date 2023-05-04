@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const MetaUser = require('../models/MetaUser')
 const UserProfile = require('../models/UserProfile')
+const Role = require('../models/Role')
 const bcrypt = require('bcrypt')
 const tokenService = require('../service/token.service')
 const UserDto = require('../models/UserDto')
@@ -16,20 +17,16 @@ class userController {
     }
 
     async getUsers(req, res) {
-        if(req.message){
-            //res.json(req.message)
-            //this.refresh(req, res)
-            res.status(401).json(req.message) 
-            //не оч мне понравилось кидать ошибку сразу из миддлвейра,
-            //поэтому код такой странный кек
+        if (req.message) {
+            res.status(401).json(req.message)
         }
-        else{
+        else {
             await User.query()
-            .then(users => {
-                console.log(req.user)
-                res.json(users)
-            })
-            .catch(err => res.json(err.message))
+                .then(users => {
+                    console.log(req.user)
+                    res.json(users)
+                })
+                .catch(err => res.json(err.message))
         }
     }
 
@@ -129,7 +126,7 @@ class userController {
             const { refreshToken } = req.cookies
             await tokenService.removeToken(refreshToken).then(token => {
                 res.clearCookie('refreshToken')
-                res.json({token: token[0]})
+                res.json({ token: token[0] })
             })
         } catch (err) {
             res.json(err.message)
@@ -161,6 +158,47 @@ class userController {
         } catch (err) {
             res.json(err.message)
         }
+    }
+
+    async changeUserRole(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const { role } = req.body
+            const id = req.params.id
+            await MetaUser.query()
+                .findById(id)
+                .patchAndFetchById(id, {
+                    role
+                })
+                .then(metaUser => {
+                    if (metaUser === undefined) res.json("Такой записи мета_юзер нет")
+                    else res.json(metaUser)
+                })
+                .catch(err => res.json(err.message))
+        }
+    }
+
+    async findUserBySurname(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const { surname } = req.body
+            await User.query()
+                .select("*")
+                .where("surname", "ilike", surname)
+                .then(user => res.json(user))
+                .catch(err => res.json(err.message))
+        }
+    }
+
+    async getRoles(req, res){
+        await Role.query()
+        .select("*")
+        .then(roles => res.json(roles))
+        .catch(err => res.json(err.message))
     }
 }
 

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SidebarElement } from '../../models/sidebar-element';
 import { MainCategory } from '../../models/main-category';
-import { map } from 'rxjs';
+import { map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,32 +20,25 @@ export class LoadInitDataService {
 
   getSidebarContent(userRole: number) {
     let sidebarElements: SidebarElement[] = []
-    if (userRole == this.ADMIN_ROLE) {
-      //потом будет другое
-      return this.http.get<MainCategory | null>(this.mapping + 'storefront/main_category')
-        .pipe(
-          map((data: any) => {
-            for (let mainCat of data) {
-              let elem = new SidebarElement(mainCat.name, `/main_category/${mainCat.id}`)
-              sidebarElements.push(elem)
-            }
-            return sidebarElements
-          })
-        )
-
-    }
-    //просто пользователи и не залогиненные
-    else{
-      return this.http.get<MainCategory | null>(this.mapping + 'storefront/main_category')
-        .pipe(
-          map((data: any) => {
-            for (let mainCat of data) {
-              let elem = new SidebarElement(mainCat.name, `/main_category/${mainCat.id}`)
-              sidebarElements.push(elem)
-            }
-            return sidebarElements
-          })
-        )
+    switch (userRole) {
+      case (this.ADMIN_ROLE):
+        sidebarElements.push(new SidebarElement("Сотрудники ИС", "/admin/staff"))
+        sidebarElements.push(new SidebarElement("Производители", "/admin/manufacturer"))
+        sidebarElements.push(new SidebarElement("Поставщики", "/admin/supplier"))
+        sidebarElements.push(new SidebarElement("Сервисы доставки", "/admin/shipping_service"))
+        return of(sidebarElements) //обзервбл))) из списка
+      //просто пользователи и не залогиненные
+      default:
+        return this.http.get<MainCategory | null>(this.mapping + 'storefront/main_category')
+          .pipe(
+            map((data: any) => {
+              for (let mainCat of data) {
+                let elem = new SidebarElement(mainCat.name, `/main_category/${mainCat.id}`)
+                sidebarElements.push(elem)
+              }
+              return sidebarElements
+            })
+          )
     }
   }
 }

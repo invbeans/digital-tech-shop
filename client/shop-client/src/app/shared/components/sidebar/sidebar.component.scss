@@ -1,11 +1,12 @@
 .sidebar {
-    position: fixed;
+    position:absolute;
+    top: 10vh;
     left: 0;
     width: 20vw;
+    height: 100%;
     display: flex;
     flex-direction: column;
     background-color: #153915;
-    height: 94vh;
 }
 
 aside {

@@ -1,6 +1,7 @@
 const Router = require('express')
 const router = new Router()
 const controller = require('../controllers/storefront.controller')
+const adminAuthMiddleware = require('../middlewares/admin-auth.middleware')
 
 // --------- main category CRUD ----------
 router.post('/main_category', controller.createMainCategory)
@@ -73,16 +74,16 @@ router.delete('/product_image/:id', controller.deleteProductImage)
 router.get('/product_image/:id', controller.getProductImageById)
 
 // --------- supplier CRUD ----------
-router.post('/supplier', controller.createSupplier)
-router.put('/supplier/:id', controller.updateSupplier)
-router.delete('/supplier/:id', controller.deleteSupplier)
+router.post('/supplier', adminAuthMiddleware, controller.createSupplier)
+router.put('/supplier/:id', adminAuthMiddleware, controller.updateSupplier)
+router.delete('/supplier/:id', adminAuthMiddleware, controller.deleteSupplier)
 router.get('/supplier/:id', controller.getSupplierById)
 router.get('/supplier', controller.getSuppliers)
 
 // --------- manufacturer CRUD ----------
-router.post('/manufacturer', controller.createManufacturer)
-router.put('/manufacturer/:id', controller.updateManufacturer)
-router.delete('/manufacturer/:id', controller.deleteManufacturer)
+router.post('/manufacturer', adminAuthMiddleware, controller.createManufacturer)
+router.put('/manufacturer/:id', adminAuthMiddleware, controller.updateManufacturer)
+router.delete('/manufacturer/:id', adminAuthMiddleware, controller.deleteManufacturer)
 router.get('/manufacturer/:id', controller.getManufacturerById)
 router.get('/manufacturer', controller.getManufacturers)
 

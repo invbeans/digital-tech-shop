@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AdminPageModule } from './admin-page/admin-page.module';
+//import { AdminPageModule } from './admin-page/admin-page.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,7 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
     //MakeOrderModule,
     //TrackOrderModule,
     //ReturnModule,
-    AdminPageModule,
+    //AdminPageModule,
     ManagerPageModule,
     ContentPageModule
   ],

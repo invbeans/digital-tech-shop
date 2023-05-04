@@ -13,7 +13,6 @@ export class MainService {
 
   mapping: string = 'http://localhost:3000/';
   constructor(private http: HttpClient, private cookieService: CookieService, private authService: AuthService) {
-    //console.log(cookieService.check('refreshToken'))
   }
 
   getLastAction() {
@@ -32,14 +31,14 @@ export class MainService {
       withCredentials: true,
       "observe?": "response"
     }
-    console.log("делаем запрос") //метод чтоб тестить, не смотреть сюда 
+    console.log("делаем запрос") //метод чтоб тестить,
     return this.http.get<User | null>(this.mapping + 'user/user', httpOptions)
     .pipe(
       map((data: any) => {
         if(data.status === 401){
           this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
             if(refreshData){
-              localStorage.setItem('token', refreshData.accessToken) //это должен быть рефреш по истечению времени вроде
+              localStorage.setItem('token', refreshData.accessToken)
               this.getAllUsers()
             }
           })

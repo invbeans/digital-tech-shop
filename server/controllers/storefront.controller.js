@@ -720,36 +720,51 @@ class storefrontController {
 
     // --------- supplier CRUD ----------
     async createSupplier(req, res) {
-        const { name, email, phone } = req.body
-        await Supplier.query()
-            .insert({ name, email, phone })
-            .then(supplier => res.json(supplier))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const { name, email, phone } = req.body
+            await Supplier.query()
+                .insert({ name, email, phone })
+                .then(supplier => res.json(supplier))
+                .catch(err => res.json(err.message))
+        }
     }
 
     async updateSupplier(req, res) {
-        const id = req.params.id
-        const { name, email, phone } = req.body
-        await Supplier.query()
-            .patchAndFetchById(id, {
-                name, email, phone
-            })
-            .then(supplier => {
-                if (supplier === null) res.json("Такого поставщика нет")
-                else res.json(supplier)
-            })
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const id = req.params.id
+            const { name, email, phone } = req.body
+            await Supplier.query()
+                .patchAndFetchById(id, {
+                    name, email, phone
+                })
+                .then(supplier => {
+                    if (supplier === null) res.json("Такого поставщика нет")
+                    else res.json(supplier)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async deleteSupplier(req, res) {
-        const id = req.params.id
-        await Supplier.query()
-            .deleteById(id)
-            .then(amount => {
-                if (amount == 0) res.json("Такого поставщика нет")
-                else res.json(`Поставщик с id = ${id} удалён`)
-            })
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const id = req.params.id
+            await Supplier.query()
+                .deleteById(id)
+                .then(amount => {
+                    if (amount == 0) res.json("Такого поставщика нет")
+                    else res.json(`Поставщик с id = ${id} удалён`)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async getSuppliers(req, res) {
@@ -771,36 +786,51 @@ class storefrontController {
 
     // --------- manufacturer CRUD ----------
     async createManufacturer(req, res) {
-        const { name, email } = req.body
-        await Manufacturer.query()
-            .insert({ name, email })
-            .then(manufacturer => res.json(manufacturer))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const { name, email } = req.body
+            await Manufacturer.query()
+                .insert({ name, email })
+                .then(manufacturer => res.json(manufacturer))
+                .catch(err => res.json(err.message))
+        }
     }
 
     async updateManufacturer(req, res) {
-        const id = req.params.id
-        const { name, email } = req.body
-        await Manufacturer.query()
-            .patchAndFetchById(id, {
-                name, email
-            })
-            .then(manufacturer => {
-                if (manufacturer === null) res.json("Такого производителя нет")
-                else res.json(manufacturer)
-            })
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const id = req.params.id
+            const { name, email } = req.body
+            await Manufacturer.query()
+                .patchAndFetchById(id, {
+                    name, email
+                })
+                .then(manufacturer => {
+                    if (manufacturer === null) res.json("Такого производителя нет")
+                    else res.json(manufacturer)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async deleteManufacturer(req, res) {
-        const id = req.params.id
-        await Manufacturer.query()
-            .deleteById(id)
-            .then(amount => {
-                if (amount == 0) res.json("Такого производителя нет")
-                else res.json(`Производитель с id = ${id} удалён`)
-            })
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const id = req.params.id
+            await Manufacturer.query()
+                .deleteById(id)
+                .then(amount => {
+                    if (amount == 0) res.json("Такого производителя нет")
+                    else res.json(`Производитель с id = ${id} удалён`)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async getManufacturers(req, res) {

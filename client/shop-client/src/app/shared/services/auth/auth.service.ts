@@ -19,11 +19,11 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   setRole(role: number) {
-    this.role = role
+    this.userDto.role = role
   }
 
   getRole() {
-    return this.role
+    return this.userDto.role
   }
 
   setAuth(isAuth: boolean) {
