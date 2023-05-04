@@ -78,7 +78,6 @@ export class ReturnPageComponent implements OnInit{
   }
 
   submitApplication(){
-    console.log(this.products)
     let chosenProducts: ProductReturnPage[] = []
     for(let elem of this.products){
       if (elem.chosen) chosenProducts.push(elem)

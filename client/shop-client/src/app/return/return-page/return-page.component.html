@@ -6,7 +6,7 @@
     <app-order-text-feed>
         <app-order-text-item *ngFor="let order of orders" [order]="order" (orderClicked)="onOrderClick(order.id || 0)">
             <app-product-text-feed *ngIf="openedOrder == order.id">
-                <app-product-text-item *ngFor="let product of products; let index = index" [product]="product" [listNumber]="index"></app-product-text-item>
+                <app-product-text-item *ngFor="let product of products; let index = index" [product]="product"></app-product-text-item>
             </app-product-text-feed>
         </app-order-text-item>
     </app-order-text-feed>

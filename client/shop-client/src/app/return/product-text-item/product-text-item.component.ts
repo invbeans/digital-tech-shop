@@ -9,7 +9,6 @@ import { ProductReturnPage } from 'src/app/shared/models/product-return-page';
 })
 export class ProductTextItemComponent {
   @Input() product: ProductReturnPage = {} as ProductReturnPage
-  @Input() listNumber = 0
 
   onChoseClick(){
     this.product.chosen = !this.product.chosen
