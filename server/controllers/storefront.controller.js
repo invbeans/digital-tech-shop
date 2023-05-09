@@ -11,6 +11,7 @@ const Supplier = require("../models/Supplier")
 const Manufacturer = require("../models/Manufacturer")
 const { raw } = require('objection')
 const { knex } = require('knex')
+const { transaction } = require('objection')
 
 class storefrontController {
     //проверки на роль админа / контент манагёра пока нет
@@ -808,9 +809,15 @@ class storefrontController {
             await Manufacturer.query()
                 .patchAndFetchById(id, {
                     name, email
-                })
-                .then(manufacturer => {
-                    if (manufacturer === null) res.json("Такого производителя нет")
+                }).then(async manufacturer => {
+                    if (manufacturer === undefined) {
+                        await Manufacturer.query()
+                        .insert({name, email})
+                        .then(manufacturer => {
+                            console.log(manufacturer)
+                            res.json(manufacturer)
+                        })
+                    }
                     else res.json(manufacturer)
                 })
                 .catch(err => res.json(err.message))

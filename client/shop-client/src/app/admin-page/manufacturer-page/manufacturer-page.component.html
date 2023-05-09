@@ -1,1 +1,9 @@
-<p>manufacturer-page works!</p>
+<div class="wrapper">
+    <div class="page-name">
+        <p>Редактирование производителей</p>
+    </div>
+    <button (click)="onNewManufacturerClick()">Добавить нового производителя</button>
+    <app-edit-text-item-card *ngFor="let manufacturer of manufacturers; let index=index" [index]="index" title="Производитель" [hasDelete]="true" (editSaveClick)="onEditSaveClick($event)" (deleteClick)="onDeleteClick($event)">
+        <app-manufacturer-form [manufacturer]="manufacturer" [readonly]="readonlyArr[index]" (manufacturerChanged)="onManufacturerChanged($event)"></app-manufacturer-form>
+    </app-edit-text-item-card>
+</div>

@@ -14,6 +14,23 @@ class Manufacturer extends Model {
         }
     }
 
+    $beforeUpdate(){
+        if(!validate(this.email)){
+            throw new ValidationError({
+                message: 'Неправильно введена электронная почта'
+            })
+        }
+    }
+
+    static get jsonSchema() {
+        return {
+            type: 'object',
+            properties: {
+                email: { type: 'string' }
+            }
+        }
+    }
+
     static get relationMappings() {
         const BrandAction = require('./BrandAction')
         const Product = require('./Product')

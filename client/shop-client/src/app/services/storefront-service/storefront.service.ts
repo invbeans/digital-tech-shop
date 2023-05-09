@@ -1,18 +1,21 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
+import { AuthResponse } from 'src/app/shared/models/auth-response';
 import { MainCategory } from 'src/app/shared/models/main-category';
 import { Manufacturer } from 'src/app/shared/models/manufacturer';
 import { Product } from 'src/app/shared/models/product';
 import { ProductProdPage } from 'src/app/shared/models/product-prod-page';
 import { PropertyValueInfo } from 'src/app/shared/models/property-value-info';
 import { SubCategory } from 'src/app/shared/models/sub-category';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorefrontService {
   mapping: string = 'http://localhost:3000/storefront/';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getSubcategoriesByMainCategory(id: number){
     return this.http.get<SubCategory | null>(this.mapping + `sub_category/by_main_category/${id}`);
@@ -40,6 +43,59 @@ export class StorefrontService {
 
   getManufacturerById(id: number){
     return this.http.get<Manufacturer | null>(this.mapping + `manufacturer/${id}`)
+  }
+
+  getManufacturers(){
+    return this.http.get<Manufacturer | null>(this.mapping + `manufacturer/`)
+  }
+
+  changeManufacturerById(id: number, manufacturer: Manufacturer){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    const body = {name: manufacturer.name, email: manufacturer.email}
+    return this.http.put<Manufacturer | null>(this.mapping + `manufacturer/${id}`, body, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.changeManufacturerById(id, manufacturer)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  deleteManufacturerById(id: number){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.delete<Manufacturer | null>(this.mapping + `manufacturer/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.deleteManufacturerById(id)
+              }
+            })
+          }
+          else return data
+        })
+      )
   }
 
   getProductsByManufacturer(id: number){

@@ -1,0 +1,10 @@
+<div class="wrapper">
+    <form [formGroup]="manufacturerForm" class="form" novalidate (change)="onManufacturerChanged()">
+        <div class="control">
+            <input type="text" formControlName="name" [readonly]="readonly">
+        </div>
+        <div class="control">
+            <input type="text" formControlName="email" [readonly]="readonly">
+        </div>
+    </form>
+</div>
