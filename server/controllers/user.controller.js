@@ -22,8 +22,10 @@ class userController {
         }
         else {
             await User.query()
+                .joinRelated('user_profile_rel')
+                .joinRelated('meta_user_rel.role_rel')
+                .select("user.id", "username", "surname", "firstname", "lastname", "phone_number", "email", "meta_user_rel:role_rel.id as roleId", "name as role")
                 .then(users => {
-                    console.log(req.user)
                     res.json(users)
                 })
                 .catch(err => res.json(err.message))
@@ -56,14 +58,19 @@ class userController {
     }
 
     async deleteUser(req, res) {
-        const id = req.params.id
-        await User.query()
-            .deleteById(id)
-            .then(amount => {
-                if (amount == 0) res.json("Такого пользователя нет")
-                else res.json(`Пользователь с id = ${id} удален`)
-            })
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const id = req.params.id
+            await User.query()
+                .deleteById(id)
+                .then(amount => {
+                    if (amount == 0) res.json("Такого пользователя нет")
+                    else res.json(`Пользователь с id = ${id} удален`)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async registration(req, res) {
@@ -168,7 +175,6 @@ class userController {
             const { role } = req.body
             const id = req.params.id
             await MetaUser.query()
-                .findById(id)
                 .patchAndFetchById(id, {
                     role
                 })
@@ -187,18 +193,20 @@ class userController {
         else {
             const { surname } = req.body
             await User.query()
-                .select("*")
+                .joinRelated('user_profile_rel')
+                .joinRelated('meta_user_rel.role_rel')
+                .select("user.id", "username", "surname", "firstname", "lastname", "phone_number", "email", "meta_user_rel:role_rel.id as roleId", "name as role")
                 .where("surname", "ilike", surname)
                 .then(user => res.json(user))
                 .catch(err => res.json(err.message))
         }
     }
 
-    async getRoles(req, res){
+    async getRoles(req, res) {
         await Role.query()
-        .select("*")
-        .then(roles => res.json(roles))
-        .catch(err => res.json(err.message))
+            .select("*")
+            .then(roles => res.json(roles))
+            .catch(err => res.json(err.message))
     }
 }
 

@@ -29,10 +29,10 @@ export class SidebarComponent implements OnChanges {
 
 
   loadData() {
-    let userRole = this.authService.getRole()
-    this.loadInitDataService.getSidebarContent(userRole)
+    //let userRole = this.authService.getRole()
+    this.loadInitDataService.getSidebarContent(this.userRole)
       .subscribe((data: any) => {
-        if (this.sidebarElements.length == 0) this.sidebarElements = data
+        this.sidebarElements = data
       })
   }
 

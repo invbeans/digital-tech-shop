@@ -1,1 +1,12 @@
-<p>staff-page works!</p>
+<div class="wrapper">
+    <div class="page-name">
+        <p>Назначение сотрудников ИС</p>
+    </div>
+    <div class="search">
+        <input type="text" placeholder="Введите фамилию..." [(ngModel)]="searchString">
+        <button  (click)="userSearchClick()">Найти</button>
+    </div>
+    <app-edit-text-item-card *ngFor="let user of userInfo; let index=index" [index]="index" title="Пользователь" [hasDelete]="false" (editSaveClick)="onEditSaveClick($event)">
+        <app-user-form [userInfo]="user" [roles]="roles" [readonly]="readonlyArr[index]" (roleChanged)="onRoleChanged($event)"></app-user-form>
+    </app-edit-text-item-card>
+</div>

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { EditObject } from '../../models/edit-object';
 
 @Component({
   selector: 'app-edit-text-item-card',
@@ -7,13 +8,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class EditTextItemCardComponent {
   @Input() title = "Заголовок";
-  @Input() content = "Содержимое";
+  @Input() index = 0;
+  @Input() hasDelete = false;
 
-  isEdit = true;
+  isEdit = false;
   editSaveButtonName = "";
 
-  @Output() editSaveClick = new EventEmitter<boolean>();
-  @Output() deleteClick = new EventEmitter();
+  @Output() editSaveClick = new EventEmitter<EditObject>();
+  @Output() deleteClick = new EventEmitter<number>();
 
   constructor() {
     this.editSaveButtonName = "Редактировать";
@@ -21,12 +23,13 @@ export class EditTextItemCardComponent {
 
   onEditSaveClick(){
     this.isEdit = !this.isEdit;
-    this.editSaveButtonName = (this.isEdit) ? "Редактировать" : "Сохранить";
-    this.editSaveClick.emit(this.isEdit); //if true we change text to input form
+    this.editSaveButtonName = (!this.isEdit) ? "Редактировать" : "Сохранить";
+    let editObject = new EditObject(this.index, this.isEdit);
+    this.editSaveClick.emit(editObject); //if true we change text to input form
   }
 
   onDeleteClick(){
-    this.deleteClick.emit();
+    this.deleteClick.emit(this.index);
   }
 
 }

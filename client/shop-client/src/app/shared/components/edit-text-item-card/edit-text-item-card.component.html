@@ -4,7 +4,7 @@
             <span class="grid buttons-div">
             <button class="green" 
             (click)="onEditSaveClick()">{{editSaveButtonName}}</button>
-            <button class="red" (click)="onDeleteClick()">Удалить</button>
+            <button class="red" (click)="onDeleteClick()" *ngIf="hasDelete">Удалить</button>
             </span>
         </div>
     </header>

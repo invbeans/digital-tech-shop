@@ -1,0 +1,28 @@
+.wrapper{
+    padding-bottom: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-name {
+    margin-top: 5vh;
+}
+
+.search {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 5vh;
+}
+
+.search input {
+    width: 40vw;
+    min-width: fit-content;
+}
+
+.search button {
+    width: 10vw;
+    min-width: fit-content;
+}

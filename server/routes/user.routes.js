@@ -12,11 +12,11 @@ router.get('/refresh', controller.refresh)
 router.get('/user', adminAuthMiddleware, controller.getUsers)
 router.put('/user/change_role/:id', adminAuthMiddleware, controller.changeUserRole)
 router.post('/user/by_surname', adminAuthMiddleware, controller.findUserBySurname)
+router.delete('/user/:id', adminAuthMiddleware, controller.deleteUser)
 
 router.get('/role', controller.getRoles)
 
 router.post('/user', controller.saveUser)
-router.delete('/user/:id', controller.deleteUser)
 router.get('/user/:id', controller.getUserById)
 router.put('/user/:id', controller.updateUserById)
 

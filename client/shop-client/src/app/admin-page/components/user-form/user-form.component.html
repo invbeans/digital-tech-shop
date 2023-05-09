@@ -1,0 +1,33 @@
+<div class="wrapper">
+    <form [formGroup]="userForm" class="form" novalidate>
+        <div class="control">
+            <input type="text" formControlName="username" readonly>
+        </div>
+        <div class="control">
+            <input type="text" formControlName="surname" readonly>
+        </div>
+        <div class="control">
+            <input type="text" formControlName="firstname" readonly>
+        </div>
+        <div class="control">
+            <input type="text" formControlName="lastname" readonly>
+        </div>
+        <div class="control">
+            <input type="text" formControlName="phone_number" readonly>
+        </div>
+        <div class="control">
+            <input type="text" formControlName="email" readonly>
+        </div>
+        <!-- <option  value={{userInfo.roleId}}>{{userInfo.role}}</option> -->
+        <div class="control" *ngIf="readonly">
+            <select formControlName="role">
+                <option value={{userInfo.role}}>{{userInfo.role}}</option>
+            </select>
+        </div>
+        <div class="control" *ngIf="!readonly">
+            <select formControlName="role" (change)="onRoleOptionClick($event)">
+                <option *ngFor="let role of roles" value={{role.id}}>{{role.name}}</option>
+            </select>
+        </div>
+    </form>
+</div>
