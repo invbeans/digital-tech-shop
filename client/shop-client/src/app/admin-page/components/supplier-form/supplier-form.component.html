@@ -1,10 +1,14 @@
 <div class="wrapper">
-    <form [formGroup]="manufacturerForm" class="form" novalidate (change)="onManufacturerChanged()">
+    <form [formGroup]="supplierForm" class="form" novalidate (change)="onSupplierChanged()">
         <div class="control">
             <input type="text" formControlName="name" [readonly]="readonly" placeholder="Название">
         </div>
         <div class="control">
             <input type="text" formControlName="email" [readonly]="readonly" placeholder="Электронная почта">
         </div>
+        <div class="control">
+            <input type="text" formControlName="phone" [readonly]="readonly" placeholder="Номер телефона">
+        </div>
     </form>
 </div>
+

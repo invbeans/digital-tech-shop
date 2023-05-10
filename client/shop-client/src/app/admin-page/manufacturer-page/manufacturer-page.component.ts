@@ -57,6 +57,11 @@ export class ManufacturerPageComponent implements OnInit {
     this.tempManufacturer = manufacturer
   }
 
+  onNewManufacturerClick(){
+    this.manufacturers.splice(0, 0, new Manufacturer(0, "", ""))
+    this.readonlyArr.splice(0, 0, true)
+  }
+
   checkAuth() {
     this.authService.checkAuth().subscribe((data: any) => {
       let logined = this.authService.getAuth()
@@ -65,10 +70,4 @@ export class ManufacturerPageComponent implements OnInit {
       }
     })
   }
-
-  onNewManufacturerClick(){
-    this.manufacturers.splice(0, 0, new Manufacturer(0, "", ""))
-    this.readonlyArr.splice(0, 0, true)
-  }
-
 }

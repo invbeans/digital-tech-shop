@@ -1,1 +1,9 @@
-<p>supplier-page works!</p>
+<div class="wrapper">
+    <div class="page-name">
+        <p>Редактирование поставщиков</p>
+    </div>
+    <button (click)="onNewSupplierClick()">Добавить нового поставщика</button>
+    <app-edit-text-item-card *ngFor="let supplier of suppliers; let index=index" [index]="index" title="Производитель" [hasDelete]="true" (editSaveClick)="onEditSaveClick($event)" (deleteClick)="onDeleteClick($event)">
+        <app-supplier-form [supplier]="supplier" [readonly]="readonlyArr[index]" (supplierChanged)="onSupplierChanged($event)"></app-supplier-form>
+    </app-edit-text-item-card>
+</div>

@@ -8,6 +8,7 @@ import { Product } from 'src/app/shared/models/product';
 import { ProductProdPage } from 'src/app/shared/models/product-prod-page';
 import { PropertyValueInfo } from 'src/app/shared/models/property-value-info';
 import { SubCategory } from 'src/app/shared/models/sub-category';
+import { Supplier } from 'src/app/shared/models/supplier';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Injectable({
@@ -124,5 +125,58 @@ export class StorefrontService {
     }
     const body = { manufacturer, main_category }
     return this.http.post<SubCategory | null>(this.mapping + `sub_category/by_manufacturer`, body, httpOptions)
+  }
+
+  getSuppliers(){
+    return this.http.get<Supplier | null>(this.mapping + `supplier/`)
+  }
+
+  changeSupplierById(id: number, supplier: Supplier){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    const body = {name: supplier.name, email: supplier.email, phone: supplier.phone}
+    return this.http.put<Supplier | null>(this.mapping + `supplier/${id}`, body, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.changeSupplierById(id, supplier)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  deleteSupplierById(id: number){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.delete<Supplier | null>(this.mapping + `supplier/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.deleteSupplierById(id)
+              }
+            })
+          }
+          else return data
+        })
+      )
   }
 }

@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { ManufacturerFormComponent } from './components/manufacturer-form/manufacturer-form.component';
+import { SupplierFormComponent } from './components/supplier-form/supplier-form.component';
 
 const routes: Routes = [
   {path: 'staff', component: StaffPageComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
     SupplierPageComponent,
     ShippingServicePageComponent,
     UserFormComponent,
-    ManufacturerFormComponent
+    ManufacturerFormComponent,
+    SupplierFormComponent
   ],
   imports: [
     CommonModule,

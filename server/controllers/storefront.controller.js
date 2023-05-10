@@ -744,8 +744,14 @@ class storefrontController {
                 .patchAndFetchById(id, {
                     name, email, phone
                 })
-                .then(supplier => {
-                    if (supplier === null) res.json("Такого поставщика нет")
+                .then(async supplier => {
+                    if (supplier === undefined){
+                        await Supplier.query()
+                        .insert({name, email, phone})
+                        .then(supplier => {
+                            res.json(supplier)
+                        })
+                    } 
                     else res.json(supplier)
                 })
                 .catch(err => res.json(err.message))
@@ -814,7 +820,6 @@ class storefrontController {
                         await Manufacturer.query()
                         .insert({name, email})
                         .then(manufacturer => {
-                            console.log(manufacturer)
                             res.json(manufacturer)
                         })
                     }

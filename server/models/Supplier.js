@@ -21,6 +21,20 @@ class Supplier extends Model {
         }
     }
 
+    $beforeUpdate() {
+        if(phone(this.phone, {country: 'RUS'}).isValid === false){
+            throw new ValidationError({ 
+                message: 'Неправильно введён номер телефона'
+            })
+        }
+        else this.phone = phone(this.phone, {country: 'RUS'}).phoneNumber
+        if(!validate(this.email)){
+            throw new ValidationError({
+                message: 'Неправильно введена электронная почта'
+            })
+        }
+    }
+
     static get jsonSchema() {
         return{
             type: 'object',
