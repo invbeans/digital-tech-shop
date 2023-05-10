@@ -14,7 +14,6 @@ export class UserFormComponent implements OnInit {
   @Input() readonly = true
   @Input() roles: Role[] = []
   @Output() roleChanged = new EventEmitter<number>()
-  //роль нужно через чекбокс рисовать
 
   constructor(){
     this.userForm = new FormGroup({

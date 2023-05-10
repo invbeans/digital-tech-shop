@@ -2,6 +2,7 @@ const Router = require('express')
 const router = new Router()
 const controller = require('../controllers/shipping.controller')
 const userMiddleware = require('../middlewares/user-auth.middleware')
+const adminMiddleware = require('../middlewares/admin-auth.middleware')
 
 //---------- orders part ------------------
 router.post('/make_order', userMiddleware, controller.makeOrder)
@@ -9,9 +10,10 @@ router.get('/track_order_short', userMiddleware, controller.getTrackOrderShort)
 
 // --------- shipping service CRUD ----------
 router.post('/shipping_service', controller.createShippingService)
-router.put('/shipping_service/:id', controller.updateShippingService)
-router.delete('/shipping_service/:id', controller.deleteShippingService)
+router.put('/shipping_service/:id', adminMiddleware, controller.updateShippingService)
+router.delete('/shipping_service/:id', adminMiddleware, controller.deleteShippingService)
 router.get('/shipping_service/by_method/:id', controller.getShippingServiceByShippingMethod)
+router.get('/shipping_service/full_info', adminMiddleware, controller.getShippingServicesFullInfo)
 router.get('/shipping_service/:id', controller.getShippingServiceById)
 router.get('/shipping_service', controller.getShippingServices)
 

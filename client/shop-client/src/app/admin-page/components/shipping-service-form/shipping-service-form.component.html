@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <form [formGroup]="shippingServiceForm" class="form" novalidate (change)="onShippingServiceChanged($event)">
+        <div class="control">
+            <input type="text" formControlName="name" [readonly]="readonly" (change)="onNameChanged($event)">
+        </div>
+        <div class="control" *ngIf="readonly">
+            <select formControlName="shippingMethod">
+                <option value={{shippingService.shippingMethod}}>{{shippingService.shippingMethod}}</option>
+            </select>
+        </div>
+        <div class="control" *ngIf="!readonly">
+            <select formControlName="shippingMethod" (change)="onShippingMethodChanged($event)">
+                <option *ngFor="let shippingMethod of shippingMethods" value={{shippingMethod.id}}>{{shippingMethod.name}}</option>
+            </select>
+        </div>
+        <div class="control">
+            <input type="text" formControlName="price" [readonly]="readonly" (change)="onPriceChanged($event)">
+        </div>
+    </form>
+</div>

@@ -11,6 +11,7 @@ import { ShippingHistory } from 'src/app/shared/models/shipping-history';
 import { ShippingHistoryTrackPage } from 'src/app/shared/models/shipping-history-track-page';
 import { ShippingMethod } from 'src/app/shared/models/shipping-method';
 import { ShippingService } from 'src/app/shared/models/shipping-service';
+import { ShippingServiceAdmin } from 'src/app/shared/models/shipping-service-admin';
 import { Street } from 'src/app/shared/models/street';
 import { StreetType } from 'src/app/shared/models/street-type';
 import { TrackOrderShort } from 'src/app/shared/models/track-order-short';
@@ -175,6 +176,79 @@ export class ShippingOrderService {
               if (refreshData) {
                 localStorage.setItem('token', refreshData.accessToken)
                 this.getShippingHistoryByOrder(id)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  getShippingServicesForAdmin() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<ShippingServiceAdmin | null>(this.mapping + `/shipping_service/full_info`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getShippingServicesForAdmin()
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  changeShippingServicesById(id: number, shippingService: ShippingService) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    const body = {name: shippingService.name, shipping_method: shippingService.shippingMethod, price: shippingService.price}
+    return this.http.put<ShippingService | null>(this.mapping + `/shipping_service/${id}`, body, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.changeShippingServicesById(id, shippingService)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  deleteShippingServicesById(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.delete<ShippingService | null>(this.mapping + `/shipping_service/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.deleteShippingServicesById(id)
               }
             })
           }

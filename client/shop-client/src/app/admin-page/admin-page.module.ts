@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { ManufacturerFormComponent } from './components/manufacturer-form/manufacturer-form.component';
 import { SupplierFormComponent } from './components/supplier-form/supplier-form.component';
+import { ShippingServiceFormComponent } from './components/shipping-service-form/shipping-service-form.component';
 
 const routes: Routes = [
   {path: 'staff', component: StaffPageComponent},
@@ -25,7 +26,8 @@ const routes: Routes = [
     ShippingServicePageComponent,
     UserFormComponent,
     ManufacturerFormComponent,
-    SupplierFormComponent
+    SupplierFormComponent,
+    ShippingServiceFormComponent
   ],
   imports: [
     CommonModule,

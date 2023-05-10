@@ -1,1 +1,11 @@
-<p>shipping-service-page works!</p>
+<div class="wrapper">
+    <div class="page-name">
+        <p>Редактирование сервисов доставки</p>
+    </div>
+    <button (click)="onNewShippingServiceClick()">Добавить новый сервис доставки</button>
+    <app-edit-text-item-card *ngFor="let shippingService of shippingServices; let index=index" [index]="index"
+        title="Сервисы доставки" [hasDelete]="true" (editSaveClick)="onEditSaveClick($event)" (deleteClick)="onDeleteClick($event)">
+        <app-shipping-service-form [shippingService]="shippingService" [shippingMethods]="shippingMethods" [readonly]="readonlyArr[index]"
+            (shippingServiceChanged)="onShippingServiceChanged($event)"></app-shipping-service-form>
+    </app-edit-text-item-card>
+</div>

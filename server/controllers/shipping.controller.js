@@ -102,34 +102,62 @@ class shippingController {
     }
 
     async updateShippingService(req, res) {
-        const id = req.params.id
-        const { name, shipping_method, price } = req.body
-        await ShippingService.query()
-            .patchAndFetchById(id, {
-                name, shipping_method, price
-            })
-            .then(shippingService => {
-                if (shippingService === null) res.json("Такого сервиса доставки нет")
-                else res.json(shippingService)
-            })
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const id = req.params.id
+            const { name, shipping_method, price } = req.body
+            await ShippingService.query()
+                .patchAndFetchById(id, {
+                    name, shipping_method, price
+                })
+                .then(async shippingService => {
+                    if (shippingService === undefined) {
+                        await ShippingService.query()
+                            .insert({name, shipping_method, price})
+                            .then(shippingService => res.json(shippingService))
+                    }
+                    else res.json(shippingService)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async deleteShippingService(req, res) {
-        const id = req.params.id
-        await ShippingService.query()
-            .deleteById(id)
-            .then(amount => {
-                if (amount == 0) res.json("Такого сервиса доставки нет")
-                else res.json(`Сервис доставки с id = ${id} удалён`)
-            })
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const id = req.params.id
+            await ShippingService.query()
+                .deleteById(id)
+                .then(amount => {
+                    if (amount == 0) res.json("Такого сервиса доставки нет")
+                    else res.json(`Сервис доставки с id = ${id} удалён`)
+                })
+                .catch(err => res.json(err.message))
+        }
     }
 
     async getShippingServices(req, res) {
         await ShippingService.query()
             .then(shippingService => res.json(shippingService))
             .catch(err => res.json(err.message))
+    }
+
+    async getShippingServicesFullInfo(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            await ShippingService.query()
+                .joinRelated("shipping_method_rel")
+                .select("shipping_service.id as id", "shipping_service.name as name",
+                    "shipping_service.price as price", "shipping_method_rel.name as shippingMethod")
+                .then(shippingService => res.json(shippingService))
+                .catch(err => res.json(err.message))
+        }
     }
 
     async getShippingServiceById(req, res) {
@@ -245,7 +273,7 @@ class shippingController {
             .catch(err => res.json(err.message))
     }
 
-    async getPickupPointByOrder(req, res){
+    async getPickupPointByOrder(req, res) {
         if (req.message) {
             res.status(401).json(req.message)
         }
@@ -253,12 +281,12 @@ class shippingController {
             const order = req.params.id
             let user = req.userData.id
             await PickupPointType.query()
-            .joinRelated("order_shipping_rel.order_rel")
-            .where("order_shipping_rel:order_rel.id", order)
-            .andWhere("order_shipping_rel:order_rel.user", user)
-            .first("pickup_point_type.*")
-            .then(pickupPointType => res.json(pickupPointType))
-            .catch(err => res.json(err.message))
+                .joinRelated("order_shipping_rel.order_rel")
+                .where("order_shipping_rel:order_rel.id", order)
+                .andWhere("order_shipping_rel:order_rel.user", user)
+                .first("pickup_point_type.*")
+                .then(pickupPointType => res.json(pickupPointType))
+                .catch(err => res.json(err.message))
         }
     }
 
@@ -763,7 +791,7 @@ class shippingController {
             .catch(err => res.json(err.message))
     }
 
-    async getShippingHistoryTrackByOrder(req, res){
+    async getShippingHistoryTrackByOrder(req, res) {
         if (req.message) {
             res.status(401).json(req.message)
         }
@@ -772,26 +800,26 @@ class shippingController {
             let user = req.userData.id
             let historyArray = []
             await ShippingHistory.query()
-            .joinRelated("order_rel")
-            .where("order_rel.id", order)
-            .andWhere("order_rel.user", user)
-            .select("shipping_history.*")
-            .orderBy("shipping_history.id", "asc")
-            .then(async histories => {
-                for(let item of histories){
-                    let historyElem = {}
-                    historyElem.id = item.id
-                    historyElem.date = item.date
-                    await ShippingStatus.query()
-                    .findById(item.shipping_status)
-                    .then(status => {
-                        historyElem.shipping_status = status.name
-                        historyArray.push(historyElem)
-                    })
-                }
-                res.json(historyArray)
-            })
-            .catch(err => res.json(err.message))
+                .joinRelated("order_rel")
+                .where("order_rel.id", order)
+                .andWhere("order_rel.user", user)
+                .select("shipping_history.*")
+                .orderBy("shipping_history.id", "asc")
+                .then(async histories => {
+                    for (let item of histories) {
+                        let historyElem = {}
+                        historyElem.id = item.id
+                        historyElem.date = item.date
+                        await ShippingStatus.query()
+                            .findById(item.shipping_status)
+                            .then(status => {
+                                historyElem.shipping_status = status.name
+                                historyArray.push(historyElem)
+                            })
+                    }
+                    res.json(historyArray)
+                })
+                .catch(err => res.json(err.message))
         }
     }
 
