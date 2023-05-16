@@ -38,9 +38,9 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #232823;
+    background-color: var(--contrast-focus);
 }
 
 .add-to-basket:active {
-    background-color: #454e45;
+    background-color: var(--contrast);
 }

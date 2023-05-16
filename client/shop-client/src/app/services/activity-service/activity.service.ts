@@ -181,4 +181,77 @@ export class ActivityService {
         })
       )
   }
+
+  getReturnApplications() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<ReturnApplication | null>(this.mapping + 'return_application', httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getReturnApplications()
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  getReturnProductsByApplication(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    return this.http.get<ProductReturnPage | null>(this.mapping + `return_product/by_return_application/${id}`, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.getReturnProductsByApplication(id)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
+
+  changeReturnApplicationStatus(id: number, approved: boolean) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true,
+      "observe?": "response"
+    }
+    const body = {approved: approved}
+    return this.http.put<ReturnApplication | null>(this.mapping + `return_application/change_status/${id}`, body, httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.status === 401) {
+            this.authService.checkAuth().subscribe((refreshData: AuthResponse | null) => {
+              if (refreshData) {
+                localStorage.setItem('token', refreshData.accessToken)
+                this.changeReturnApplicationStatus(id, approved)
+              }
+            })
+          }
+          else return data
+        })
+      )
+  }
 }

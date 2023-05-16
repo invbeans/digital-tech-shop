@@ -26,6 +26,7 @@ class MetaUser extends Model {
     }
 
     $beforeUpdate() {
+        if(this.phone_number == undefined && this.email == undefined) return
         if (phone(this.phone_number, { country: 'RUS' }).isValid === false) {
             throw new ValidationError({
                 message: 'Неправильно введён номер телефона'

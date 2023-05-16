@@ -10,7 +10,7 @@ import { ContentPageModule } from './content-page/content-page.module';
 //import { MainCatModule } from './main-cat/main-cat.module';
 //import { MainModule } from './main/main.module';
 //import { MakeOrderModule } from './make-order/make-order.module';
-import { ManagerPageModule } from './manager-page/manager-page.module';
+//import { ManagerPageModule } from './manager-page/manager-page.module';
 //import { ProductModule } from './product/product.module';
 //import { ReturnModule } from './return/return.module';
 import { SharedModule } from './shared/shared.module';
@@ -38,7 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     //TrackOrderModule,
     //ReturnModule,
     //AdminPageModule,
-    ManagerPageModule,
+    //ManagerPageModule,
     ContentPageModule
   ],
   providers: [],

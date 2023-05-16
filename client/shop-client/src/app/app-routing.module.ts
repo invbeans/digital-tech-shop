@@ -18,7 +18,8 @@ const routes: Routes = [
   {path: 'track-order', loadChildren: () => import('./track-order/track-order.module').then(m => m.TrackOrderModule)},
   {path: 'help', loadChildren: () => import('./help-page/help-page.module').then(m => m.HelpPageModule)},
   {path: 'return', loadChildren: () => import('./return/return.module').then(m => m.ReturnModule)},
-  {path: 'admin', loadChildren: () => import('./admin-page/admin-page.module').then(m => m.AdminPageModule)}
+  {path: 'admin', loadChildren: () => import('./admin-page/admin-page.module').then(m => m.AdminPageModule)},
+  {path: 'manager', loadChildren: () => import('./manager-page/manager-page.module').then(m => m.ManagerPageModule)}
 
 ];
 

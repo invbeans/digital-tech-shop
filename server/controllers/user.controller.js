@@ -176,9 +176,10 @@ class userController {
             const id = req.params.id
             await MetaUser.query()
                 .patchAndFetchById(id, {
-                    role
+                    'role': role
                 })
                 .then(metaUser => {
+                    console.log(metaUser)
                     if (metaUser === undefined) res.json("Такой записи мета_юзер нет")
                     else res.json(metaUser)
                 })

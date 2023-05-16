@@ -1,0 +1,10 @@
+.wrapper {
+    border: 1px solid #183719;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    height: 10vh;
+    min-height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+}

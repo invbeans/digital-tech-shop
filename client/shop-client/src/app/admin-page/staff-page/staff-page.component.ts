@@ -48,6 +48,7 @@ export class StaffPageComponent implements OnInit {
     if(!editObject.isEdit){ //то есть нажатие на кнопку "Сохранить"
       this.userService.changeUserRole(this.userInfo[editObject.index].id, this.chosenRoleId)
       .subscribe((data: any) => {
+        console.log(data)
         this.userInfo[editObject.index].role = this.roles.filter(elem => elem.id == data.role)[0].name
       })
     }

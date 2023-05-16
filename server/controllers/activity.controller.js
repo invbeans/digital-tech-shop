@@ -4,6 +4,7 @@ const Answer = require('../models/Answer')
 const ReturnApplication = require('../models/ReturnApplication')
 const ReturnProduct = require('../models/ReturnProduct')
 const User = require('../models/User')
+const Product = require('../models/Product')
 
 class activityController {
     // --------- review CRUD ----------
@@ -237,6 +238,25 @@ class activityController {
             .catch(err => res.json(err.message))
     }
 
+    async changeReturnApplicationStatus(req, res) {
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const id = req.params.id
+            const { approved } = req.body
+            await ReturnApplication.query()
+                .patchAndFetchById(id, {
+                    approved
+                })
+                .then(returnApplication => {
+                    if (returnApplication === null) res.json("Такой заявки на возврат нет")
+                    else res.json(returnApplication)
+                })
+                .catch(err => res.json(err.message))
+        }
+    }
+
     async deleteReturnApplication(req, res) {
         const id = req.params.id
         await ReturnApplication.query()
@@ -249,9 +269,16 @@ class activityController {
     }
 
     async getReturnApplications(req, res) {
-        await ReturnApplication.query()
-            .then(returnApplication => res.json(returnApplication))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            await ReturnApplication.query()
+                .select("*")
+                .orderBy('id', 'asc')
+                .then(returnApplication => res.json(returnApplication))
+                .catch(err => res.json(err.message))
+        }
     }
 
     async getReturnApplicationsByUser(req, res) {
@@ -291,12 +318,18 @@ class activityController {
     }
 
     async getReturnProductByReturnApplication(req, res) {
-        const return_application = req.params.id
-        await ReturnProduct.query()
-            .select("*")
-            .where("return_application", "=", return_application)
-            .then(returnProduct => res.json(returnProduct))
-            .catch(err => res.json(err.message))
+        if (req.message) {
+            res.status(401).json(req.message)
+        }
+        else {
+            const return_application = req.params.id
+            await Product.query()
+                .joinRelated('return_product_rel')
+                .where("return_product_rel.return_application", "=", return_application)
+                .select("product.* as product", "return_product_rel.proper_quality as proper_quality")
+                .then(returnProduct => res.json(returnProduct))
+                .catch(err => res.json(err.message))
+        }
     }
 }
 

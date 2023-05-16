@@ -26,8 +26,12 @@ export class LoadInitDataService {
         sidebarElements.push(new SidebarElement("Производители", "/admin/manufacturer"))
         sidebarElements.push(new SidebarElement("Поставщики", "/admin/supplier"))
         sidebarElements.push(new SidebarElement("Сервисы доставки", "/admin/shipping_service"))
-        return of(sidebarElements) //обзервбл))) из списка
-      //просто пользователи и не залогиненные
+        return of(sidebarElements) 
+      case(this.MANAGER_ROLE):
+        sidebarElements.push(new SidebarElement("Возвраты", "/manager/return"))
+        sidebarElements.push(new SidebarElement("Статистика заказов", "/manager/orders"))
+        sidebarElements.push(new SidebarElement("Статистика товаров", "/manager/products_stats"))
+        return of(sidebarElements)
       default:
         return this.http.get<MainCategory | null>(this.mapping + 'storefront/main_category')
           .pipe(

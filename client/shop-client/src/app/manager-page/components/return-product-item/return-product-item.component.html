@@ -1,0 +1,7 @@
+<div class="wrapper">
+    <p>{{product.product.name}}</p>
+    <p>{{product.product.price | currency:'RUB':'symbol-narrow'}}</p>
+    <label>
+        <input type="checkbox" name="quality" [(ngModel)]="product.properQuality" [disabled]="true">Надлежащее качество
+    </label>
+</div>

@@ -1,0 +1,15 @@
+<div class="wrapper">
+    <app-return-feed>
+        <app-return-item *ngFor="let application of returnApplications" [returnApplication]="application"
+            (applicationClicked)="onReturnApplicationClick($event)" (changeStatus)="onSubmitChangesClick($event)">
+            <app-return-product-feed *ngIf="application.id == openedApplication">
+                <div class="centered">
+                    <p *ngIf="changed">{{changedText}}</p>
+                    <app-return-product-item *ngFor="let product of returnProducts"
+                        [product]="product"></app-return-product-item>
+                </div>
+            </app-return-product-feed>
+        </app-return-item>
+
+    </app-return-feed>
+</div>

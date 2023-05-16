@@ -24,14 +24,15 @@ router.get('/answer/by_question/:id', controller.getAnswerByQuestionForProdPage)
 
 // --------- return application CRUD ----------
 router.post('/return_application', userMiddleware, controller.createReturnApplication)
+router.put('/return_application/change_status/:id', managerMiddleware, controller.changeReturnApplicationStatus)
 router.put('/return_application/:id', controller.updateReturnApplication)
 router.delete('/return_application/:id', controller.deleteReturnApplication)
 router.get('/return_application/by_user', userMiddleware, controller.getReturnApplicationsByUser)
-router.get('/return_application', controller.getReturnApplications)
+router.get('/return_application', managerMiddleware, controller.getReturnApplications)
 
 // --------- return product CRUD ----------
 router.post('/return_product', controller.createReturnProduct)
 router.delete('/return_product/:id', controller.deleteReturnProduct)
-router.get('/return_product/by_return_application/:id', controller.getReturnProductByReturnApplication)
+router.get('/return_product/by_return_application/:id', managerMiddleware, controller.getReturnProductByReturnApplication)
 
 module.exports = router
