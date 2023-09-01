@@ -32,6 +32,14 @@ export class LoadInitDataService {
         sidebarElements.push(new SidebarElement("Статистика заказов", "/manager/orders"))
         sidebarElements.push(new SidebarElement("Статистика товаров", "/manager/products_stats"))
         return of(sidebarElements)
+      case(this.CONTENT_ROLE):
+        sidebarElements.push(new SidebarElement("Категории/Подкатегории", "content/cat_subcat")),
+        sidebarElements.push(new SidebarElement("Характеристики товаров", "content/property")),
+        sidebarElements.push(new SidebarElement("Значения характеристик товаров", "content/property_value")),
+        sidebarElements.push(new SidebarElement("Товары", "content/product")),
+        sidebarElements.push(new SidebarElement("Акции", "content/discount")),
+        sidebarElements.push(new SidebarElement("Промокоды", "content/promocode"))
+        return of(sidebarElements)
       default:
         return this.http.get<MainCategory | null>(this.mapping + 'storefront/main_category')
           .pipe(

@@ -6,7 +6,7 @@ import { PropertyValuePageComponent } from './property-value-page/property-value
 import { ProductPageComponent } from './product-page/product-page.component';
 import { PromocodePageComponent } from './promocode-page/promocode-page.component';
 import { SharedModule } from '../shared/shared.module';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { DiscountPageComponent } from './discount-page/discount-page.component';
 
 const routes: Routes = [
@@ -28,7 +28,15 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    RouterModule.forChild(routes)
+  ],
+  exports: [
+    CatSubcatPageComponent,
+    PropertyPageComponent,
+    PropertyValuePageComponent,
+    ProductPageComponent,
+    PromocodePageComponent
   ],
   providers: []
 })

@@ -1,1 +1,29 @@
-<p>product-page works!</p>
+<div class="wrapper"> <!-- это заглушка для отчета -->
+    
+    <article class="product">
+        <header>Создание товара</header>
+        <form [formGroup]="productForm" class="form" novalidate>
+            <div class="control"><label>Название</label>
+                <input type="text" formControlName="name" placeholder="Название товара">
+            </div>
+            <div class="control"><label>Стоимость</label>
+                <input type="text" formControlName="price" placeholder="Стоимость">
+            </div>
+            <div class="control"><label>Ссылка на изображение</label>
+                <input type="text" formControlName="image_link" placeholder="Ссылка на изображение">
+            </div>
+            <div class="control"><label>Подкатегория</label>
+                <input type="text" formControlName="subCategory" placeholder="Подкатегория товара">
+            </div>
+            <div class="control"><label>Производитель</label>
+                <input type="text" formControlName="manufacturer" placeholder="Производитель товара">
+            </div>
+            <div class="control"><label>Поставщик</label>
+                <input type="text" formControlName="supplier" placeholder="Поставщик товара">
+            </div>
+            <div class="control">
+                <button>Сохранить товар</button>
+            </div>
+        </form>
+    </article>
+</div>

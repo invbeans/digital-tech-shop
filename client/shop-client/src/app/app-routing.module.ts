@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  //{path: '/main_categories', component: MainCatPageComponent},
-  //{path: '', component: MainPageComponent}
   {path: '', loadChildren: () => import('./main/main.module').then(m => m.MainModule)},
   {path: 'main_categories', loadChildren: () => import('./main-cat/main-cat.module').then(m => m.MainCatModule)},
   {path: 'main_category/:id', loadChildren: () => import('./sub-cat/sub-cat.module').then(m => m.SubCatModule)},
@@ -19,7 +17,8 @@ const routes: Routes = [
   {path: 'help', loadChildren: () => import('./help-page/help-page.module').then(m => m.HelpPageModule)},
   {path: 'return', loadChildren: () => import('./return/return.module').then(m => m.ReturnModule)},
   {path: 'admin', loadChildren: () => import('./admin-page/admin-page.module').then(m => m.AdminPageModule)},
-  {path: 'manager', loadChildren: () => import('./manager-page/manager-page.module').then(m => m.ManagerPageModule)}
+  {path: 'manager', loadChildren: () => import('./manager-page/manager-page.module').then(m => m.ManagerPageModule)},
+  {path: 'content', loadChildren: () => import('./content-page/content-page.module').then(m => m.ContentPageModule)}
 
 ];
 
